@@ -1,0 +1,5 @@
+.trash/
+.uceditor/
+.projectlinkstore/
+*Debug/
+imported_project_report.html

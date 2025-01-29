@@ -1,0 +1,101 @@
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  text-transform: none;
+}
+
+.reveal h5 {
+  font-size: 0.80em;
+}
+
+.reveal h6 {
+  font-size: 0.60em;
+}
+
+.reveal p {
+  font-size: 80%;
+  text-align: left;
+}
+
+.reveal figcaption {
+  font-size: 60%;
+}
+
+.reveal p.pbcenter {
+  text-align: center;
+}
+
+.reveal ul, .reveal ol {
+  font-size: 80%;
+}
+
+.reveal blockquote {
+  text-align: left;
+  font-size: 80%;
+  width: 80%;
+}
+
+.reveal code.codeblock {
+  font-size: 60%;
+  line-height: 1.3;
+  background-color: black;
+}
+
+.reveal code.codeinline {
+  font-size: 100%;
+  line-height: 1.0;
+}
+
+.reveal code {
+  color: yellow;
+  font-size: 60%;
+  line-height: 1.3; 
+  background-color: black;
+}
+
+.reveal ul.pbsmaller, .reveal table.pbsmaller, .reveal p.pbsmaller, div.pbsmaller {
+    font-size: 70%; }
+    
+.reveal ul.pbsmaller2, .reveal table.pbsmaller2, .reveal p.pbsmaller2, div.pbsmaller2 {
+    font-size: 60%; }
+
+.reveal p.pbcentersmaller2 {
+  text-align: center;
+  font-size: 50%;
+}
+  
+.reveal div.pbverysmall {
+  font-size: 33%; 
+}
+
+.reveal img.pbfloor {
+    margin-bottom: -10px;
+    margin-top: 0px;
+}
+  
+.reveal section img {
+  box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
+  border: 0; }
+
+.row {
+  display: flex;
+}
+  
+.column {
+  flex: 50%;
+}
+
+.pbcolumns { 
+  display: flex; width: 100%; 
+}
+
+.pbcolumns div { 
+  flex-grow: 1; 
+}
+
+.pbcolumns div {
+  padding: 8px;
+}

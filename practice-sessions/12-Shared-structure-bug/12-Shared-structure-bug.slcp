@@ -1,0 +1,46 @@
+# Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
+project_name: 12-Shared-structure-bug
+label: 12-Shared-structure-bug
+description: |
+  This example project shows an empty configuration that can be used as a starting point to add components and functionality.
+category: Example|Platform
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Beginner]
+package: platform
+quality: production
+readme:
+- {path: readme.md}
+- {path: readme.md}
+source:
+- {path: app.c}
+- {path: main.c}
+include:
+- path: .
+  file_list:
+  - {path: app.h}
+sdk: {id: simplicity_sdk, version: 2024.6.2}
+toolchain_settings: []
+component:
+- {id: EFR32MG24B310F1536IM48}
+- {id: app_log}
+- {id: brd2601b}
+- {id: clock_manager}
+- {id: device_init}
+- {id: freertos}
+- {id: iostream_retarget_stdio}
+- {id: iostream_stdlib_config}
+- instance: [vcom]
+  id: iostream_usart
+- {id: sl_system}
+- {id: sleeptimer}
+define:
+- {name: DEBUG_EFM}
+ui_hints:
+  highlight:
+  - {path: readme.md, focus: true}
+

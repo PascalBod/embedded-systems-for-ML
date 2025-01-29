@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+	
+        <!-- -------------------- Contents ---------------------------------------- -->
+
+        <section>
+          <h3>Contents - 1/2</h3>
+          <div class="pbcolumns">
+            <div class="pbsmaller">
+              <ul>
+                <li><a href="#/executionEnvironments">Execution environments</a>
+                  <ul>
+                    <li><a href="#/bareMetal">Bare metal</a></li>
+                    <li><a href="#/rtos">RTOS</a></li>
+                    <li><a href="#/os">OS</a></li>
+                  </ul>
+                </li>
+                <li><a href="#/moreAboutRtos">More about what an RTOS is</a></li>
+                <li><a href="#/benefits">Benefits</a></li>
+                <li><a href="#/drawbacks">Drawbacks</a></li>
+                <li><a href="#/components">Components</a></li>
+                <li><a href="#/tasks">Tasks</a>
+                  <ul>
+                    <li><a href="#/whatATaskIs">What a task is and can do</a></li>
+                    <li><a href="#/exercise11"><b>Practice: creating and starting one task</b></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="pbsmaller">
+              <ul>
+                <li><a href="#/concurrencyControl">Concurrency control</a>
+                  <ul>
+                    <li><a href="#/exercise12"><b>Practice: sharing data bug</b></a></li>
+                    <li><a href="#/concurrencyIntro">Problem statement</a></li>
+                    <li><a href="#/concurrencyMutex">Mutex</a></li>
+                    <li><a href="#/exercise13"><b>Practice: shared structure and mutex</b></a></li>
+                    <li><a href="#/concurrencyPriorityInversion">Priority inversion</a></li>
+                    <li><a href="#/concurrencyDeadlock">Deadlock</a></li>
+                    <li><a href="#/concurrencySemaphore">Semaphore</a></li>
+                    <li><a href="#/exercise14"><b>Practice: semaphore</b></a></li>
+                  </ul>
+                </li>
+                <li><a href="#/communication">Communication</a>
+                  <ul>
+                    <li><a href="#/communicationIntroduction">Introduction</a></li>
+                    <li><a href="#/communicationQueues">Queues</a></li>
+                    <li><a href="#/exercise15"><b>Practice: using a queue</b></a></li>
+                    <li><a href="#/queueBenefits">Queue: a useful tool</a></li>
+                    <li><a href="#/exercise16"><b>Practice: time-stamped button presses</b></a></li>
+                    <li><a href="#/exercise17"><b>Practice: a log server</b></a></li>
+                    <li><a href="#/concurrencySummary">Concurrency: summary</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h3>Contents - 2/2</h3>
+          <div class="pbcolumns">
+            <div class="pbsmaller">
+              <ul>
+                <li><a href="#/time">Time</a></li>
+                <li><a href="#/memoryAllocation">Memory allocation</a></li>
+                <li><a href="#/middleware">Middleware</a></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
+        <!-- -------------------- Execution environments ---------------------------------------- -->
+        
+        <section id="executionEnvironments">
+          <h3>Execution environments</h3>
+        </section>
+        <section>
+          <p>Execution environment: what the target board provides to run an application.</p>
+        </section>
+        
+        <!-- -------------------- Execution environments > bare metal ---------------------------------------- -->
+        
+        <section id="bareMetal">
+          <h4>Bare metal</h4>
+          <ul>
+            <li>You write all the code, without any help to run concurrent tasks,
+              to share data between tasks, etc.</li>
+            <li>Nowadays, an abstraction layer is provided by almost all 
+              microcontroller manufacturers:
+              <ul>
+                <li>&rArr; Compatibility over a family of microcontrollers</li>
+                <li>&rArr; A little bit easier to use peripherals and interfaces</li>
+                <li>Arm: <a href="https://www.arm.com/technologies/cmsis" target="_blank">CMSIS</a></li>
+                <li>Silicon Labs: <a href="https://www.silabs.com/developer-tools/gecko-software-development-kit"
+                      target="_blank"">Gecko SDK</a></li>
+                <li>STMicroelectronics: <a href="https://github.com/STMicroelectronics/STM32Cube_MCU_Overall_Offer/blob/master/README.md#stm32cube-hal-drivers"
+                      target="_blank">HAL + LL</a></li>
+                <li>Espressif: <a href="https://www.espressif.com/en/products/sdks/esp-idf"
+                      target="_blank">ESP-IDF</a></li>
+                <li>Etc.</li>
+              </ul>
+            </li>
+          </ul>
+          <p>What we did in the practical sessions is bare-metal software development.</p>
+        </section>
+        
+        <!-- -------------------- Execution environments > RTOS ---------------------------------------- -->
+
+        <section id="rtos">
+          <h4>Real-Time Operating System (RTOS)</h4>
+          <ul>
+            <li>Provides real help to run concurrent tasks, share data between tasks, etc.</li>
+            <li>Allows for deterministic response time</li>
+            <li>Uses very little memory</li>
+            <li>No protection between tasks, nor between tasks and RTOS (no virtual memory)</li>
+            <li>No way to modify the application without rebuilding and reflashing (well, not fully true)</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>Minimum required memory:</p>
+          <ul>
+            <li>RAM: a few KB</li>
+            <li>Flash: a few KB</li>
+            <li>Depends on the application</li>
+          </ul>
+        </section>
+
+        <section>
+          <img src="images/rtos.png">
+          <div class="pbverysmall">Sources: <a href="https://www.freertos.org/index.html" title="FreeRTOS"
+                                               target="_blank">FreeRTOS</a>,
+            <a href="https://www.ecoscentric.com/ecos/index.shtml" title="eCos" target="_blank">eCos</a>,
+            <a href="https://www.contiki-ng.org/" title="Contiki-NG"
+               target="_blank">Contiki-NG</a>,
+            <a href="http://riot-os.org/" title="RIOT" target="_blank">RIOT</a>,
+            <a href="https://blackberry.qnx.com/en" title="QNX" target="_blank">QNX</a>,
+           <a href="https://www.rt-thread.io/index.html" title="RT-Thread" target="_blank">RT-Thread</a>,
+            <a href="https://www.zephyrproject.org/" title="Zephyr" target="_blank">Zephyr</a>,
+            <a href="https://threadx.io/" title="ThreadX"
+               target="_blank">ThreadX</a>,
+            <a href="https://www.silabs.com/developer-tools/micrium-os" title="Micriµm OS" target="_blank">Micriµm OS</a>,
+            <a href="https://microware.com/" title="OS-9" target="_blank">OS-9</a>,
+            <a href="https://mynewt.apache.org/" title="Mynewt" target="_blank">Mynewt</a>,
+            <a href="https://www.windriver.com/products/vxworks/" title="VxWorks"
+               target="_blank">VxWorks</a>,
+            <a href="https://www.lynx.com/products/lynxos-posix-real-time-operating-system-rtos"
+               title="LynxOS" target="_blank">LynxOS</a>,
+            <a href="https://www.zerynth.com/zos/" title="Zerynth OS" target="_blank">Zerynth OS</a>,
+            <a href="https://nuttx.apache.org/" title="NuttX" target="_blank">NuttX</a>
+          </div>        
+        </section>
+
+        <section>
+          <ul>
+            <li>FreeRTOS acquired by Amazon - 2017</li>
+            <li>ThreadX acquired by Microsoft - 2019, transferred to the Eclipse Foundation, as open source - 2023</li>
+            <li>Google and Meta support Zephyr</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Available services: will be seen farther.</p>
+        </section>
+
+        <!-- -------------------- Execution environments > OS ---------------------------------------- -->
+
+        <section id="os">
+          <h4>Operating System (OS)</h4>
+          <ul>
+            <li>Mainly: Linux</li>
+            <li>Similar to a desktop computer environment:
+              <ul>
+                <li>Package manager, to install new applications</li>
+                <li>Graphical user interface is possible</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <p>Minimum required memory:</p>
+          <ul>
+            <li>RAM: a few MB or a few tens of MB</li>
+            <li>Depends on applications</li>
+          </ul>
+          <p>Usually:</p>
+          <ul>
+            <li>RAM: from 512 MB to 8 GB</li>
+            <li>Flash card: from 1 GB to 8 GB</li>
+          </ul>
+        </section>
+
+        <section>
+          <ul>
+            <li>Linux typically requires an MMU (Memory Management Unit) &rArr; virtual memory</li>
+            <li>The kernel can be configured to work without one
+              <ul>
+                <li>Thanks to μClinux project</li>
+                <li>Beware about applications compatibility</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <img src="images/embeddedOS.png">
+          <div class="pbverysmall">Sources: <a href="https://isc.tamu.edu/~lewing/linux/" title="Larry Ewing"
+                                               target="_blank">Larry Ewing</a>,
+            <a href="https://www.yoctoproject.org/" title="Yocto Project" target="_blank">Yocto Project</a>,
+            <a href="https://legato.io/" title="Legato" target="_blank">Legato</a>,
+            <a href="https://archlinuxarm.org/" title="Arch Linux ARM" target="_blank">Arch Linux ARM</a>,
+            <a href="https://openwrt.org/" title="OpenWrt Project" target="_blank">OpenWrt Project</a>,
+            <a href="https://www.balena.io/os/" title="balenaOS" target="_blank">balenaOS</a>,
+            <a href="https://www.windriver.com/products/linux/" title="Wind River" target="_blank">Wind
+              River</a>,
+            <a href="https://www.mvista.com/" title="MontaVista" target="_blank">MontaVista</a>,
+            <a href="https://www.lynx.com/products/lynx-mosaic-modular-development-framework"
+               title="LYNX MOSA.ic" target="_blank">LYNX MOSA.ic</a>
+          </div>
+        </section>
+        
+        <section>
+          <p>Latest news: <a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=baeb9a7d8b60b021d907127509c44507539c15e5"
+               target="_blank">real-time is now supported by mainline Linux kernel</a>.</p>
+          <p>&rArr; "standard" Linux now can provide deterministic response time.</p>
+        </section>
+        
+        <!-- -------------------- More about what an RTOS is ---------------------------------------- -->
+
+        <section id="moreAboutRtos">
+          <h2>More about what an RTOS is</h2>
+        </section>
+        
+        <section>
+            <h3>Problem</h3>
+            <p>The bare metal architecture (ISR + background task) seen before does not provide solutions
+               to the following needs:</p>
+            <ul>
+                <li>Structure application code in several "independent" units of execution</li>
+                <li>Share data between these units</li>
+                <li>Handle different priorities</li>
+                <li>Ensure that time constraints are met (or not met)</li>
+                <li>Etc.</li>
+            </ul>
+        </section>
+        
+        <section>
+            <h3>A solution</h3>
+            <p>An RTOS.</p>
+        </section>
+        
+        <section>
+          <h3>More precisely</h3>
+          <p class="pbcenter">RTOS = OS intended for real-time applications.</p>
+          <ul>
+            <li>Provides minimal latency when handling events</li>
+            <li>Guarantees predictable response time</li>
+          </ul>
+        </section>
+        
+        <section>
+            <h3>Soft and hard real time</h3>
+            <ul>
+                <li><b>Hard real time</b>: when a system will cease to function if a deadline is missed, 
+                    which can result in catastrophic consequences</li>
+                <li class="fragment"><b>Soft real time</b>: when a system continues to function even if
+                    it’s unable to execute within an allotted time. If the system has missed its deadline,
+                    it will not result in critical consequences. The system can continue to function,
+                    though with undesirable lower quality of output</li>
+            </ul>
+            <div class="pbverysmall">Source: <a href="https://www.intel.com/content/www/us/en/robotics/real-time-systems.html" title="Intel" target="_blank">Intel</a></div>
+        </section>
+        
+        <section>
+            <p>This presentation is about soft real time only.</p>
+        </section>
+        
+        <!-- -------------------- RTOS benefits ---------------------------------------- -->
+
+        <section id="benefits">
+          <h2>Benefits</h2>
+        </section>
+        
+        <section>
+          <ul>
+            <li>
+              Provides a way to split application code in several execution blocks
+            </li>
+            <li class="fragment">
+              Allows to prioritize execution blocks
+            </li>
+            <li class="fragment">
+              Application architecture easier to design: several execution blocks can 
+              concurrently process events
+            </li>
+            <li class="fragment">
+              Can reuse existing middleware (TCP/IP stack, flash file system, time handling, etc.)
+              more easily
+            </li>
+            <li class="fragment">
+              Provides a common reference framework for teams of several developers
+            </li>
+            <li class="fragment">
+              Makes application code more portable (to different hardware targets)
+            </li>
+            <li class="fragment">
+              ...
+            </li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- RTOS drawbacks ---------------------------------------- -->
+
+        <section id="drawbacks">
+          <h2>Drawbacks</h2>
+        </section>
+        
+        <section>
+          <ul>
+            <li>
+              Requires more flash memory (from a few KB to a few tens of KB)
+            </li>
+            <li class="fragment">
+              Requires more RAM (fixed quantity + quantity depending on execution blocks)
+            </li>
+            <li class="fragment">
+              Consumes some processing power (a few %)
+            </li>
+            <li class="fragment">
+              Associated learning curve must be taken into account
+            </li>
+            <li class="fragment">
+              Brings in a software dependency
+            </li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- RTOS components ---------------------------------------- -->
+
+        <section id="components">
+          <h2>Components</h2>
+        </section>
+        
+        <section>
+          <p class="pbcenter">Usual components:</p>
+          <ul>
+            <li>
+              Scheduler - assigns computing resource to the execution blocks <em>(tasks</em> or 
+              <em>threads)</em>
+            </li>
+            <li class="fragment">
+              Services allowing concurrent accesses to shared resources
+            </li>
+            <li class="fragment">
+              Communication services letting tasks exchange data
+            </li>
+            <li class="fragment">
+              Time services
+            </li>
+            <li class="fragment">
+              Memory allocation services
+            </li>
+            <li class="fragment">
+              Middleware: Wi-Fi stack, Bluetooth stack, TCP/IP stack, USB stack, flash file system, 
+              GUI, etc.
+            </li>
+          </ul>
+          <p class="pbsmaller fragment">GUI: Graphical User Interface</p>
+        </section>
+        
+        <!-- -------------------- RTOS > tasks ---------------------------------------- -->
+        
+        <section id="tasks">
+          <h2>Tasks</h2>
+        </section>
+        
+        <section id="whatATaskIs">
+          <p>Task: a long-living execution block.</p>
+          <ul>
+            <li>The application is made of several tasks.</li>
+            <li>These tasks may have to exchange data and to synchronize.</li>
+            <li>Each task has its own execution context</li>
+            <li>Each task can be assigned a priority</li>
+            <li>Each task is assigned a "fair" proportion of processing time by the scheduler</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>A task may be in one of several states. Usually:</p>
+          <ul>
+            <li><b>Ready</b>: the task is ready to run, but another one is using the processor</li>
+            <li><b>Running</b>: the task is being executed</li>
+            <li><b>Blocked</b> (or <b>Waiting</b>): the task is waiting for an event (timer timeout, reception of
+                a byte on a serial link, etc.)</li>
+            <li><b>Suspended</b>: the task won't use the processor anymore</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>For FreeRTOS:</h3>
+          <img src="images/freeRtosTaskStates.gif">
+          <div class="pbverysmall">Source: <a href="https://www.freertos.org/RTOS-task-states.html" 
+                                              title="FreeRTOS" target="_blank">FreeRTOS</a></div>
+        </section>
+        
+        <section>
+          <p>Note: for our practice sessions, we will use <a href="https://www.freertos.org"
+             target="_blank">FreeRTOS</a></p>
+        </section>
+        
+        <section>
+          <h3>For Zephyr OS:</h3>
+          <img src="images/zephyrTaskStates.svg">
+          <div class="pbverysmall">Source: <a href="https://docs.zephyrproject.org/latest/kernel/services/threads/index.html#thread-states" 
+                                              title="Zephyr Project" target="_blank">Zephyr Project</a></div>
+        </section>
+        
+        <section>
+          <p>On a microcontroller with one core: only one task can be executed at a given time.</p>
+          <p>&rArr; Difference between <em>concurrency</em> and <em>parallelism:</em></p>
+          <ul>
+            <li><strong>Concurrency</strong>: several tasks appear to be running at the same time</li>
+            <li><strong>Parallelism</strong>: several tasks are really running at the same time</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>The scheduler is the magic behind concurrency.</p>
+          <p>Scheduling method depends on the RTOS.</p>
+          <p>For FreeRTOS:</p>
+          <ul>
+            <li>
+              <strong>Fixed priority</strong> - task priority is not changed (excepted for priority inheritance - see farther)
+            </li>
+            <li class="fragment fade-in">
+              <strong>Preemptive</strong> - if a higher priority task enters ready state (due to 
+              some event), and a lower priority task is being executed, the scheduler stops it 
+              and starts the higher priority one
+            </li>
+            <li class="fragment fade-in">
+              <strong>Round-robin time slicing</strong> - every task in the set of tasks with same priority is
+              guaranteed to be executed after some time
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>When a task requests to wait for some event:</p>
+          <ul>
+            <li>The task enters the <b>blocked</b> (<b>waiting</b>) state</li>
+            <li>The scheduler schedules the task with the highest priority, having waited for the longest 
+              time period</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>When a task with a given priority loops, for instance polling for an event without 
+            waiting for it:</p>
+          <ul class="fragment">
+            <li>Tasks with lower priority will never be executed.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>API example</h3>
+          <ul>
+            <li><code>task_handle_t task_create(...)</code></li>
+            <li><code>status_t task_delete(task_handle_t th)</code></li>
+            <li><code>status_t task_priority_set(task_handle_t th)</code></li>
+            <li><code>status_t task_suspend(task_handle_t th)</code></li>
+            <li><code>status_t task_resume(task_handle_t th)</code></li>
+            <li><code>...</code></li>
+          </ul>
+        </section>
+        
+        <section>
+          <p><a href="https://freertos.org/Documentation/01-FreeRTOS-quick-start/01-Beginners-guide/01-RTOS-fundamentals"
+                target="_blank">A good overview of task scheduling is provided by the FreeRTOS website</a>.</p>
+        </section>
+        
+        <!-- -------------------- Practice: creating and starting one task ---------------------------------------- -->
+        
+        <section id="exercise11">
+          <h3>Exercise 11</h3>
+          <p class="pbcenter">Creating and starting one task</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Purpose: make a LED blink using a task</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/11-Start-task/README.md"
+                   target="_blank"><code>RTOS-presentation/exercises/11-Start-task/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Concurrency control ---------------------------------------- -->
+        
+        <section id="concurrencyControl">
+          <h2>Concurrency control</h2>
+        </section>
+
+        
+        <!-- -------------------- Practice: sharing data bug ---------------------------------------- -->
+        
+        <section id="exercise12">
+          <h3>Exercise 12</h3>
+          <p class="pbcenter">Sharing data bug</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Purpose: exhibit a possible problem when sharing data between tasks</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/12-Shared-structure-bug/README.md"
+                   target="_blank"><code>RTOS-presentation/exercises/12-Shared-structure-bug/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+        
+        <section>
+            <p>In real life (of an embedded developer), concurrency problems are far less evident than here &#x1F642;</p>
+            <p class="fragment">They may occur on shared data, and on shared physical interfaces</p>
+        </section>
+        
+        <section>
+            <p>In next slides, we see how to handle this class of problems.</p>
+        </section>
+        
+        <!-- -------------------- Concurrency - introduction --------------------------------- -->
+        
+        <section id="concurrencyIntro">
+          <h3>Aim of concurrency control</h3>
+          <p class="pbcenter">Generate correct results for concurrent operations on same resource.</p>
+        </section>
+        
+        <section>
+          <h3>Shared resources</h3>
+          <ul>
+            <li>Hardware: interfaces, peripherals</li>
+            <li>Data structures used to transfer information between tasks, and between ISRs and tasks</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Critical section</h3>
+          <ul>
+            <li>Part of a program that must be protected from being executed by concurrent tasks</li>
+            <li>In other words: it requires <em>atomic</em> execution</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Simplest implementation</h3>
+          <ul>
+            <li>For a system with only one processor: disabling/enabling interrupt(s)</li>
+          </ul>
+          <p>But better to use the RTOS services described in next pages, in any case.</p>
+        </section>
+        
+        <!-- -------------------- Concurrency > mutex --------------------------------- -->
+        
+        <section id="concurrencyMutex">
+          <h3>Mutex (MUTual EXclusion)</h3>
+          <p>An object which:</p>
+          <ul>
+            <li>Guards a resource</li>
+            <li>Can be imagined as containing a token</li>
+            <li>A task which wants to access a given resource requests the token from the mutex:
+              <ul>
+                <li>If it is available: OK</li>
+                <li>If it is not available: the task stays blocked on the mutex until the 
+                  token is available or a timeout occurs</li>
+              </ul>
+            </li>
+            <li>A task which has obtained the token must release it once it stops accessing the resource</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>This is a cooperation agreement. Creating a mutex does not protect a resource from a task that would
+            not use the mutex!
+          </p>
+        </section>
+        <section>
+          <h3>API example</h3>
+          <ul>
+            <li><code>mutex_handle_t mutex_create()</code></li>
+            <li><code>status_t mutex_acquire(mutex_handle_t mh, timeout_t timeout)</code></li>
+            <li><code>status_t mutex_release(mutex_handle_t mh)</code></li>
+            <li><code>status_t mutex_delete(mutex_handle_t mh)</code></li>
+          </ul>
+          <p class="pbcenter">An ISR must not try to take a mutex. Because it must not wait!</p>
+        </section>
+        
+        <!-- -------------------- Practice: shared structure with mutex -------------------- -->
+
+        <section id="exercise13">
+          <h3>Exercise 13</h3>
+          <p class="pbcenter">Shared structure and mutex</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Purpose: demonstrate how to use a mutex</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/13-Shared-structure-mutex/README.md"
+                   target="_blank"><code>RTOS-presentation/exercises/13-Shared-structure-mutex/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+
+        <!-- -------------------- Concurrency > Priority inversion ------------------------ -->
+        
+        <section id="concurrencyPriorityInversion">
+          <h3>Potential problem</h3>
+          <p>Context:</p>
+          <ul>
+            <li>A task T3, of high priority, shares a resource with T1, a task of low priority</li>
+            <li>The resource is protected by a mutex, M</li>
+            <li>A task T2, of medium priority, performs some continuous processing, and almost 
+              never waits for an event</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Successive actions</h4>
+          <div class="row">
+            <div class="column">
+              <div class="r-stack">
+                <img src="images/priorityInversion-01.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="1">
+                <img src="images/priorityInversion-02.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="2">
+                <img src="images/priorityInversion-03.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="3">
+                <img src="images/priorityInversion-04.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="4">
+                <img src="images/priorityInversion-05.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="5">
+                <img src="images/priorityInversion-06.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="6">
+                <img src="images/priorityInversion-06.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="7">
+              </div>
+            </div>
+            <div class="column">
+              <ul class="pbsmaller2">
+                <li class="fragment fade-in pbsmaller2" data-fragment-index="1">
+                  The highest priority task, T3, is executing. Then it waits for an event.
+                </li>
+                <li class="fragment fade-in pbsmaller2" data-fragment-index="2">
+                  The medium priority task, T2, can now execute. Then it waits for an event.
+                </li>
+                <li class="fragment fade-in pbsmaller2" data-fragment-index="3">
+                  The low priority task, T1, can now execute. Then it requests to acquire M,
+                  acquires it, and goes on executing.
+                </li>
+                <li class="fragment fade-in pbsmaller2" data-fragment-index="4">
+                  Event for T2 is received. The scheduler schedules T2.
+                </li>
+                <li class="fragment fade-in pbsmaller2" data-fragment-index="5">
+                  Event for T3 is received. The scheduler schedules T3. Then T3 requests to acquire M.
+                </li>
+                <li class="fragment fade-in pbsmaller2" data-fragment-index="6">
+                  But M is held by T1. So T3 enters blocked state. And only T2 can be scheduled.
+                </li>
+                <li class="fragment fade-in pbsmaller2" data-fragment-index="7">
+                  As T2 almost never waits for an event, T1 will not be able to run again, and
+                  won't be able to release M: T3 stays blocked. T2, of lower priority than T3,
+                  blocks T3.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <h4>Result</h4>
+          <ul>
+            <li>T2, of lower priority than T3, runs, instead of T3, as if it was of higher priority</li>
+            <li>This is the problem of <strong>priority inversion</strong></li>
+          </ul>
+        </section>
+        <section>
+          <h4>A (partial) solution</h4>
+          <ul>
+            <li>
+              If a high priority task blocks while attempting to acquire a mutex that is currently held by 
+              a lower priority task, then the priority of the task holding the mutex is temporarily 
+              raised to that of the blocking task
+            </li>
+            <li>This is <strong>priority inheritance</strong></li>
+            <li>Does not entirely solve the problem. The real solution is a good system design</li>
+          </ul>
+          <p>Note: the timeout of the take function may also help.</p>
+        </section>
+        
+        <section>
+          <h4>A real-life example of priority inversion</h4>
+          <ul>
+            <li>In 1997, Pathfinder landed on Mars</li>
+            <li>After some time, the spacecraft began experiencing system resets and loosing sensor data</li>
+            <li>A remote (!) debug session found the source of the problem: priority inversion</li>
+          </ul>
+          <p class = fragment>Note: time transmission between Earth and Mars is between 4 min and 24 min.</p>
+          <div class="pbverysmall">Source: <a href="http://www.cs.cornell.edu/courses/cs614/1999sp/papers/pathfinder.html" 
+                                              title="Mars Pathfinder" target="_blank">Cornell University</a></div>
+        </section>
+
+        <!-- -------------------- Concurrency > Deadlock ------------------------ -->
+        
+        <section id="concurrencyDeadlock">
+          <h4>Another potential problem</h4>
+          <p>Context:</p>
+          <ul>
+            <li>Task T1 would like to acquire a first mutex, MA and then a second one, MB</li>
+            <li>Task T2 would like to acquire MB and then MA</li>
+            <li>T1 and T2 have the same priority</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Successive actions</h4>
+          <div class="row">
+            <div class="column">
+              <div class="r-stack">
+                <img src="images/deadLock-01.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="1">
+                <img src="images/deadLock-02.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="2">
+                <img src="images/deadLock-03.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="3">
+                <img src="images/deadLock-04.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="4">
+                <img src="images/deadLock-05.png" 
+                     class="fragment fade-in-then-out" data-fragment-index="5">
+              </div>
+            </div>
+            <div class="column">
+              <ul class="pbsmaller">
+                <li class="fragment fade-in pbsmaller" data-fragment-index="1">
+                  T1 requests to acquire MA, and acquires it.
+                </li>
+                <li class="fragment fade-in pbsmaller" data-fragment-index="2">
+                  T2 requests to acquire MB, and acquires it.
+                </li>
+                <li class="fragment fade-in pbsmaller" data-fragment-index="3">
+                  T1 requests to acquire MB and stays blocked on it.
+                </li>
+                <li class="fragment fade-in pbsmaller" data-fragment-index="4">
+                  T2 requests to acquire MA and stays blocked on it.
+                </li>
+                <li class="fragment fade-in pbsmaller" data-fragment-index="5">
+                  <strong>Deadlock</strong>!
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <h4>Solution</h4>
+          <p class="pbcenter">A good system design.</p>
+          <p class="pbcenter">Note 1: the timeout of the take function may also help.</p>
+          <p class="pbcenter">Note 2: we will see a possible solution easier to use in a next section.</p>
+        </section>
+
+        <!-- -------------------- Concurrency > Semaphore ------------------------ -->
+        
+        <section id="concurrencySemaphore">
+          <h3>Semaphore</h3>
+          <ul>
+            <li>Guards a set of resources</li>
+            <li>Contains a variable counting the number of free resources</li>
+            <li>A task which wants to access one of the resources calls the semaphore <em>take</em>
+              function. This decrements the variable</li>
+            <li>At the end of the access, <em>give</em> must be called. This increments the variable</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>API example</h3>
+          <ul>
+            <li><code>sem_handle_t sem_create(int max_count, int initial_count)</code></li>
+            <li><code>status_t sem_take(sem_handle_t sh, timeout_t timeout)</code></li>
+            <li><code>status_t sem_give(sem_handle_t sh)</code></li>
+            <li><code>status_t sem_delete(sem_handle_t sh)</code></li>
+          </ul>
+          <p class="pbcenter">An ISR must not try to take a semaphore. Because it must not wait!</p>
+        </section>
+
+        <!-- -------------------- Practice: semaphore -------------------- -->
+
+        <section id="exercise14">
+          <h3>Exercise 14</h3>
+          <p class="pbcenter">Using a semaphore</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Purpose: demonstrate how to use a semaphore</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/14-Semaphore/README.md"
+                   target="_blank"><code>RTOS-presentation/exercises/14-Semaphore/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Concurrency > mutex vs semaphore ------------ -->
+        
+        <section>
+          <h3>Mutex vs semaphore</h3>
+          <ul>
+            <li>A mutex provides priority inheritance, a semaphore does not</li>
+            <li>A mutex can be used recursively by a task</li>
+            <li>A mutex must be released by the task which acquired it</li>
+            <li>A mutex is used to guard a resource</li>
+            <li>A semaphore is used to manage a set of resources or to count events</li>
+          </ul>
+        </section>
+
+        <!-- -------------------- Communication > introduction ------------ -->
+        
+        <section id="communication">
+          <h2>Communication</h2>
+        </section>
+        
+        <section id="communicationIntroduction">
+          <p>By <em>communication</em> we mean:</p>
+          <ul>
+            <li>Exchanging data between tasks</li>
+            <li>Exchanging data between ISRs and tasks</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Exchanging data is usually asynchronous: data producer may produce data at some time, while 
+            data consumer may try to consume data at another time.
+          </p>
+          <p class="fragment">
+            Data exchange must be protected so that the consumer always gets consistent data.
+          </p>
+          <p class="fragment">
+            It is desirable that a mechanism let the consumer know that there is some data to consume.
+          </p>
+        </section>
+
+        <!-- -------------------- Communication > Queues ------------ -->
+        
+        <section id="communicationQueues">
+          <h3>Queues</h3>
+          <ul>
+            <li>Used to send messages between a source and a destination</li>
+          </ul>
+          <img src="images/queue-01.png">
+        </section>
+        
+        <section>
+          <p>Usually:</p>
+          <ul>
+            <li>A queue is FIFO (First In First Out)</li>
+            <li>The write operation returns immediately</li>
+            <li>Trying to read from an empty queue blocks</li>
+            <li>Trying to write into a full queue blocks or returns an error</li>
+            <li>Messages are of fixed size (but may contain pointers)</li>
+            <li>Messages are passed by copy</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>API example</h3>
+          <ul>
+            <li><code>queue_handle_t queue_create(int queue_length, int message_size)</code></li>
+            <li><code>status_t queue_send(queue_handle_t qh, void *message, timeout_t timeout)</code></li>
+            <li><code>status_t queue_receive(queue_handle_t qh, void *message, timeout_t timeout)</code></li>
+            <li><code>status_t queue_delete(queue_handle_t qh)</code></li>
+          </ul>
+        </section>
+
+        <!-- -------------------- Practice: queue -------------------- -->
+
+        <section id="exercise15">
+          <h3>Exercise 15</h3>
+          <p class="pbcenter">Using a queue</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Purpose: demonstrate how to use a queue</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/15-Queue/README.md"
+                   target="_blank"><code>RTOS-presentation/exercises/15-Queue/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Queues > Benefits -------------------- -->
+        
+        <section id="queueBenefits">
+          <h3>Queues: benefits - 1/2</h3>
+          <ul>
+            <li>Ensure atomic access to messages</li>
+            <li>Provide synchronization between tasks</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Queues: benefits - 2/2</h3>
+          <p>A useful tool to prevent priority inversion and deadlocks</p>
+          <p>&rArr; In many cases, it's better to use queues instead of mutexes or semaphores.</p>
+          <p>A common design pattern: to provide access to a shared resource, use a "server" task 
+             with a queue. Clients write their requests into the queue.</p>
+          </p>
+        </section>
+
+        <!-- -------------------- Practice: button presses -------------------- -->
+
+        <section id="exercise16">
+          <h3>Exercise 16</h3>
+          <p class="pbcenter">Time-stamped button presses</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Purpose: use a queue to handle button presses</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/16-All-button-presses/README.md"
+                   target="_blank"><code>RTOS-presentation/exercises/16-All-button-presses/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+
+        <!-- -------------------- Practice: a log server -------------------- -->
+
+        <section id="exercise17">
+          <h3>Exercise 17</h3>
+          <p class="pbcenter">A log server</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Purpose: correct the log messages problem detected in exercise 14</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/17-Log-server/README.md"
+                   target="_blank"><code>RTOS-presentation/exercises/17-Log-server/README.md</code></a>
+                file</li>
+          </ul>
+          <p>Note: this exercise is a little bit more challenging than the previous ones.</p>
+        </section>
+        
+        <!-- -------------------- Concurrency > summary ------------ -->
+        
+        <section id="concurrencySummary">
+          <h3>Concurrency summary</h3>
+        </section>
+        
+        <section>
+          <p>Problems start when you have to share objects between concurrent tasks.</p>
+          <p class="fragment">Solutions are based on atomic operations. An atomic operation is an operation
+             which can't be interrupted by another one.</p>
+        </section>
+        
+        <section>
+          <p>In a bare-metal environment:</p>
+          <ul>
+            <li>With a single-core microcontroller: atomicity can be provided by disabling interrupt(s)</li>
+            <li>With a multi-core microcontroller: atomicity rely on specific instructions and bus control</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>In an RTOS environment, high-level facilities:</p>
+          <ul>
+            <li>Mutexes</li>
+            <li>Semaphores</li>
+            <li>Queues</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Mutexes and semaphores must be used with caution, otherwise: priority inversion, deadlock.</p>
+          <p>Queues can be an easier solution. They can be used to synchronize tasks, and to exchange data
+             between tasks.</p>
+          <p>In some contexts, mutexes and semaphores can be better than queues. You have to remember that
+             they exist.</p>
+          <p class="fragment">In the end, many things depend on the architecture, i.e. on the developer(s).</p>
+        </section>
+        
+        <!-- -------------------- Time ------------ -->
+        
+        <section id="time">
+          <h2>Time</h2>
+        </section>
+        
+        <section>
+          <h3>Timer</h3>
+          <p>We used one in exercise 9.</p>
+          <ul>
+            <li>Software timers: service provided by the RTOS, based on at least one hardware timer</li>
+            <li>No limitation (excepted RAM) on the number of timers</li>
+            <li>When the timer reaches its duration, it calls its callback function</li>
+            <li>The callback function is passed a parameter that allows to identify the timer</li>
+            <li>Do not block in the callback function!</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Time functions</h3>
+          <ul>
+            <li>Time is local to the microcontroller</li>
+            <li>Function to get current (local) time</li>
+            <li>Function to convert time (e.g. POSIX format)</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>In some systems integrating several devices and/or PCs, servers, etc., it may be important to have a 
+             common time.</p>
+          <p class="fragment">If the devices are connected to the Internet, 
+             <a href="https://www.rfc-editor.org/rfc/rfc5905" target="_blank">NTP (Network Time Protocol)</a> can be used.</p>
+          <p class="fragment">If not, you're on your own.</p>
+          <div class="fragment">
+            <p>Possible solutions:</p>
+              <ul>
+                <li>A Real-Time Clock (RTC)</li>
+                <li>A simple message exchange to get (approximate) time</li>
+                <li>Etc.</li>
+              </ul>
+          </div>
+        </section>
+        
+        <!-- -------------------- Memory allocation ------------ -->
+        
+        <section id="memoryAllocation">
+          <h2>Memory allocation</h2>
+        </section>
+
+        <section>
+          <h3>Dynamic memory allocation</h3>
+          <ul>
+            <li>An application may require an amount of memory not known beforehand</li>
+            <li>An application may require to allocate some memory to some task, and reallocate it to some other task
+              later on</li>
+            <li>Some data structures and associated operations may require dynamic memory (linked lists...)</li>
+          </ul>
+          <p>&rArr; C library provides <code>malloc</code> and <code>free</code> functions</p>
+        </section>
+        
+        <section>
+          <h3>Dynamic memory allocation</h3>
+          <ul>
+            <li>Memory is allocated when the application requests it</li>
+            <li>The application must release memory when no more used: no garbage collector</li>
+            <li>The memory is allocated from the <em>heap</em></li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Drawbacks of dynamic memory allocation</h3>
+          <ul>
+            <li>
+              Several interwoven allocation/release cycles of memory blocks of different sizes may lead
+              to heap fragmentation
+            </li>
+            <li>
+              Allocation and release times are not deterministic (but not as bad as garbage collecting
+              for higher-level languages)
+            </li>
+          </ul>
+          <p>&rArr; If possible, do not use dynamic memory allocation</p>
+        </section>
+        
+        <section>
+          <p>For FreeRTOS, <a href="https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/09-Memory-management/01-Memory-management"
+             target="_blank">a page to read</a>.</p>
+        </section>
+        
+        <!-- -------------------- Middleware ------------ -->
+        
+        <section id="middleware">
+          <h2>Middleware</h2>
+        </section>
+        
+        <section>
+          <p>Quite often, developing an application requires more than an RTOS:</p>
+          <ul>
+            <li>Storing data in flash memory</li>
+            <li>Handling integrated radio interfaces (Wi-Fi, Bluetooth...)</li>
+            <li>Using one of the IP protocols (TCP, UDP...) over some networking layer</li>
+            <li>Using some messaging protocols (MQTT, CoAP...)</li>
+            <li>Logging</li>
+            <li>Updating the code in the field (FUOTA - Firmware Update Over The Air)</li>
+            <li>Artifical Intelligence tooling</li>
+            <li>etc.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>The availability of such middleware components depends on the RTOS.</p>
+          <p>Some components may be generic (RTOS independent) but may require some integration.</p>
+          <p>&rArr; Check the ecosystem against your needs before choosing an RTOS</p>
+        </section>
+        
+        <section>
+          <p><a href="https://www.freertos.org/Documentation/03-Libraries/01-Library-overview/01-All-libraries"
+             target="_blank">Some libraries for FreeRTOS</a>.</p>
+        </section>
+        
+        <!-- -------------------- That's all folks!' ------------ -->
+
+        <section>
+          <p class="pbcenter">Thank you for your attention.</p>
+        </section>
+
+	
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+	  hash: true,
+	  slideNumber: 'c/t',
+	  // Scroll view inhibited until arrow keys can be used.
+	  //view: 'scroll',
+	  //scrollProgress: true,
+	  // Learn about plugins: https://revealjs.com/plugins/
+	  plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>      
