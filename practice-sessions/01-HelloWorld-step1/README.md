@@ -14,7 +14,7 @@ There are pros and cons to this architecture. Adding, configuring and removing s
 
 ## What to do
 
-1. Ensure you completed the [prerequisites](https://github.com/PascalBod/RTOS-presentation?tab=readme-ov-file#prerequisites-for-the-practical-exercises).
+1. Ensure you completed the [prerequisites](https://github.com/PascalBod/embedded-systems-for-ML?tab=readme-ov-file#prerequisites-for-the-practical-exercises).
 2. [Create a new project](https://github.com/PascalBod/lm-efr32-simplicityStudio?tab=readme-ov-file#sample-application), still based on the **Empty C project**, naming it `01-HelloWorld`.
 3. Check that you can build it and that you can program the board.
 4. Replace the content of the `readme.md` file (right-click and **Open With > Text Editor**) by:
