@@ -1,6 +1,6 @@
-# Exercise 14 - Semaphore
+# PRactice session 14 - Semaphore
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Use a semaphore to simulate how several tasks can access a set of resources.
 

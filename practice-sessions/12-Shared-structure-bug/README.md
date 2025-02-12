@@ -1,6 +1,6 @@
-# Exercise 12 - Shared structure bug
+# Practice session 12 - Shared structure bug
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Demonstrate a "strange" behavior when three tasks share some global variables.
 

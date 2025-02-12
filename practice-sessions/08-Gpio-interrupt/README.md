@@ -1,6 +1,6 @@
-# Exercise 08 - GPIO interrupt
+# Practice session 08 - GPIO interrupt
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Use an interrupt to detect button presses.
 

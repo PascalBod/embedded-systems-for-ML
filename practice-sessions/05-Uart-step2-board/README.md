@@ -1,6 +1,6 @@
-# Exercise 05 - UART - step 2
+# Practice session 05 - UART - step 2
 
-## Purpose of the exercise
+## Purpose of the Practice session
 
 Echo every character received on the serial port.
 

@@ -1,6 +1,6 @@
-# Exercise 01 - step 1 - Hello World
+# Practice session 01 - step 1 - Hello World
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Display a message on the virtual serial link created over the USB connection.
 
@@ -12,7 +12,7 @@ For Simplicity Studio, these libraries are provided as "software components" whi
 
 There are pros and cons to this architecture. Adding, configuring and removing software support to a given interface or peripheral is easy. On the other hand, it can be sometimes difficult to understand exactly how a library works. 
 
-## The exercise
+## What to do
 
 1. Ensure you completed the [prerequisites](https://github.com/PascalBod/RTOS-presentation?tab=readme-ov-file#prerequisites-for-the-practical-exercises).
 2. [Create a new project](https://github.com/PascalBod/lm-efr32-simplicityStudio?tab=readme-ov-file#sample-application), still based on the **Empty C project**, naming it `01-HelloWorld`.
@@ -64,7 +64,7 @@ When creating an empty C project, two source-code files are generated for you by
 
 Some other source-code files are generated in the `autogen` and `simplicity_sdk_2024.6.1` directories. We can ignore them for now.
 
-An application is made of your code, and of the code used by the required libraries. In this example, the application prints a message. In a desktop application, the message would be printed in a terminal window. Here, the message is sent over a serial link. The serial link is created over the USB connection between the microcontroller board and the development computer. On the computer, the message is displayed by the serial terminal application.
+An application is made of your code, and of the code used by the required libraries. In this example, the application prints a message. In a desktop application, the message would be printed in a terminal window. Here, the message is sent over a serial link. The serial link is created over the USB connection between the microcontroller board and the development PC. On the PC, the message is displayed by the serial terminal application.
 
 Initializing the serial link and redirecting the message to the serial link is performed by some code automatically added by Simplicity Studio. This code has to be run along with your code. This is done by `main.c`:
 ```C

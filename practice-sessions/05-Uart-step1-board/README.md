@@ -1,8 +1,8 @@
-# Exercise 05 - UART - step 1
+# PRactice session 05 - UART - step 1
 
 ## Purpose of the exercise
 
-Send a character to the computer over a (virtual) serial port.
+Send a character to the PC over a (virtual) serial port.
 
 ## What you have to do
 

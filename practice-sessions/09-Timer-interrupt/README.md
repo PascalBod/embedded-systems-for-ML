@@ -1,6 +1,6 @@
-# Exercise 09 - Timer interrupt
+# Practice session 09 - Timer interrupt
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 By using an ISR attached to a timer, periodically display a message.
 

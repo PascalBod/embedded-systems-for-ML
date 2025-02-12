@@ -1,6 +1,6 @@
-# Exercise 04 - ADC
+# Practice session 04 - ADC
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 In a first step: get the value of an internal voltage.
 
@@ -69,7 +69,7 @@ ADC_CLK is derived from CLK_SRC_ADC and is used to drive the ADC front-end and t
 
 The IADC provides two independent groups of configurations for setting conversion mode, clock prescaler, reference voltage selection, sampling rate, analog gain, etc.
 
-## The exercise
+## What to do
 
 ### Step 1
 
@@ -87,6 +87,6 @@ Keep in mind information provided by the comments:
 
 ### Step 2
 
-Start a new conversion every second, and display resulting voltage. Use a sleep timer, as in exercise 03, to wait between two successive conversions.
+Start a new conversion every second, and display resulting voltage. Use a sleep timer, as in practice session 03, to wait between two successive conversions.
 
 Note: the ADC block provides a timer, which can be used to trigger repeated conversions, without intervention from the CPU, i.e. without having to add control code. But maximum timer period is shorter than what we need. Consequently, we can't use this timer.

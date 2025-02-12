@@ -1,6 +1,6 @@
-# Exercise 01 step 2 - Debugging Hello World
+# Practice session 01 step 2 - Debugging Hello World
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 To demonstrate how to start Hello World application in debug mode, how to step it, how to set a breakpoint.
 
@@ -26,7 +26,7 @@ Click on the *Step Over* tool to run the fisrt statement of the `sl_system_init`
 
 ![](debuggerStepOver.png)
 
-### Step a breakpoint
+### Set a breakpoint
 
 If `app.c` is not displayed in the editor view, open it (from the *Project Explorer* view).
 

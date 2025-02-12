@@ -1,10 +1,10 @@
-# Exercise 02 - GPIO Input
+# Practice session 02 - GPIO Input
 
-## Purpose of the exercise
+## Purpose of the Practice session
 
 Display a message when the BTN0 button is pushed or released.
 
-## The exercise
+## What to do
 
 1. Create a new project, again based on the **Empty C project**, naming it `02-GpioInput`.
 2. Check that you can build it and that you can program the board.

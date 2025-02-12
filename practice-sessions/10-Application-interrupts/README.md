@@ -1,6 +1,6 @@
-# Exercise 10 - Application and interrupts
+# Practice session 10 - Application and interrupts
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Develop an application which conforms to the following requirements:
 * After the user has pressed twice the button 0, wait for a given period, WAIT_PERIOD_MS, and then display a message. Only button release is to be considered
@@ -9,7 +9,7 @@ Develop an application which conforms to the following requirements:
 
 ## Guidelines
 
-Reuse what you have seen in the previous exercises:
+Reuse what you have seen in the previous practice sessions:
 * Finite state machine
 * GPIO interrupt
 * Timer interrupt

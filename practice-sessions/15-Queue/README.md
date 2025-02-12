@@ -1,6 +1,6 @@
-# Exercise 15 - Queue
+# Practice session 15 - Queue
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Use a queue to let two producers send their data to one consumer.
 

@@ -1,14 +1,14 @@
-# Exercise 03 - GPIO Output
+# Practice session 03 - GPIO Output
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Make the board RGB LED blink red.
 
-## The exercise
+## What to do
 
-1. Import the `exercises/03-GpioOutput` project in Simplicity Studio, following these instructions:
+1. Import the `practice-sessions/03-GpioOutput` project in Simplicity Studio, following these instructions:
    1. **File > Import...**
-   2. Use the **Browse** button to select the `exercises/03-GpioOutput` directory.
+   2. Use the **Browse** button to select the `practice-sessions/03-GpioOutput` directory.
    3. Select the line containing the **Simplicity Studio (.sls)** project type.
    4. Click the **Next >** button.
    5. Accept the proposed default values and click the **Next >** button.
@@ -17,7 +17,7 @@ Make the board RGB LED blink red.
 
 The `app.c` file contains some code, detailed in the following sections.
 
-### Application version and block clock
+### Application version and GPIO block clock
 
 As in the previous exercise, the application displays its name and its version, at initialization time. Then, it enables the GPIO block clock.
 

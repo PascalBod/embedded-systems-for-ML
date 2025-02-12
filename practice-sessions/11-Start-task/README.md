@@ -1,6 +1,6 @@
-# Exercise 11 - Creating an starting a task
+# Practice session 11 - Creating an starting a task
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Build and run the Silicon Labs FreeRTOS sample application which makes a LED blink.
 

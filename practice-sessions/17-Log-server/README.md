@@ -1,8 +1,8 @@
-# Exercise 17
+# Practice session 17
 
-## Purpose of the exercise
+## Purpose of the practice session
 
-In exercise 14, we saw that the `app_log` functions were not thread-safe. In the current exercise, you have to develop a log server, which will guarantee that log print requests are done by only one task, the log server task. Tasks which need to print log message will send log requests to the log server task, instead of directly printing their log messages. This way, all log print requests are *serialized*.
+In practice session 14, we saw that the `app_log` functions were not thread-safe. In the current practice session, you have to develop a log server, which will guarantee that log print requests are done by only one task, the log server task. Tasks which need to print log message will send log requests to the log server task, instead of directly printing their log messages. This way, all log print requests are *serialized*.
 
 Each log message must have a time stamp, the number of ticks elapsed since last reset. This time stamp allows to get a precise information about when the log message was created.
 

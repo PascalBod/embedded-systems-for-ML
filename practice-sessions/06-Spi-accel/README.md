@@ -1,6 +1,6 @@
-# Exercise 06 - SPI
+# Practice session 06 - SPI
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Get accelerometer data from the ICM-20689 IMU using the SPI bus.
 

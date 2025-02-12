@@ -142,9 +142,9 @@
                 <li><a href="#/softwareDevelopment1">Software development - introduction</a>
                   <ul>
                     <li><a href="#/crossDevelopment">Cross development</a></li>
-                    <li><a href="#/exercise01Step1"><b>Practice: build and run an Hello World application</b></a></li>
+                    <li><a href="#/practice01Step1"><b>Practice: build and run an Hello World application</b></a></li>
                     <li><a href="#/debugging">Debugging</a></li>
-                    <li><a href="#/exercise01Step2"><b>Practice: set a breakpoint</b></a></li>
+                    <li><a href="#/practice01Step2"><b>Practice: set a breakpoint</b></a></li>
                   </ul>
                 </li>
                 <li><a href="#/peripherals">Peripherals</a></li>
@@ -155,8 +155,8 @@
                 <li><a href="#/interfacesPart1">Interfaces - part 1</a>
                   <ul>
                     <li><a href="#/gpioInterface">GPIO</a></li>
-                    <li><a href="#/exercise02"><b>Practice: display button state changes</b></a></li>
-                    <li><a href="#/exercise03"><b>Practice: make the red LED blink</b></a></li>
+                    <li><a href="#/practice02"><b>Practice: display button state changes</b></a></li>
+                    <li><a href="#/practice03"><b>Practice: make the red LED blink</b></a></li>
                   </ul>
                 </li>
                 <li><a href="#/fsm">Software development - design pattern</a>
@@ -167,14 +167,14 @@
                 <li><a href="#/interfacesPart2">Interfaces - part 2</a>
                   <ul>
                     <li><a href="#/adcInterface">ADC</a></li>
-                    <li><a href="#/exercise04"><b>Practice: convert an analog signal</b></a></li>
+                    <li><a href="#/practice04"><b>Practice: convert an analog signal</b></a></li>
                     <li><a href="#/uartInterface">UART</a></li>
-                    <li><a href="#/exercise05Step1"><b>Practice: send characters to the PC</b></a></li>
-                    <li><a href="#/exercise05Step2"><b>Practice: echo received characters</b></a></li>
+                    <li><a href="#/practice05Step1"><b>Practice: send characters to the PC</b></a></li>
+                    <li><a href="#/practice05Step2"><b>Practice: echo received characters</b></a></li>
                     <li><a href="#/spiInterface">SPI</a></li>
-                    <li><a href="#/exercise06"><b>Practice: get data from the inertial sensor</a></b></li>
+                    <li><a href="#/practice06"><b>Practice: get data from the inertial sensor</a></b></li>
                     <li><a href="#/i2cInterface">I<sup>2</sup>C</a></li>
-                    <li><a href="#/exercise07"><b>Practice: get data from the temperature sensor</a></b></li>
+                    <li><a href="#/practice07"><b>Practice: get data from the temperature sensor</a></b></li>
                   </ul>
                 </li>
               </ul>
@@ -194,9 +194,9 @@
                     <li><a href="#/memoryStorage">Memory: automatic/dynamic storage</a></li>
                     <li><a href="#/reset">How an application starts</a></li>
                     <li><a href="#/interrupts">Interrupts and background task</a></li>
-                    <li><a href="#/exercise08"><b>Practice: GPIO and interrupt</b></a></li>
-                    <li><a href="#/exercise09"><b>Practice: timer and interrupt</b></a></li>
-                    <li><a href="#/exercise10"><b>Practice: application and interrupts</b></a></li>
+                    <li><a href="#/practice08"><b>Practice: GPIO and interrupt</b></a></li>
+                    <li><a href="#/practice09"><b>Practice: timer and interrupt</b></a></li>
+                    <li><a href="#/practice10"><b>Practice: application and interrupts</b></a></li>
                     <li><a href="#/sleepModes">Sleep modes</a></li>
                   </ul>
                 </li>
@@ -899,7 +899,7 @@
         
         <section>
           <h5>Development board</h5>
-          <img src="images/efr32bg24-dev-kit.png" height="400">
+          <img src="images/efr32xg24-dev-kit.png" height="400">
           <p class="pbcenter">US$79</p>
           <div class="pbverysmall">Source: 
             <a
@@ -984,7 +984,7 @@
         
         <section id="crossDevelopment">
           <h4>Cross development</h4>
-          <img src="images/crossDevEfr32bg24.png">
+          <img src="images/crossDevEfr32xg24.png">
           <div class="pbverysmall">Icons made by 
             <a href="https://www.flaticon.com/authors/freepik"
                title="Freepik" target="_blank">Freepik</a> from 
@@ -1046,7 +1046,7 @@
         <section>
           <h4>Debugging</h4>
           <ul>
-            <li>The development computer can control the execution of the application running in the microcontroller</li>
+            <li>The development PC can control the execution of the application running in the microcontroller</li>
             <li>Requires a debug interface on the microcontroller board and a serial link</li>
           </ul>
         </section>
@@ -1059,10 +1059,10 @@
           </ul>
         </section>
         
-        <!-- -------------------- Exercise 01 - step 1: Hello World ---------------------------------------- -->
+        <!-- -------------------- Practice session 01 - step 1: Hello World ---------------------------------------- -->
         
-        <section id="exercise01Step1">
-          <h3>Exercise 01</h3>
+        <section id="practice01Step1">
+          <h3>Practice session 01</h3>
           <p>Build and run an <em>Hello World</em> application for the EFR32xG24 Dev Kit</p>
         </section>
         
@@ -1078,7 +1078,7 @@
         
         <section>
           <h4>xG24 Dev Kit</h4>
-          <img src="images/efr32bg24-dev-kit-annotated-photo.png" height="400">
+          <img src="images/efr32xg24-dev-kit-annotated-photo.png" height="400">
           <div class="pbverysmall">Source: 
             <a
               href="https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf"
@@ -1139,23 +1139,23 @@
           <h4>SSv5</h4>
           <div class="r-stack">
             <div class="fragment fade-out" data-fragment-index="0">
-              <img src="images/efr3232DevEnvironmentWithoutCallouts.png">
+              <img src="images/efr32DevEnvironmentWithoutCallouts.png">
             </div>
             <div class="fragment fade-in-then-out" data-fragment-index="0">
-              <img src="images/efr3232DevEnvironmentCallouts1.png">
+              <img src="images/efr32DevEnvironmentCallouts1.png">
             </div>
           </div>
         </section>
         
         <section>
-          <h4>Exercise 01 - step 1</h4>
+          <h4>Practice session 01 - step 1</h4>
           <ul>
             <li>Using <em>git</em>, clone the <a href="https://github.com/PascalBod/RTOS-presentation"
                                           target="_blank">
               <code>RTOS-presentation</code> GitHub repository</a></li>
             <li>Follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/01-HelloWorld-step1/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/01-HelloWorld-step1/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/01-HelloWorld-step1/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/01-HelloWorld-step1/README.md</code></a>
                 file.</li>
           </ul>
         </section>
@@ -1189,14 +1189,14 @@
           <img src="images/onBoardDebugger.png">
         </section>
         
-        <!-- -------------------- Exercise 01 - step 2: breakpoint ---------------------------------------- -->
+        <!-- -------------------- Practice session 01 - step 2: breakpoint ---------------------------------------- -->
         
-        <section id="exercise01Step2">
-          <h4>Exercise 01 - step 2</h4>
+        <section id="practice01Step2">
+          <h4>Practice session 01 - step 2</h4>
           <ul>
             <li>Follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/01-HelloWorld-step2/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/01-HelloWorld-step2/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/01-HelloWorld-step2/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/01-HelloWorld-step2/README.md</code></a>
                 file.</li>          
             </ul>
         </section>
@@ -1245,7 +1245,7 @@
             <li>Display</li>
             <li>OBD connector (On-Board Diagnostics)</li>
             <li>RFID tag reader</li>
-            <li>Computer (!)</li>
+            <li>PC (!)</li>
             <li>etc.</li>
           </ul>
         </section>
@@ -1461,26 +1461,26 @@
         
         <!-- -------------------- Practice: GPIO Input ---------------------------------------- -->
         
-        <section id="exercise02">
-          <h4>Exercise 02</h4>
+        <section id="practice02">
+          <h4>Practice session 02</h4>
           <p>Display a message when a button is pushed or released</p>
           <ul>
             <li>Follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/02-GpioInput/README.md"
-                   target="_blank""><code>RTOS-presentation/exercises/02-GpioInput/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/02-GpioInput/README.md"
+                   target="_blank""><code>RTOS-presentation/practice-sessions/02-GpioInput/README.md</code></a>
                 file.</li>
           </ul>
         </section>
         
         <!-- -------------------- Practice: GPIO Output ---------------------------------------- -->
 
-        <section id="exercise03">
-          <h4>Exercise 03</h4>
+        <section id="practice03">
+          <h4>Practice session 03</h4>
           <p>Make a LED blink</p>
           <ul>
             <li>Follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/03-GpioOutput/README.md"
-                   target="_blank""><code>RTOS-presentation/exercises/03-GpioOutput/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/03-GpioOutput/README.md"
+                   target="_blank""><code>RTOS-presentation/practice-sessions/03-GpioOutput/README.md</code></a>
                 file.</li>
           </ul>
         </section>
@@ -1511,7 +1511,7 @@
         
         <section>
           <h4>Example: a message receiver</h4>
-          <p>A computer needs to send text messages to another computer. The two computers
+          <p>A PC needs to send text messages to another PC. The two PCs
              are connected by a link with the following properties:</p>
           <ul>
             <li>Reliable (every sent byte is received, without error)</li>
@@ -1660,13 +1660,13 @@
         
         <!-- -------------------- Practice: ADC ---------------------------------------- -->
 
-        <section id="exercise04">
-          <h4>Exercise 04</h4>
+        <section id="practice04">
+          <h4>Practice session 04</h4>
           <p>Convert an analog signal</p>
           <ul>
             <li>Follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/04-Adc/README.md"
-                   target="_blank""><code>RTOS-presentation/exercises/04-Adc/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/04-Adc/README.md"
+                   target="_blank""><code>RTOS-presentation/practice-sessions/04-Adc/README.md</code></a>
                 file.</li>
           </ul>
         </section>
@@ -1734,9 +1734,9 @@
         </section>
 
         <section>
-          <p>20 years ago: every computer had one UART port at least, named <em>serial port</em> or
+          <p>20 years ago: every PC had one UART port at least, named <em>serial port</em> or
              <em>COM port</em>
-          <p>For today's computers: serial-USB adapters</p>
+          <p>For today's PCs: serial-USB adapters</p>
           <img src="images/ftdi-TTL-232R1.png">
           <div class="pbverysmall">Source: 
                <a href="https://www.ftdichip.com/Products/Cables/USBTTLSerial.htm"
@@ -1771,10 +1771,10 @@
           </ul>
         </section>
         
-        <!-- -------------------- Exercise 05: UART ---------------------------------------- -->
+        <!-- -------------------- Practice session 05: UART ---------------------------------------- -->
         
-        <section id="exercise05Step1">
-          <h3>Exercise 05</h3>
+        <section id="practice05Step1">
+          <h3>Practice session 05</h3>
           <p class="pbcenter">Get acquainted with the UART</p>
         </section>
         
@@ -1833,23 +1833,23 @@
         </section>
         
         <section>
-          <h4>Exercise 05 - step 1</h4>
+          <h4>Practice session 05 - step 1</h4>
           <ul>
             <li>Purpose: send characters to the PC</li>
             <li>What to do: follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/05-Uart-step1-board/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/05-Uart-step1-board/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/05-Uart-step1-board/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/05-Uart-step1-board/README.md</code></a>
                 file</li>
           </ul>
         </section>
 
         <section>
-          <h4 id="exercise05Step2">Exercise 05 - step 2</h4>
+          <h4 id="practice05Step2">Practice session 05 - step 2</h4>
           <ul>
             <li>Purpose: echo characters sent to the board</li>
             <li>What to do: follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/05-Uart-step2-board/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/05-Uart-step2-board/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/05-Uart-step2-board/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/05-Uart-step2-board/README.md</code></a>
                 file</li>
           </ul>
         </section>
@@ -1972,10 +1972,10 @@
             </ul>
         </section>
         
-        <!-- -------------------- Exercise 06: SPI ---------------------------------------- -->
+        <!-- -------------------- Practice session 06: SPI ---------------------------------------- -->
         
-        <section id="exercise06">
-          <h3>Exercise 06</h3>
+        <section id="practice06">
+          <h3>Practice session 06</h3>
           <p class="pbcenter">Get acquainted with the SPI bus</p>
         </section>
         
@@ -2014,12 +2014,12 @@
         </section>
         
         <section>
-          <h4>Exercise 06</h4>
+          <h4>Practice session 06</h4>
           <ul>
             <li>Purpose: get accelerometer data</li>
             <li>What to do: follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/06-Spi-accel/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/06-Spi-accel/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/06-Spi-accel/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/06-Spi-accel/README.md</code></a>
                 file</li>
           </ul>
         </section>
@@ -2156,10 +2156,10 @@
           </ul>
         </section>
         
-        <!-- -------------------- Exercise 07: I2C ---------------------------------------- -->
+        <!-- -------------------- Practice session 07: I2C ---------------------------------------- -->
         
-        <section id="exercise07">
-          <h3>Exercise 07</h3>
+        <section id="practice07">
+          <h3>Practice session 07</h3>
           <p class="pbcenter">Get acquainted with the I<sup>2</sup>C bus</p>
         </section>
         
@@ -2195,12 +2195,12 @@
         </section>
         
         <section>
-          <h4>Exercise 07</h4>
+          <h4>Practice session 07</h4>
           <ul>
             <li>Purpose: get temperature data</li>
             <li>What to do: follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/07-I2c-temp/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/07-I2c-temp/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/07-I2c-temp/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/07-I2c-temp/README.md</code></a>
                 file</li>
           </ul>
         </section>
@@ -2746,10 +2746,10 @@
           </ol>
         </section>
         
-        <!-- -------------------- Exercise 08: GPIO and interrupt ---------------------------------------- -->
+        <!-- -------------------- Practice session 08: GPIO and interrupt ---------------------------------------- -->
         
-        <section id="exercise08">
-          <h3>Exercise 08</h3>
+        <section id="practice08">
+          <h3>Practice session 08</h3>
           <p class="pbcenter">GPIO and interrupt</p>
         </section>
 
@@ -2757,16 +2757,16 @@
           <ul>
             <li>Purpose: use an interrupt to detect button presses</li>
             <li>What to do: follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/08-Gpio-interrupt/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/08-Gpio-interrupt/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/08-Gpio-interrupt/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/08-Gpio-interrupt/README.md</code></a>
                 file</li>
           </ul>
         </section>
 
-        <!-- -------------------- Exercise 09: timer and interrupt ---------------------------------------- -->
+        <!-- -------------------- Practice session 09: timer and interrupt ---------------------------------------- -->
         
-        <section id="exercise09">
-          <h3>Exercise 09</h3>
+        <section id="practice09">
+          <h3>Practice session 09</h3>
           <p class="pbcenter">Timer and interrupt</p>
         </section>
 
@@ -2774,16 +2774,16 @@
           <ul>
             <li>Purpose: periodically trigger an interrupt after some period of time</li>
             <li>What to do: follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/09-Timer-interrupt/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/09-Timer-interrupt/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/09-Timer-interrupt/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/09-Timer-interrupt/README.md</code></a>
                 file</li>
           </ul>
         </section>       
 
-        <!-- -------------------- Exercise 10: application and interrupts ---------------------------------------- -->
+        <!-- -------------------- Practice session 10: application and interrupts ---------------------------------------- -->
         
-        <section id="exercise10">
-          <h3>Exercise 10</h3>
+        <section id="practice10">
+          <h3>Practice session 10</h3>
           <p class="pbcenter">Application and interrupts</p>
         </section>
 
@@ -2791,8 +2791,8 @@
           <ul>
             <li>Purpose: display a message after two button presses in a given time interval</li>
             <li>What to do: follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/exercises/10-Application-interrupts/README.md"
-                   target="_blank"><code>RTOS-presentation/exercises/10-Application-interrupts/README.md</code></a>
+                <a href="https://github.com/PascalBod/RTOS-presentation/blob/main/practice-sessions/10-Application-interrupts/README.md"
+                   target="_blank"><code>RTOS-presentation/practice-sessions/10-Application-interrupts/README.md</code></a>
                 file</li>
           </ul>
         </section>

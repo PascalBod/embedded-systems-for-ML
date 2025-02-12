@@ -1,8 +1,8 @@
-# Exercise 13 - Shared structure and mutex
+# Practice session 13 - Shared structure and mutex
 
-## Purpose of the exercise
+## Purpose of the practice session
 
-Add a mutex to the exercise 12 code so that the value of `a` is not modified between the test of its value and its assignement to `b`, in task1.
+Add a mutex to the practice session 12 code so that the value of `a` is not modified between the test of its value and its assignement to `b`, in task1.
 
 ## Reference information
 

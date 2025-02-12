@@ -1,6 +1,6 @@
-# Exercise 07 - I2C
+# Practice session 07 - I2C
 
-## Purpose of the exercise
+## Purpose of the practice session
 
 Get temperature data from the Si7021 sensor, using the I2C bus.
 
