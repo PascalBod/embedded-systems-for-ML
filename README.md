@@ -13,8 +13,6 @@ Practice sessions provide hands-on experience of the presented concepts.
 
 The hardware target for the practice sessions is the [Silicon Labs EFR32xG24 Dev Kit](https://www.silabs.com/development-tools/wireless/efr32xg24-dev-kit?tab=overview), based on the [EFR32MG24 wireless System on Chip (SoC)](https://www.silabs.com/wireless/zigbee/efr32mg24-series-2-socs).
 
-The presentation will be used in the *Machine Learning and Embedded Systems* course taught at [IMT Atlantique](https://www.imt-atlantique.fr/en) in January 2025.
-
 The presentation DOES NOT provide any information about Machine Learning topic.
 
 ## Prerequisites for the practice sessions
@@ -47,23 +45,11 @@ C language is used, for the practice sessions. [This Standford Computer Science 
 3. Ensure that you can build and program the sample application, as presented in the *lm-efr32-simplicityStudio* repository, introduced in the *Software* section above.
 
 > [!Note]
-> If you are an IMT Atlantique student attending the January 2025 course, contact your professor. He will provide you with an access to a pre-configured virtual machine.
-> A few notes about using this VM:
-> * The memory assigned to the VM is 4 GB. If your PC has enough RAM, don't hesitate to increase the VM memory to 6 or 8 GB.
-> * You still need to create a personal account on the Silicon Labs website, as described [here](https://github.com/PascalBod/lm-efr32-simplicityStudio?tab=readme-ov-file#prerequisites-1).
-> * A VM shared directory is predefined. As the host directory does not exist when you start the VM, you will get an error message. Ignore it. Then, you can configure the share directory, as explained [here](https://github.com/PascalBod/lm-vm) (look for the *share files* phrases. There are two of them).
-> * The only declared user is `developer`. The associated password is `developer`. 
-> * From time to time, a window may ask you to choose a password for a new keyring. Click the **Cancel** button.
-
-> [!IMPORTANT]
-> Do not upgrade Simplicity Studio, the Silicon Labs SDK, or the toolchain. Provided versions are:
-> * Simplicity Studio: 5.9.3.3
-> * SDK: 2024.6.2
-> * toolchain: GNU ARM 12.2.1.20221205
+> The practice sessions code was written for Simplicity SDK Suite v2024.6.2.
 
 ## Presentation
 
-The presentation is at this URL: https://pascalbod.github.io/RTOS-presentation. 
+The presentation is at this URL: https://pascalbod.github.io/embedded-systems-for-ML. 
 
 Source code of the presentation is in the `docs` directory. 
 
