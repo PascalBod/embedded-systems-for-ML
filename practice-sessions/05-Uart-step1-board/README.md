@@ -1,4 +1,4 @@
-# PRactice session 05 - UART - step 1
+# Practice session 05 - UART - step 1
 
 ## Purpose of the exercise
 

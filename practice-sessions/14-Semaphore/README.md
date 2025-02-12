@@ -1,4 +1,4 @@
-# PRactice session 14 - Semaphore
+# Practice session 14 - Semaphore
 
 ## Purpose of the practice session
 
