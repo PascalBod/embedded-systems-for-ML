@@ -54,3 +54,7 @@ The presentation is at this URL: https://pascalbod.github.io/embedded-systems-fo
 Source code of the presentation is in the `docs` directory. 
 
 The presentation is licensed under the  [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+## Sponsorship
+
+Solutions to the practice sessions are available to sponsors. Check the [sponsorship page](https://github.com/sponsors/PascalBod).
