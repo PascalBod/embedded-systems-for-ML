@@ -15,6 +15,8 @@ The hardware target for the practice sessions is the [Silicon Labs EFR32xG24 Dev
 
 The presentation DOES NOT provide any information about Machine Learning topic.
 
+This presentation was used as a support for the 22-hour course given at [IMT Atlantique](https://www.imt-atlantique.fr/en) in January 2025. The 22-hour duration was slightly too short to cover all the practical sessions.
+
 ## Prerequisites for the practice sessions
 
 ### Software
