@@ -149,7 +149,7 @@ Solutions to the practice sessions are available to sponsors. Check the [sponsor
     * Sharing data bug
     * Mutex
     * Semaphore
-*  [Communication](https://pascalbod.github.io/embedded-systems-for-ML/150-Communication.html)
+* [Communication](https://pascalbod.github.io/embedded-systems-for-ML/150-Communication.html)
   * Queues
   * Benefits
   * **Practice session:**
