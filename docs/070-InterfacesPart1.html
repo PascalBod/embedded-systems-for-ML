@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Interfaces - Part 1 ------------------------------------- -->
+        
+        <section id="interfacesPart1">
+          <h3>Interfaces - part 1</h3>
+        </section>
+        
+        <section>
+          <p><b>Interface</b>: a means (hardware and software) of connecting a peripheral to the microcontroller or 
+             to the microcontroller board.</p>
+        </section>
+        
+        <!-- -------------------- Interfaces > GPIO ---------------------------------------- -->
+        
+        <section id="gpioInterface">
+          <h4>GPIO (General Purpose digital Input Output)</h4>
+          <ul>
+            <li>Microcontroller pin which can handle a digital value: 0 or 1</li>
+            <li class="fragment">Signal voltage for bit value 0 is 0 V</li>
+            <li class="fragment">Signal voltage for bit value 1 depends on microcontroller. Usually: supply voltage (e.g. 3.3 V)</li>
+            <li class="fragment">Can be configured either as an input or as an output (with different modes)</li>
+          </ul>
+        </section>
+        
+        <section>
+          <ul>
+            <li>On a microcontroller: usually several "ports" of GPIOs</li>
+            <li>Ports are labelled, by a letter or by a number</li>
+            <li>In a given port, each GPIO is numbered</li>
+          </ul>
+          <p>For instance: PA00 to PA07, PB00 to PB03, PC00 to PC09 and PD00 to PD05.</p>
+        </section>
+        
+        <section>
+          <h4>GPIO as an output</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioOutput01.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li class="fragment">When PD02 is at 1 (i.e. VMCU), the LED is off, as no current can flow through it</li>
+                <li class="fragment">When PD02 is at 0 (i.e. 0 V), the LED is on, as some current can flow through it</li>
+              </ul>
+              <p class="fragment">Easy, isn't it? &#x1F642;</p>
+            </div>
+          </div>
+          <div class="pbsmaller">Note: component references are taken from the Dev Kit board.</div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+        
+        <section>
+          <h4>Physical world has some constraints - 1/2</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioOutput01.png" height="400">
+            </div>
+            <div class="column">
+              <ul>
+                <li>Current through the LED should not be greater than a value depending on the LED (for instance: 1.5 mA)</li>
+                <li class="fragment">A resistor in series with the LED can limit the current. Resistor value is given by Ohm's law: 
+             <code>R137 = VMCU / Imax</code></li>
+                <li class="fragment">We have <code>VMCU = 3.3 V</code> and decide on <code>Imax = 1.5 mA</code></li>
+                <li class="fragment">&rArr; <code>R137 = 2.2 k&#8486;</code></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <h4>Physical world has some constraints - 2/2</h4>
+          <p>The LED current flows into the microcontroller. A GPIO can't accept more than a given value 
+             (provided by the microcontroller data sheet).</p>
+          <p class="fragment">For the EFR32MG24, maximum value is 50 mA. As R137 limits the current to 1.5 mA, we are OK.</p>
+          <p class="fragment">Another limit: total maximum value for all GPIO pins. For the EFR32MG24: 200 mA.</p>
+          <p class="fragment">Note: the GPIO is configured as an output, but the current flows INTO the microcontroller.</p>
+        </section>
+        
+        <section>
+          <h4>GPIO as an input - 1/5</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioInput01.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li class="fragment">When the switch is closed, PB02 is set to 0 (GND = 0 V)</li>
+                <li class="fragment">When the switch is open, PB02 is not set. It is "floating"</li>
+              </ul>
+              <p class="fragment">How to set PB02 to 1 when the switch is open?</p>
+            </div>
+          </div>
+          <div class="pbsmaller">Note: component references are taken from the Dev Kit board.</div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+
+        <section>
+          <h4>GPIO as an input - 2/5</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioInput02.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li>R140 ensures that PB02 is set to 1 when the switch is open</li>
+                <li class="fragment">It is named <em>pullup resistor</em></li>
+                <li class="fragment">The resistor value is large enough to get a low current through it (but beware: it is not null)</li>
+                <li class="fragment">If the switch was connected to VMCU instead of GND, we would use a <em>pulldown resistor</em></li>
+              </ul>
+            </div>
+          </div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+
+        <section>
+          <h4>GPIO as an input - 3/5</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioInput03.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li>The <a href="https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf"
+                       target="_blank">board schematic</a> shows an additional resistor, R141. What is its purpose?</li>
+                <li class="fragment">If the GPIO was configured as an output (bug), set to 1, and the switch was closed: short-circuit</li>
+                <li class="fragment">R141 limits the current in such a case</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+
+        <section>
+          <h4>GPIO as an input - 4/5</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioInput04.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li>The <a href="https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf"
+                       target="_blank">board schematic</a> shows a capacitor, C142. What is its purpose?</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+        
+        <section>
+          <h4>What really happens when closing a switch</h4>
+          <img src="images/0059-Switch_Debouncing_Figure_1.webp" height="300">
+          <p class="pbcenter">Vertical: 1 V / division - Horizontal: 1 ms / division</p>
+          <div class="pbverysmall">Source: <a href="https://circuitcellar.com/resources/quickbits/switch-debouncing/" title="circuit cellar" 
+               target="_blank">
+               circuit cellar</a></div>
+        </section>
+        
+        <section>
+          <h4>GPIO as an input - 5/5</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioInput04.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li>C142 "fills in" the gaps / filters out the highest frequencies</li>
+                <li class="fragment">&rArr; <em>debouncing</em></li>
+                <li class="fragment">Debouncing can also be done in software</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+        
+        <section>
+          <h4>Voltage and current adaptation</h4>
+          <p>If peripheral voltage is different from microcontroller voltage, or if it requires
+             more current than what the microcontroller can provide, or if regulations require 
+             some specific protections, adaptation is required:</p>
+          <ul>
+            <li>Optocoupler</li>
+            <li>Relay</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>GPIO and ML application</h4>
+          <ul>
+            <li>Start/stop a task on a contact closure:
+              <ul>
+                <li>Start processing a video stream when a door opens</li>
+                <li>Start converting and processing analog data when an engine starts</li>
+                <li>Etc.</li>
+              </ul></li>
+            <li>Activate a peripheral:
+              <ul>
+                <li>Start an alarm siren when an unknown person enters a room</li>
+                <li>Stop a conveyor belt when a problem is detected</li>
+                <li>Etc.</li>
+              </ul></li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Practice: GPIO Input ---------------------------------------- -->
+        
+        <section id="practice02">
+          <h4>Practice session 02</h4>
+          <p>Display a message when a button is pushed or released</p>
+          <ul>
+            <li>Follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/02-GpioInput/README.md"
+                   target="_blank""><code>embedded-systems-for-ML/practice-sessions/02-GpioInput/README.md</code></a>
+                file.</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Practice: GPIO Output ---------------------------------------- -->
+
+        <section id="practice03">
+          <h4>Practice session 03</h4>
+          <p>Make a LED blink</p>
+          <ul>
+            <li>Follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/03-GpioOutput/README.md"
+                   target="_blank""><code>embedded-systems-for-ML/practice-sessions/03-GpioOutput/README.md</code></a>
+                file.</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

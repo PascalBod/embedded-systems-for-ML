@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- -------------------- Preamble ---------------------------------------- -->
+        
+        <section>
+          <h2>Introduction to embedded systems for ML</h2>
+          <h5>Pascal Bodin</h5>
+          <img src="images/energy-system.png" height="350">
+          <div class="pbverysmall">To enter the presentation, click the arrow in bottom right corner</div>
+        </section>
+        <section>
+          <h3>Document history</h3>
+          <table class="pbsmaller">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>What</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>12-Feb-2025</td>
+                <td>First version</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        
+        <section>
+          <h3>Licenses</h3>
+          <h4>Presentation</h4>
+            <p class="pbcenter"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+              Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></p>
+          <h4>Source code</h4>
+            <p class="pbcenter"><a href="https://www.gnu.org/licenses/gpl-3.0.html#license-text"
+                  target="_blank"">GNU General Public License v3</a></p>
+        </section>
+        <section>
+          <h3>Credits</h3>
+          <ul>
+            <li><a target="_blank" href="https://github.com/hakimel/reveal.js">reveal.js</a> - Copyright (C)
+              2020 Hakim El Hattab</li>
+            <li><a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a>
+              from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a>
+            </li>
+            <li><a href="https://www.flaticon.com/free-icons/electricity" title="electricity icons"
+                 target="_blank">Electricity icons created by Dewi Sari - Flaticon</a>
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>How to navigate</h3>
+          <ul>
+            <li>Use the right and left arrows (in bottom right corner)
+            <li>Overview: press "O" letter - navigate with arrow keys - "ESC" or click on slide to exit</li>
+            <li>Full screen: press "F" letter - "ESC" to exit</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

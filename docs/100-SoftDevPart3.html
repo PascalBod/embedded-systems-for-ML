@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Software development - part 3 ---------------------------------------- -->
+
+        <section id="softwareDevelopmentPart2">
+          <h3>Software development - part 2</h3>
+        </section>
+        
+        <!-- -------------------- Floating point numbers ---------------------------------------- -->
+
+        <section id="floatingPoint">
+          <h3>Floating-point arithmetic</h3>
+        </section>
+        
+        <section>
+          <h4>Integer ranges</h4>
+          <ul>
+            <li>With <code>n</code> bits:
+              <ul>
+                <li>Signed integer: <code>[-2<sup>n-1</sup>, 2<sup>n-1</sup> - 1]</code></li>
+                <li>Unsigned integer: <code>[0, 2<sup>n</sup> - 1]</code></li>
+            </ul></li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Integer ranges</h4>
+          <ul>
+            <li>8 bits:
+              <ul>
+                <li><code>[-128, 127]</code></li>
+                <li><code>[0, 255]</code></li>
+              </ul>
+            </li>
+            <li>32 bits:
+              <ul>
+                <li><code>[-2,147,483,648, 2,147,483,647]</code></li>
+                <li><code>[0, 4,294,967,296]</code></li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Problem</h4>
+          <ul>
+            <li>How to encode:
+              <ul>
+                <li>Very large numbers?</li>
+                <li>Rational numbers (<code>2/3</code>...)?</li>
+                <li>Irrational numbers (<code><math><msqrt><mi>2</mi></msqrt></math></code>...)?</li>
+                <li>Transcendental numbers (<code>e</code>...)?</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>When are those types of numbers needed?</h4>
+          <ul>
+            <li>Many algorithms: optimization, calculating distances, surfaces and volumes, etc.</li>
+            <li>Many machine learning algorithms</li>
+            <li>Simple example: calculate a long distance over the surface of the Earth</li>
+          </ul>
+        </section>
+        <section>
+          <h4>A solution: floating-point representation</h4>
+          <ul>
+            <li><code>sign x significand x base<sup>exponent</sup></code></li>
+            <li>The significand (or mantissa) controls accuracy</li>
+            <li>The exponent controls range</li>
+            <li>Base is usually <code>2</code></li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>A standard: IEEE 754</h4>
+          <ul>
+            <li>Base 2 or 10</li>
+            <li>Single precision: 23 bit significand, 8 bit exponent</li>
+            <li>Double precision: 52 bit significand, 11 bit exponent</li>
+            <li>...</li>
+          </ul>
+          <div class="pbverysmall">Source: <a href="https://ieeexplore.ieee.org/document/8766229"
+                                              target="_blank">IEEE 754</a></div>
+        </section>
+        
+        <section>
+          <h4>IEEE 754 single precision base 2</h4>
+          <table class="pbsmaller">
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>00000000</td>
+                <td>0000000000000000000000000000000</td>
+              </tr>
+              <tr>
+                <td>S</td>
+                <td>E</td>
+                <td>M</td>
+              </tr>
+            </tbody>
+          </table>
+          <img src="images/floatingPointNumberValue.png" class="fragment">
+        </section>
+        
+        <section>
+          <ul>
+            <li>Sign: one bit</li>
+            <li>Significand: a decimal value greater than or equal to <code>1</code> 
+              and less than <code>2</code>. Leading <code>1</code>
+              is assumed and not encoded &rArr; actually 24 bits</li>
+            <li>Exponent: biased, so that resulting value is always positive. Bias is
+              <code>127</code></li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>An IEEE 754 converter running in a web browser: <br/>
+             <a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html"
+                target="_blank">https://www.h-schmidt.net/FloatConverter/IEEE754.html</a></p>
+        </section>
+        
+        <section>
+          <h4>Some complexity and side effects</h4>
+          <ul>
+            <li>Two zero values: a positive one and a negative one</li>
+            <li>Two infinities</li>
+            <li>NaN (Not a Number)
+              <ul>
+                <li>Quiet NaN (&rArr; indeterminate operation)</li>
+                <li>Signalling NaN (&rArr; invalid operation)</li>
+              </ul>
+            </li>
+            <li>Denormalized numbers</li>
+            <li>Rounding &rArr; a calculation result may be different from the theorical value</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Floating-point arithmetic and microcontrollers</h4>
+          <ul>
+            <li>Low-cost microcontrollers: no instructions for floating-point arithmetic</li>
+            <li>Other microcontrollers: Floating-Point Unit (FPU)</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>A software solution when no FPU</h4>
+          <p>Floating-point library:</p>
+          <ul>
+            <li>Implements floating-point arithmetic in software</li>
+            <li>Drawbacks:
+              <ul>
+                <li>Increases the size of the application</li>
+                <li>Increases the number of executed instructions</li>
+                <li>May be distributed under paid license</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Other solutions, depending on the context</h4>
+          <ul>
+            <li>Tensor Flow: post-training integer quantization</li>
+            <li>A short distance over the Earth's surface: integer operations are (almost) enough</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Memory: code and data ---------------------------------------- -->
+        
+        <section id="memoryCodeData">
+          <h3>Memory: code and data</h3>
+        </section>
+        
+        <section>
+          <p>Memory required to run some code:</p>
+          <ul>
+            <li>The code is stored in read-only memory (Flash)</li>
+            <li>Data are stored in read/write memory (RAM)</li>
+          </ul>
+          <p>Note: other configurations are possible.</p>
+        </section>
+        
+        <section>
+          <p>The memory map is the list of the various addressable memory regions.</p>
+          <p>Example: the EFR32xG24 memory map</p>
+          <img src="images/xG24MemoryMap.png" height="400">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/reference-manuals/efr32xg24-rm.pdf"
+              title="EFR32xG24 Reference Manual"
+              target="_blank">EFR32xG24 Reference Manual</a></div>
+        </section>
+        
+        <section>
+          <p>Available memory in the EFR32MG24 Dev Kit:</p>
+          <ul>
+            <li>Flash: 1536 KB (i.e. 1536 x 1024 bytes)</li>
+            <li>RAM: 256 KB (i.e. 256 x 1024 bytes)</li>
+          </ul>
+          <p class="fragment">This is huge! &#x1F642;</p>
+        </section>
+        
+        <!-- -------------------- Memory: static, automatic and dynamic storage ---------------------------------------- -->
+        
+        <section id="memoryStorage">
+          <h3>Memory: static, automatic and dynamic storage</h3>
+        </section>
+        
+        <section>
+          <div class="row">
+            <div class="column">
+              <pre><code data-trim data-noescape class="codeblock">
+                  uint32_t val1;
+                  
+                  int function1(void) {
+
+                    uint32_t val2;
+                    uint8_t *mem_block;
+                  
+                    mem_block = malloc(1024);
+                  
+                    ...
+                  
+                    free(mem_block);
+                  
+                  }
+              </code></pre>
+            </div>
+            <div class="column">
+              <br>
+              <p><code>val1</code>: <em>static storage</em></p>
+              <p><code>val2</code>: <em>automatic storage</em></p>
+              <p><code>mem_block</code>: <em>dynamic storage</em></p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <p><em>Static storage:</em> allocated at program startup and stays allocated</p>
+          <p><em>Automatic storage:</em> allocated when entering the surrounding block, deallocated upon exit</p>
+          <p><em>Dynamic storage:</em> allocated/deallocated under the control of the program</p>
+          <p>Note: try not to use dynamic storage in embedded code!</p>
+        </section>
+
+        <section>
+          <h4>Nested calls</h4>
+          <div class="row">
+            <div class="column">
+              <pre><code data-trim data-noescape data-line-numbers class="codeblock">
+                  int res;
+                  
+                  int function1(int p) {
+                    int temp = p * 10;
+                    return temp;
+                  }
+                  
+                  int function2(int p) {
+                    int temp = function1(p);
+                    return temp + 3;
+                  }
+                  
+                  res = function2(3);
+                  ...
+              </code></pre>
+            </div>
+            <div class="column">
+              <p class="pbsmaller">At line 1: <code>res</code> is allocated from static storage</p>
+              <p class="pbsmaller">At line 13: automatic storage is allocated for the argument, <code>3</code></p>
+              <p class="pbsmaller">At line 9: <code>temp</code> is local to <code>function2</code>. Automatic storage</p>
+              <p class="pbsmaller">At line 4: <code>temp</code> is local to <code>function1</code>. Automatic storage</p>
+            </div>
+          </div>
+          <p>Automatic storage allocated to a function can be reused when the function exits.</p>
+        </section>
+        
+        <section>
+          <p>Automatic storage is allocated from the <em>stack</em>.</p>
+          <p>The stack is stored in RAM.</p>
+          <p>The <em>stack-pointer</em> register points to the "top" of the stack.</p>
+          <p>Depending on the microcontroller, the stack may grow torwards top of the RAM or bottom of the RAM.</p>
+          <p>A microcontroller may have more than one stack pointer.</p>
+        </section>
+        
+        <section>
+          <p>Dynamic storage is allocated from the <em>heap</em>.</p>
+          <p>The heap is stored in RAM.</p>
+          <p class="fragment">Again: try to not use dynamic storage in embedded code (see RTOS part).</p>
+        </section>
+        
+        <section>
+          <p>What happens when the program requires too much automatic storage?</p>
+          <p class="fragment">The stack overwrites other parts of the RAM, for instance the heap, or statically allocated data.</p>
+          <p class="fragment">Recursive functions may consume lot of automatic storage: try not to use them in embedded code.</p>
+        </section>
+        
+        <section>
+          <p>At the end of the build process (compilation + linking): the amount of required static storage is known.</p>
+          <p class="fragment">A default stack size is provided by the development environment. It's up to the developer
+            to check that it is enough.</p>
+          <p class="fragment">Running a program with too small a stack makes developer's life fun &#x1F642;</p>
+        </section>
+        
+        <section>
+          <h4>Controlling stack size, and other things</h4>
+          <p>The stack size can be modified in the <em>linker script</em>.</p>
+          <p class="fragment">Additionally, the linker script tells the linker about the memory map, the heap size, etc.</p>
+          <p class="fragment">&rArr; It allows to generate a binary file which can be written in the flash memory
+            at the right place.</p>
+        </section>
+        
+        <section>
+          <p>Additionally, the linker script adds a small initialization code to the program:</p>
+          <ul>
+            <li>Initializes the stack pointer</li>
+            <li>Initializes interrupt vectors (see further)</li>
+            <li>Initializes some parts of the RAM</li>
+            <li>Initializes some other parts of the microcontroller (clock, etc.)</li>
+            <li>Calls the <code>main</code> function of the program</li>
+          </ul>
+        </section>
+
+        <!-- -------------------- How an application starts ---------------------------------------- -->
+        
+        <section id="reset">
+          <h3>How an application starts</h3>
+        </section>
+        
+        <section>
+          <p>A reset may occur when:</p>
+          <ul>
+            <li>The microcontroller board is powered on</li>
+            <li>A specific microcontroller pin is set to a specific level</li>
+            <li>A specific instruction is executed</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>A reset sets (most of) the microcontroller in a known state.</p>
+          <p>The microcontroller fetches the address of the code to be executed.</p>
+          <p>The code is executed.</p>
+          <p>Executed code = initialization code + application code (see a previous page).</p>
+        </section>
+        
+        <!-- -------------------- Interrupts ---------------------------------------- -->
+        
+        <section id="interrupts">
+          <h3>Interrupts and background task</h3>
+        </section>
+
+        <section>
+          <h4>Events</h4>
+          <p>When the program runs, several events may occur:</p>
+          <ul>
+            <li>A specific condition from a peripheral</li>
+            <li>A software fault condition (e.g. undefined instruction)</li>
+            <li>A hardware fault condition (e.g. bus error)</li>
+            <li>Etc.</li>
+          </ul>
+          <p class="fragment">In what follows, we only consider events signalled by peripherals.</p>
+        </section>
+        
+        <section>
+          <h4>Some events</h4>
+          <ul>
+            <li>UART:
+              <ul>
+                <li>A byte is received</li>
+                <li>Transmit buffer is empty</li>
+                <li>Parity error on received byte</li>
+                <li>Etc.</li>
+              </ul>
+            </li>
+            <li>ADC:
+              <ul>
+                <li>Conversion done</li>
+                <li>Etc.</li>
+              </ul>
+            </li>
+            <li>Timer:
+              <ul>
+                <li>End of period</li>
+                <li>Etc.</li>
+              </ul>
+            </li>
+            <li>GPIO:
+              <ul>
+                <li>Level transition</li>
+                <li>Etc.</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>From event to interrupt</h4>
+          <p>The microcontroller can be configured so that (some) events generate an <em>interrupt</em>.</p>
+        </section>
+        
+        <section>
+          <h4>Effect of an interrupt</h4>
+          <img src="images/interrupt.png" height="600">
+        </section>
+        
+        <section>
+          <p>Context:</p>
+          <ul>
+            <li>Address of next instruction to execute</li>
+            <li>Stack pointer</li>
+            <li>Other CPU state information</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Vocabulary</h4>
+          <p>Code servicing the interrupt: <em>Interrupt Handler, Interrupt Service Routine (ISR)</em>.</p>
+          <p>Code not running in the context of an interrupt: <em>background task</em>.</p>
+        </section>
+        
+        <section>
+          <p>How are events and ISRs linked?</p>
+          <div class="fragment">
+            <p>It depends on the microcontroller. For Arm Cortex M:</p>
+            <ul>
+              <li>A table contains the starting address of each ISR</li>
+              <li>It is named the <em>vector table</em></li>
+              <li>It starts at a known address</li>
+            </ul>
+          </div>
+        </section>
+        
+        <section>
+          <div class="pbsmaller">
+            <table>
+              <tbody>
+                <tr>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>USART0_RX_IRQ</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>TIMER1 IRQ</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>TIMER0 IRQ</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <td>0x8000008</td>
+                  <td>NMI</td>
+                </tr>
+                <tr>
+                  <td>0x8000004</td>
+                  <td>Reset</td>
+                </tr>
+                <tr>
+                  <td>0x8000000</td>
+                  <td>Initial stack pointer</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section>
+          <p>Question: what happens if an interrupt is triggered while an ISR is servicing a 
+            previous interrupt?</p>
+          <p class="fragment">Answer: it depends.</p>
+        </section>
+        
+        <section>
+          <p>For most microcontrollers:</p>
+          <ul>
+            <li>Every interrupt may have a priority level (possibly configurable)</li>
+            <li>An interrupt of a higher priority interrupts an ISR servicing a lower priority interrupt</li>
+            <li>An interrupt of lower or equal level does not interrupt the ISR; it is saved for later servicing</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Beware: only the latest interrupt of a given type is saved.</p>
+          <p class="fragment">The interrupt will not be lost. But one or more events may be lost.</p>
+          <p class="fragment">&rArr; Always write short ISRs</p>
+        </section>
+        
+        <section>
+          <h4>Usual interrupt processing</h4>
+          <ul>
+            <li>In the ISR:
+              <ul>
+                <li>Get information associated to the interrupt</li>
+                <li>Store it in a variable shared with the background task</li>
+                <li>Set a flag to tell the background task that the interrupt occurred</li>
+              </ul>
+            </li>
+            <li>In the background task, for a set interrupt flag: 
+              <ul>
+                <li>Reset the flag</li>
+                <li>Process the associated information</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <img src="images/backgroundTaskInterrupts.png">
+        </section>
+        <section>
+          <h4>More detailed view</h4>
+          <img src="images/backgroundIntDetailed.png">
+        </section>
+        
+        <section>
+          <h4>Microcontroller configuration</h4>
+          <p>Remember the elements provided by Arm Cortex-M IP block?</p>
+          <img src="images/armCortexMArchitecture.png">
+        </section>
+        
+        <section>
+          <h4>A more generic and global view</h4>
+          <img src="images/interruptConfiguration.png" height="300">
+          <ol>
+            <li>Configure block so that a given event generates an interrupt</li>
+            <li>Configure interrupt controller logic so that the CPU can be interrupted by the interrupt</li>
+          </ol>
+        </section>
+        
+        <!-- -------------------- Practice session 08: GPIO and interrupt ---------------------------------------- -->
+        
+        <section id="practice08">
+          <h3>Practice session 08</h3>
+          <p class="pbcenter">GPIO and interrupt</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Purpose: use an interrupt to detect button presses</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/08-Gpio-interrupt/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/08-Gpio-interrupt/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+
+        <!-- -------------------- Practice session 09: timer and interrupt ---------------------------------------- -->
+        
+        <section id="practice09">
+          <h3>Practice session 09</h3>
+          <p class="pbcenter">Timer and interrupt</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Purpose: periodically trigger an interrupt after some period of time</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/09-Timer-interrupt/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/09-Timer-interrupt/README.md</code></a>
+                file</li>
+          </ul>
+        </section>       
+
+        <!-- -------------------- Practice session 10: application and interrupts ---------------------------------------- -->
+        
+        <section id="practice10">
+          <h3>Practice session 10</h3>
+          <p class="pbcenter">Application and interrupts</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Purpose: display a message after two button presses in a given time interval</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/10-Application-interrupts/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/10-Application-interrupts/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Sleep modes ---------------------------------------- -->
+        
+        <section id="sleepModes">
+          <h3>Sleep modes</h3>
+        </section>
+        
+        <section>
+          <p>In many applications, there are not a lot of events</p>
+          <p>Question: how can energy be saved?</p>
+        </section>
+        
+        <section>
+          <p>Answer: enter a sleep mode between two scans for events</p>
+        </section>
+        
+        <section>
+          <img src="images/backgroundIntSleep.png">
+        </section>
+        
+        <section>
+          <h4>Exiting from sleep mode</h4>
+        </section>
+        
+        <section>
+          <div class="r-stack">
+            <div>
+              <img src="images/backgroundIntSleep-1.png">
+            </div>
+            <div class="fragment fade-in-then-out">
+              <img src="images/backgroundIntSleep-2.png">
+            </div>
+            <div class="fragment fade-in-then-out">
+              <img src="images/backgroundIntSleep-3.png">
+            </div>
+            <div class="fragment fade-in-then-out">
+              <img src="images/backgroundIntSleep-4.png">
+            </div>
+            <div class="fragment fade-in-then-out">
+              <img src="images/backgroundIntSleep.png">
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Entering a sleep mode is important for devices without external power supply</li>
+            <li>Usually, several different sleep modes</li>
+            <li>The block(s) generating events must be kept active</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

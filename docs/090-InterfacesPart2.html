@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Interfaces - part 2 ---------------------------------------- -->
+        
+        <section id="interfacesPart2">
+          <h3>Interfaces - part 2</h3>
+        </section>
+        
+        <!-- -------------------- Interfaces > ADC ---------------------------------------- -->
+        
+        <section id="adcInterface">
+          <h4>ADC (Analog to Digital Converter)</h4>
+          <ul>
+            <li>In the physical world: an analog signal is continuous in time and in amplitude</li>
+            <li class="fragment">In a computer: data is discrete in time and in amplitude</li>
+            <li class="fragment">ADC: transforms an analog signal into (a sequence of) data</li>
+          </ul>
+        </section>
+        
+        <section>
+          <img src="images/adc.png">
+        </section>
+        
+        <section>
+          <p><em>Quantization:</em> maps a continuous set of values to a finite set of values</p>
+          <ul>
+            <li>With 4 bits: 16 values</li>
+            <li>With 12 bits: 4096 values</li>
+            <li>With 15 bits: 32,768 values</li>
+            <li>With 24 bits: 16,777,216 values</li>
+            <li>With 32 bits: around 4.3 billions of values</li>
+          </ul>
+          <p>Whatever the number of bits, there are always continuous values which are not part of the finite set of values.
+            <em>Quantization error:</em> difference between the continuous value and the quantized value.</p>
+          <p><em>Resolution:</em> number of bits.</p>
+        </section>
+        
+        <section>
+          <p><em>Sampling:</em> periodically quantizing the continuous value</p>
+          <p><em>Sample rate:</em> sampling frequency</p>
+          <p><em>Nyquist–Shannon sampling theorem:</em> the sample rate must be at least twice the bandwidth of the signal.</p>
+          <ul>
+            <li>Sufficient condition to capture all the information from a continuous-time signal of finite bandwidth</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Some sampling rates</h4>
+          <ul>
+            <li>Legacy analog telephone: 8 kHz (good human sounding voice: 300 - 3400 Hz)</li>
+            <li>Audio CD: 44.1 kHz</li>
+          </ul>
+          <p>Usually: samples/s - sps, ksps, Msps</p>
+        </section>
+        
+        <section>
+          <h4>Reference voltage</h4>
+          <p>The ADC needs a reference voltage to which it compares the incoming analog voltage.</p>
+          <p>The ADC cannot measure voltages larger than the reference voltage.</p>
+          <p>Depending on the microcontroller, the reference voltage may be internal or external.
+             Several references may be available.</p>
+        </section>
+
+        <section>
+          <h4>Input selection</h4>
+          <p>For some microcontrollers: the ADC block can support measurement on a number of internal and 
+             external signals.</p>
+        </section>
+        
+        <section>
+          <h4>Voltage adaptation</h4>
+          <p>Depending on the signal to be converted, amplification or attenuation can be required.</p>
+          <p>The microcontroller can provide some adaptation means.</p>
+        </section>
+        
+        <section>
+          <h4>ADC and ML application</h4>
+          <ul>
+            <li>Check battery voltage, and reduce the number of tasks when too low</li>
+            <li>Convert microphone signal, to perform wake word detection</li>
+            <li>Convert pressure sensor signal, to perform local weather forecast</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Practice: ADC ---------------------------------------- -->
+
+        <section id="practice04">
+          <h4>Practice session 04</h4>
+          <p>Convert an analog signal</p>
+          <ul>
+            <li>Follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/04-Adc/README.md"
+                   target="_blank""><code>embedded-systems-for-ML/practice-sessions/04-Adc/README.md</code></a>
+                file.</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Interfaces > UART ---------------------------------------- -->
+        
+        <section id="uartInterface">
+          <h4>UART (Universal Asynchronous Receiver/Transmitter)</h4>
+        </section>
+        
+        <section>
+          <ul>
+            <li>GPIO: set/get 0 or 1</li>
+            <li>ADC: get the approximate value of a signal</li>
+            <li class="fragment">UART: exchange data</li>
+          </ul>
+        </section>
+        
+        <section>
+          <ul>
+            <li><b>Universal</b>: can be used in many different contexts</li>
+            <li><b>Asynchronous</b>: no common clock required between the receiver and the transmitter</li>
+          </ul>
+          <p>Data is transmitted bit by bit.</p>
+        </section>
+        
+        <section>
+          <h4>Physical layer</h4>
+          <ul>
+            <li>At least 3 wires: <b>Transmit</b>, <b>Receive</b>, <b>Ground</b></li>
+            <li>Additional wires possible: <b>Request to send</b>, <b>Ready for sending</b>, etc.</li>
+            <li>Wires definition: <a href="https://www.itu.int/rec/T-REC-V.24-200002-I/en"
+                target="_blank"><b>V.24</b></a> 
+                (<a href="https://store.accuristech.com/tia/standards/tia-tia-232-f?product_id=2594289"
+                    target="_blank"><b>TIA-232</b></a> in the USA)</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>Electrical levels:</p>
+          <ul>
+            <li><a href="https://www.itu.int/rec/T-REC-V.28-199303-I/en"
+                   target="_blank""><b>V.28</b></a>: -15 V to -3 V and +3 V to +15 V</li>
+            <li>0 and 5 V</li>
+            <li>0 and 3.3 V</li>
+            <li>...</li>
+          </ul>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Distance: < 15 m</li>
+            <li>Maximum speed: 20 kb/s (according to V.28)</li>
+            <li>On short distances: 115 kb/s or more</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>Connectors: DB9 or DB25 D-subminiature connectors</p>
+          <img src="images/db9male-medium.png" width="250">
+          <img src="images/db25male-medium.png" width="300">
+          <div class="pbverysmall">Source: 
+              <a href="https://eu.mouser.com/Connectors/D-Sub-Connectors/D-Sub-Standard-Connectors/_/N-9gybx"
+                 title="Mouser" target="_blank">Mouser</a></div>
+        </section>
+
+        <section>
+          <p>20 years ago: every PC had one UART port at least, named <em>serial port</em> or
+             <em>COM port</em>
+          <p>For today's PCs: serial-USB adapters</p>
+          <img src="images/ftdi-TTL-232R1.png">
+          <div class="pbverysmall">Source: 
+               <a href="https://www.ftdichip.com/Products/Cables/USBTTLSerial.htm"
+                  title="FTDI" target="_blank">FTDI</a></div>
+        </section>
+
+        <section>
+          <img src="images/uart-db9.png">
+          <div class="pbverysmall">Source: 
+             <a href="https://eu.mouser.com/Connectors/D-Sub-Connectors/D-Sub-Standard-Connectors/_/N-9gybx"
+                title="Mouser" target="_blank">Mouser</a></div>
+        </section>
+
+        <section>
+          <p>Data transfer:</p>
+          <img src="images/serialCommFormat.png">
+        </section>
+        
+        <section>
+          <p class="pbcenter">Important:</p>
+          <ul>
+            <li>Each side must be configured in the same way (speed, parity, etc.)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h4>UART and ML application</h4>
+          <ul>
+            <li>Collect data from a sensor</li>
+            <li>Update the embedded application with a retrained model</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Practice session 05: UART ---------------------------------------- -->
+        
+        <section id="practice05Step1">
+          <h3>Practice session 05</h3>
+          <p class="pbcenter">Get acquainted with the UART</p>
+        </section>
+        
+        <section>
+          <h4>EFR32MG24</h4>
+          <p>Functional diagram:</p>
+          <img src="images/efr32mg24-functional-diagram.png">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/data-sheets/efr32mg24-datasheet.pdf"
+              title="EFR32MG24 Datasheet"
+              target="_blank">EFR32MG24 Datasheet</a></div>
+        </section>
+        
+        <section>
+          <p>The UART is actually a USART: Universal Synchronous/Asynchronous Receiver/Transmitter.</p>
+          <p>Synchronous part presented in later sections.</p>
+          <p class="fragment">EUSART: an additional UART which can be used in low-energy mode.</p>
+        </section>
+        
+        <section>
+          <p>Block diagram:</p>
+          <img src="images/efr32mg24-block-diagram.png" height="500">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/data-sheets/efr32mg24-datasheet.pdf"
+              title="EFR32MG24 Datasheet"
+              target="_blank">EFR32MG24 Datasheet</a></div>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Several blocks between USART signals and µC pins</li>
+            <li>Each block must be configured</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>xG24 Dev Kit</h4>
+          <ul>
+            <li>No more serial connectors on modern PCs</li>
+            <li class="fragment">USB allows to transport virtual serial ports</li>
+            <li class="fragment">On Dev Kit: USB on PC side, UART on µC side</li>
+            <li class="fragment">On-board debugger is used as a gateway</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Block diagram:</p>
+          <img src="images/xG24-debugger-diagram.png">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf"
+              title="xG24 User's Guide'"
+              target="_blank">xG24 User's Guide</a></div>
+        </section>
+        
+        <section>
+          <h4>Practice session 05 - step 1</h4>
+          <ul>
+            <li>Purpose: send characters to the PC</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/05-Uart-step1-board/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/05-Uart-step1-board/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+
+        <section>
+          <h4 id="practice05Step2">Practice session 05 - step 2</h4>
+          <ul>
+            <li>Purpose: echo characters sent to the board</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/05-Uart-step2-board/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/05-Uart-step2-board/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+
+        <!-- -------------------- Interfaces > SPI ---------------------------------------- -->
+        
+        <section id="spiInterface">
+          <h4>Some serial port deficiencies</h4>
+          <ul>
+            <li>About 20% of overhead (1 start bit + 1 stop bit)</li>
+            <li>Both sides must be configured in the same way
+            <li>TX must be connected to RX. Or not</li>
+            <li>Connects two devices only (for V.24)</li>
+          </ul>
+          <p>Interfaces presented in next sections provide other kinds of solutions.</p>
+        </section>
+        
+        <section>
+          <h4>SPI (Serial Peripheral Interface)</h4>
+        </section>
+        
+        <section>
+          <p>SPI is an a synchronous protocol with:</p>
+          <ul>
+            <li>Two roles: controller and peripheral</li>
+            <li>A clock is provided by the controller</li>
+            <li>Four wires:
+              <ul>
+                <li>SCK (Serial Clock)</li>
+                <li>PICO (Peripheral In Controller Out)</li>
+                <li>POCI (Peripheral Out Controller In)</li>
+                <li>CS (Chip Select)</li>
+              </ul>
+            </li>
+          </ul>
+          <img src="images/spiWiring.png" height="200">
+          <p class="pbcenter pbsmaller">(Power lines not shown)</p>
+        </section>
+        
+        <section>
+            <p>Multiple peripherals:</p>
+            <img src="images/spiWiringMultiplePeripherals.png">
+            <p class="pbcenter pbsmaller">(Power lines not shown)</p>
+        </section>
+        
+        <section>
+          <p>Note: wires were previously known as MOSI (Master Out Slave In), MISO, SS (Slave Select).</p>
+          <p>You may still come across these names.</p>
+          <p>SDO (Serial Data Out) and SDI (Serial Data In) may also be used.</p>
+        </section>
+        
+        <section>
+          <p>Data is synchronized with the clock. Several possible configurations:</p>
+          <img src="images/spiClocking.png">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/reference-manuals/efr32xg24-rm.pdf"
+              title="EFR32xG24 Reference Manual"
+              target="_blank">EFR32xG24 Reference Manual</a></div>
+        </section>
+        
+        <section>
+          <p>The protocol allows full-duplex operations.</p>
+          <p>The controller controls the clock.</p>
+          <p>When multiple peripherals are connected, the controller uses the CS signal
+             to activate the peripheral it wants to interact with.</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Maximum speed: up to 10 Mb/s.</li>
+            <li>Maximum distance: a few tens of cm.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>How data is exchanged</h4>
+          <p>The data protocol is defined by the peripheral.</p>
+          <p>Quite often: the peripheral interacts through registers.</p>
+          <p>Registers can be read and/or written.</p>
+          <img src="images/peripheralStructure.png" height="300">      
+        </section>
+
+        <section>
+          <h4>A generic example</h4>
+          <img src="images/spiInteractionExample.png">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp280-ds001.pdf"
+              title="Bosch BME280 data sheet"
+              target="_blank">Bosch BME280 data sheet</a></div>
+        </section>
+                
+        <section>
+          <h4>Read operation</h4>
+          <ul>
+            <li>The controller selects the peripheral (CS low) and starts the clock</li>
+            <li>On PICO: the controller sends MSB set to 1 + register address on 7 bits</li>
+            <li>On POCI: the peripheral sends data over 8 bits</li>
+            <li>If clock goes on and CS is not raised, the peripheral sends next register</li>
+            <li>...</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Write operation</h4>
+          <ul>
+            <li>The controller selects the peripheral and starts the clock</li>
+            <li>On PICO: the controller sends MSB set to 0 + register address on 7 bits</li>
+            <li>On PICO: the controller sends data over 8 bits</li>
+            <li>The controller stops the clock and raise CS</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>To summarize:</p>
+            <ul>
+              <li>Serial port: allows for more than several meters</li>
+              <li>SPI: short distances, higher speed</li>
+            </ul>
+        </section>
+        
+        <!-- -------------------- Practice session 06: SPI ---------------------------------------- -->
+        
+        <section id="practice06">
+          <h3>Practice session 06</h3>
+          <p class="pbcenter">Get acquainted with the SPI bus</p>
+        </section>
+        
+        <section>
+          <h4>On the EFR32MG24</h4>
+          <ul>
+            <li>The SPI interface is implemented over the (E)USART interface</li>
+            <li>This explains the "S" in the USART acronym</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>On the xG24 Dev Kit</h4>
+          <ul>
+            <li>The IMU (Inertial Measurement Unit) can use SPI</li>
+            <li>3-axis gyroscope, 3-axis accelerometer, temperature sensor</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Block diagram:</p>
+          <img src="images/xg24_imu_diagram.png">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf"
+              title="xG24 User's Guide'"
+              target="_blank">xG24 User's Guide</a></div>
+        </section>
+        
+        <section>
+          <ul>
+            <li>A switch controls sensor power</li>
+            <li>Pullup resistor on CS &rArr; sensor not selected by default</li>
+            <li>SPI signals are connected to PC and PA ports</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Practice session 06</h4>
+          <ul>
+            <li>Purpose: get accelerometer data</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/06-Spi-accel/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/06-Spi-accel/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Interfaces > I2C ---------------------------------------- -->
+        
+        <section id="i2cInterface">
+          <h4>Reducing the number of wires</h4>
+          <p>SPI with multiple peripherals:</p>
+          <img src="images/spiWiringMultiplePeripherals.png">
+          <p>Many wires...</p>
+        </section>
+        
+        <section>
+          <h4>I<sup>2</sup>C (Inter-Integrated Circuit)</h4>
+        </section>
+        
+        <section>
+          <p>I<sup>2</sup>C is another synchronous protocol with:</p>
+          <ul>
+            <li>Two roles: controller and peripheral <em>(target)</em></li>
+            <li>Multiple controllers can be present</li>
+            <li>Two wires:
+              <ul>
+                <li>SCL (Serial Clock line)</li>
+                <li>SDA (Serial Data line)</li>
+              </ul>
+            </li>
+          </ul>
+          <img src="images/i2cWiring.png" height="200">
+          <p class="pbcenter pbsmaller">(Power lines not shown)</p>
+        </section>
+        
+        <section>
+          <p>Multiple peripherals:</p>
+          <img src="images/i2cWiringMultiplePeripherals.png">
+          <p class="pbcenter pbsmaller">(Power lines not shown)</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Each device has a unique 7-bit address (no CS signal)</li>
+            <li>The controller provides the clock</li>
+            <li>Every byte is acknowledged by a bit</li>
+          </ul>
+          <img src="images/i2cDataTransfer.png">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf"
+              title="I2C-bus specification and user manual"
+              target="_blank">I<sup>2</sup>C-bus specification and user manual</a></div>
+        </section>
+        
+        <section>
+          <p>When multiple controllers are connected:</p>
+          <ul>
+            <li>Clock synchronization</li>
+            <li>Arbitration</li>
+          </ul>
+          <p>Done thanks to wired-AND connections of SCL and SDA and pullup resistors.</p>
+          <p>For more information:
+            <a href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf" target="_blank"">
+               I<sup>2</sup>C-bus specification and user manual</a></p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Standard-mode speed: 100 kb/s</li>
+            <li>High-speed mode: 3.4 Mb/s</li>
+            <li>Maximum distance: a few tens of cm.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>How data is exchanged</h4>
+          <p>The data protocol is defined by the peripheral.</p>
+          <p>Quite often: as for SPI, the peripheral interacts through registers.</p>
+          <p>Registers can be read and/or written.</p>
+          <img src="images/peripheralStructure.png" height="300">      
+        </section>
+        
+        <section>
+          <h4>Read operation</h4>
+          <ul>
+            <li>The controller sends the register address in write mode to the peripheral address</li>
+            <li>The peripheral sends out data from auto-incremented register address until the controller stops the interaction</li>
+          </ul>
+        </section>
+          
+        <section>
+          <p class="pbsmaller">Detailed view:</p>
+          <ul class="pbsmaller">
+            <li>The controller sets a START condition</li>
+            <li>The controller sends the peripheral address over 7 bits + LSB set to 0</li>
+            <li>The peripheral sends an ACK bit</li>
+            <li>The controller sends the register address</li>
+            <li>The peripheral sends an ACK bit</li>
+            <li>The controller sends a START condition</li>
+            <li>The controller sends the peripheral address over 7 bits + LSB set to 1</li>
+            <li>The peripheral sends an ACK bit</li>
+            <li>The peripheral sends data</li>
+            <li>The controller sends an ACK bit</li>
+            <li>The peripheral sends next register, until the controller sets a STOP condition</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Write operation</h4>
+          <ul>
+            <li>The controller sends the register address in read mode to the peripheral address</li>
+            <li>Then it sends pairs of register address and register data until it stops the interaction</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p class="pbsmaller">Detailed view:</p>
+          <ul class="pbsmaller">
+            <li>The controller sets a START condition</li>
+            <li>The controller sends the peripheral address over 7 bits + LSB set to 0</li>
+            <li>The peripheral sends an ACK bit</li>
+            <li>The controller sends the register address</li>
+            <li>The peripheral sends an ACK bit</li>
+            <li>The controller sends the register data</li>
+            <li>The peripheral sends an ACK bit</li>
+            <li>The controller goes on sending register address and register data until it sets the STOP condition</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>To summarize:</p>
+          <ul>
+            <li>Allows for multi-controller configurations</li>
+            <li>More complex than SPI to implement. But that's not your problem &#x1F642;</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Practice session 07: I2C ---------------------------------------- -->
+        
+        <section id="practice07">
+          <h3>Practice session 07</h3>
+          <p class="pbcenter">Get acquainted with the I<sup>2</sup>C bus</p>
+        </section>
+        
+        <section>
+          <h4>On the EFR32MG24</h4>
+          <ul>
+            <li>The I<sup>2</sup>C interface is a standalone block</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>On the xG24 Dev Kit</h4>
+          <ul>
+            <li>The relative humidity and temperature sensor uses I<sup>2</sup>C</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Block diagram:</p>
+          <img src="images/xg24_rhTSensor_diagram.png">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf"
+              title="xG24 User's Guide'"
+              target="_blank">xG24 User's Guide</a></div>
+        </section>
+        
+        <section>
+          <ul>
+            <li>A switch controls sensor power</li>
+            <li>I<sup>2</sup>C signals are connected to PC port</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Practice session 07</h4>
+          <ul>
+            <li>Purpose: get temperature data</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/07-I2c-temp/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/07-I2c-temp/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

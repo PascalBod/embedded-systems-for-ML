@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- RTOS > tasks ---------------------------------------- -->
+        
+        <section id="tasks">
+          <h2>Tasks</h2>
+        </section>
+        
+        <section id="whatATaskIs">
+          <p>Task: a long-living execution block.</p>
+          <ul>
+            <li>The application is made of several tasks.</li>
+            <li>These tasks may have to exchange data and to synchronize.</li>
+            <li>Each task has its own execution context</li>
+            <li>Each task can be assigned a priority</li>
+            <li>Each task is assigned a "fair" proportion of processing time by the scheduler</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>A task may be in one of several states. Usually:</p>
+          <ul>
+            <li><b>Ready</b>: the task is ready to run, but another one is using the processor</li>
+            <li><b>Running</b>: the task is being executed</li>
+            <li><b>Blocked</b> (or <b>Waiting</b>): the task is waiting for an event (timer timeout, reception of
+                a byte on a serial link, etc.)</li>
+            <li><b>Suspended</b>: the task won't use the processor anymore</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>For FreeRTOS:</h3>
+          <img src="images/freeRtosTaskStates.gif">
+          <div class="pbverysmall">Source: <a href="https://www.freertos.org/RTOS-task-states.html" 
+                                              title="FreeRTOS" target="_blank">FreeRTOS</a></div>
+        </section>
+        
+        <section>
+          <p>Note: for our practice sessions, we will use <a href="https://www.freertos.org"
+             target="_blank">FreeRTOS</a></p>
+        </section>
+        
+        <section>
+          <h3>For Zephyr OS:</h3>
+          <img src="images/zephyrTaskStates.svg">
+          <div class="pbverysmall">Source: <a href="https://docs.zephyrproject.org/latest/kernel/services/threads/index.html#thread-states" 
+                                              title="Zephyr Project" target="_blank">Zephyr Project</a></div>
+        </section>
+        
+        <section>
+          <p>On a microcontroller with one core: only one task can be executed at a given time.</p>
+          <p>&rArr; Difference between <em>concurrency</em> and <em>parallelism:</em></p>
+          <ul>
+            <li><strong>Concurrency</strong>: several tasks appear to be running at the same time</li>
+            <li><strong>Parallelism</strong>: several tasks are really running at the same time</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>The scheduler is the magic behind concurrency.</p>
+          <p>Scheduling method depends on the RTOS.</p>
+          <p>For FreeRTOS:</p>
+          <ul>
+            <li>
+              <strong>Fixed priority</strong> - task priority is not changed (excepted for priority inheritance - see farther)
+            </li>
+            <li class="fragment fade-in">
+              <strong>Preemptive</strong> - if a higher priority task enters ready state (due to 
+              some event), and a lower priority task is being executed, the scheduler stops it 
+              and starts the higher priority one
+            </li>
+            <li class="fragment fade-in">
+              <strong>Round-robin time slicing</strong> - every task in the set of tasks with same priority is
+              guaranteed to be executed after some time
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>When a task requests to wait for some event:</p>
+          <ul>
+            <li>The task enters the <b>blocked</b> (<b>waiting</b>) state</li>
+            <li>The scheduler schedules the task with the highest priority, having waited for the longest 
+              time period</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>When a task with a given priority loops, for instance polling for an event without 
+            waiting for it:</p>
+          <ul class="fragment">
+            <li>Tasks with lower priority will never be executed.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>API example</h3>
+          <ul>
+            <li><code>task_handle_t task_create(...)</code></li>
+            <li><code>status_t task_delete(task_handle_t th)</code></li>
+            <li><code>status_t task_priority_set(task_handle_t th)</code></li>
+            <li><code>status_t task_suspend(task_handle_t th)</code></li>
+            <li><code>status_t task_resume(task_handle_t th)</code></li>
+            <li><code>...</code></li>
+          </ul>
+        </section>
+        
+        <section>
+          <p><a href="https://freertos.org/Documentation/01-FreeRTOS-quick-start/01-Beginners-guide/01-RTOS-fundamentals"
+                target="_blank">A good overview of task scheduling is provided by the FreeRTOS website</a>.</p>
+        </section>
+        
+        <!-- -------------------- Practice: creating and starting one task ---------------------------------------- -->
+        
+        <section id="practice11">
+          <h3>Practice session 11</h3>
+          <p class="pbcenter">Creating and starting one task</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Purpose: make a LED blink using a task</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/11-Start-task/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/11-Start-task/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

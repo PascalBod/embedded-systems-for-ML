@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Memory allocation ------------ -->
+        
+        <section id="memoryAllocation">
+          <h2>Memory allocation</h2>
+        </section>
+
+        <section>
+          <h3>Dynamic memory allocation</h3>
+          <ul>
+            <li>An application may require an amount of memory not known beforehand</li>
+            <li>An application may require to allocate some memory to some task, and reallocate it to some other task
+              later on</li>
+            <li>Some data structures and associated operations may require dynamic memory (linked lists...)</li>
+          </ul>
+          <p>&rArr; C library provides <code>malloc</code> and <code>free</code> functions</p>
+        </section>
+        
+        <section>
+          <h3>Dynamic memory allocation</h3>
+          <ul>
+            <li>Memory is allocated when the application requests it</li>
+            <li>The application must release memory when no more used: no garbage collector</li>
+            <li>The memory is allocated from the <em>heap</em></li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Drawbacks of dynamic memory allocation</h3>
+          <ul>
+            <li>
+              Several interwoven allocation/release cycles of memory blocks of different sizes may lead
+              to heap fragmentation
+            </li>
+            <li>
+              Allocation and release times are not deterministic (but not as bad as garbage collecting
+              for higher-level languages)
+            </li>
+          </ul>
+          <p>&rArr; If possible, do not use dynamic memory allocation</p>
+        </section>
+        
+        <section>
+          <p>For FreeRTOS, <a href="https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/09-Memory-management/01-Memory-management"
+             target="_blank">a page to read</a>.</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

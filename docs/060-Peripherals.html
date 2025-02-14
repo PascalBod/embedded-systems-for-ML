@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Peripherals ---------------------------------------- -->
+        
+        <section id="peripherals">
+          <h3>Peripherals</h3>
+        </section>
+
+        <section>
+          <p><b>Peripheral</b>: a piece of equipment that can be connected to the microcontroller
+             or to the microcontroller board.</p>
+        </section>
+        
+        <section>
+          <h4>Sensors</h4>
+          <ul>
+            <li>Pressure</li>
+            <li>Temperature</li>
+            <li>Light level</li>
+            <li>Magnetic field</li>
+            <li>Gas flow</li>
+            <li>Tilt</li>
+            <li>Acceleration</li>
+            <li>Contact</li>
+            <li>etc.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h4>Actuators</h4>
+          <ul>
+            <li>Relay</li>
+            <li>Motor</li>
+            <li>Stepper motor</li>
+            <li>Servomotor</li>
+            <li>etc.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h4>Other peripherals</h4>
+          <ul>
+            <li>Printer</li>
+            <li>Display</li>
+            <li>OBD connector (On-Board Diagnostics)</li>
+            <li>RFID tag reader</li>
+            <li>PC (!)</li>
+            <li>etc.</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

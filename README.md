@@ -49,14 +49,123 @@ C language is used, for the practice sessions. [This Standford Computer Science 
 > [!Note]
 > The practice sessions code was written for Simplicity SDK Suite v2024.6.2.
 
-## Presentation
-
-The presentation is at this URL: https://pascalbod.github.io/embedded-systems-for-ML. 
-
-Source code of the presentation is in the `docs` directory. 
+## Licenses
 
 The presentation is licensed under the  [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+The source code is licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.html#license-text).
 
 ## Sponsorship
 
 Solutions to the practice sessions are available to sponsors. Check the [sponsorship page](https://github.com/sponsors/PascalBod).
+
+## Presentation
+
+* [Preamble](https://pascalbod.github.io/embedded-systems-for-ML/010-Preamble.html)
+  * Document history
+  * Licenses
+  * Credits
+  * How to navigate
+* [Foreword](https://pascalbod.github.io/embedded-systems-for-ML/020-Foreword.html)
+  * Who am I?
+  * Needs of embedded ML applications
+  * Technical domains
+  * Presentation goal
+* [Introduction](https://pascalbod.github.io/embedded-systems-for-ML/030-Introduction.html)
+  * Hardware progress
+  * Embedded applications
+* [Microcontrollers and boards](https://pascalbod.github.io/embedded-systems-for-ML/040-MicrocontrollersAndBoards.html)
+  * Reminders: memory
+  * Microcontroller
+  * Board architecture
+  * Important characteristics?
+  * Some common microcontroller families
+    * Arm cores
+    * STM32
+    * EFR32
+    * ESP32
+* [Software development - Introduction](https://pascalbod.github.io/embedded-systems-for-ML/050-SoftDevIntroduction.html)
+  * Cross development
+  * Debugging
+  * **Practice sessions:**
+    * Hello World!
+    * A debug session
+* [Peripherals](https://pascalbod.github.io/embedded-systems-for-ML/060-Peripherals.html)
+  * Sensors
+  * Actuators
+* [Interfaces - Part 1](https://pascalbod.github.io/embedded-systems-for-ML/070-InterfacesPart1.html)
+  * GPIO
+  * **Practice sessions:**
+    * Display button state changes
+    * Make the red LED blink
+* [Software development - Design pattern](https://pascalbod.github.io/embedded-systems-for-ML/080-SoftDevDesignPattern.html)
+  * Finite State Machine
+* [Interfaces - Part 2](https://pascalbod.github.io/embedded-systems-for-ML/090-InterfacesPart2.html)
+  * ADC
+  * UART
+  * SPI
+  * I2C
+  * **Practice sessions:**
+    * ADC: convert an analog signal
+    * UART: send characters to the PC
+    * UART: echo received characters
+    * SPI: get data from the inertial sensor
+    * I2C: get data from the temperature sensor
+* [Software development - Part 3](https://pascalbod.github.io/embedded-systems-for-ML/100-SoftDevPart3.html)
+  * Floating-point arithmetic
+  * Memory: code and data
+  * Memory: static, automatic and dynamic storage
+  * Stack and heap
+  * How an application starts
+  * Interrupts and background task
+  * Sleep modes
+  * **Practice sessions:**
+    * GPIO and interrupt
+    * Timer and interrupt
+    * Application and interrupts
+* [Execution environments](https://pascalbod.github.io/embedded-systems-for-ML/110-ExecutionEvironments.html)
+  * Bare metal
+  * RTOS
+  * OS
+* [More about what an RTOS is](https://pascalbod.github.io/embedded-systems-for-ML/120-MoreAboutRtos.html)
+  * Problems and solution
+  * Soft and hard real time
+  * Benefits
+  * Drawbacks
+  * Components
+* [Tasks](https://pascalbod.github.io/embedded-systems-for-ML/130-Tasks.html)
+  * States
+  * The scheduler
+  * **Practice session:**
+    * Creating and starting a task
+* [Concurrency control](https://pascalbod.github.io/embedded-systems-for-ML/140-ConcurrencyControl.html)
+  * Shared resources
+  * Critical section
+  * Mutex
+  * Priority inversion
+  * Deadlock
+  * Semaphore
+  * **Practice sessions:**
+    * Sharing data bug
+    * Mutex
+    * Semaphore
+*  [Communication](https://pascalbod.github.io/embedded-systems-for-ML/150-Communication.html)
+  * Queues
+  * Benefits
+  * **Practice session:**
+    * Using a queue
+    * Time-stamped button presses
+    * A log server
+* [Concurrency summary](https://pascalbod.github.io/embedded-systems-for-ML/160-ConcurrencySummary.html)
+* [Time](https://pascalbod.github.io/embedded-systems-for-ML/170-Time.html)
+  * Timer
+  * Time functions
+  * Device time
+* [Memory allocation](https://pascalbod.github.io/embedded-systems-for-ML/180-MemoryAllocation.html)
+  * Dynamic memory allocation
+  * Drawbacks
+* [Middleware](https://pascalbod.github.io/embedded-systems-for-ML/190-Middleware.html)
+
+
+
+

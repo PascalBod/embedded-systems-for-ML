@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Communication > introduction ------------ -->
+        
+        <section id="communication">
+          <h2>Communication</h2>
+        </section>
+        
+        <section id="communicationIntroduction">
+          <p>By <em>communication</em> we mean:</p>
+          <ul>
+            <li>Exchanging data between tasks</li>
+            <li>Exchanging data between ISRs and tasks</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Exchanging data is usually asynchronous: data producer may produce data at some time, while 
+            data consumer may try to consume data at another time.
+          </p>
+          <p class="fragment">
+            Data exchange must be protected so that the consumer always gets consistent data.
+          </p>
+          <p class="fragment">
+            It is desirable that a mechanism let the consumer know that there is some data to consume.
+          </p>
+        </section>
+
+        <!-- -------------------- Communication > Queues ------------ -->
+        
+        <section id="communicationQueues">
+          <h3>Queues</h3>
+          <ul>
+            <li>Used to send messages between a source and a destination</li>
+          </ul>
+          <img src="images/queue-01.png">
+        </section>
+        
+        <section>
+          <p>Usually:</p>
+          <ul>
+            <li>A queue is FIFO (First In First Out)</li>
+            <li>The write operation returns immediately</li>
+            <li>Trying to read from an empty queue blocks</li>
+            <li>Trying to write into a full queue blocks or returns an error</li>
+            <li>Messages are of fixed size (but may contain pointers)</li>
+            <li>Messages are passed by copy</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>API example</h3>
+          <ul>
+            <li><code>queue_handle_t queue_create(int queue_length, int message_size)</code></li>
+            <li><code>status_t queue_send(queue_handle_t qh, void *message, timeout_t timeout)</code></li>
+            <li><code>status_t queue_receive(queue_handle_t qh, void *message, timeout_t timeout)</code></li>
+            <li><code>status_t queue_delete(queue_handle_t qh)</code></li>
+          </ul>
+        </section>
+
+        <!-- -------------------- Practice: queue -------------------- -->
+
+        <section id="practice15">
+          <h3>Practice session 15</h3>
+          <p class="pbcenter">Using a queue</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Purpose: demonstrate how to use a queue</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/15-Queue/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/15-Queue/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Queues > Benefits -------------------- -->
+        
+        <section id="queueBenefits">
+          <h3>Queues: benefits - 1/2</h3>
+          <ul>
+            <li>Ensure atomic access to messages</li>
+            <li>Provide synchronization between tasks</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Queues: benefits - 2/2</h3>
+          <p>A useful tool to prevent priority inversion and deadlocks</p>
+          <p>&rArr; In many cases, it's better to use queues instead of mutexes or semaphores.</p>
+          <p>A common design pattern: to provide access to a shared resource, use a "server" task 
+             with a queue. Clients write their requests into the queue.</p>
+          </p>
+        </section>
+
+        <!-- -------------------- Practice: button presses -------------------- -->
+
+        <section id="practice16">
+          <h3>Practice session 16</h3>
+          <p class="pbcenter">Time-stamped button presses</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Purpose: use a queue to handle button presses</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/16-All-button-presses/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/16-All-button-presses/README.md</code></a>
+                file</li>
+          </ul>
+        </section>
+
+        <!-- -------------------- Practice: a log server -------------------- -->
+
+        <section id="practice17">
+          <h3>Practice session 17</h3>
+          <p class="pbcenter">A log server</p>
+        </section>
+        
+        <section>
+          <ul>
+            <li>Purpose: correct the log messages problem detected in practice session 14</li>
+            <li>What to do: follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/17-Log-server/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/17-Log-server/README.md</code></a>
+                file</li>
+          </ul>
+          <p>Note: this practice session is a little bit more challenging than the previous ones.</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

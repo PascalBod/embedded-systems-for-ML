@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Concurrency > summary ------------ -->
+        
+        <section id="concurrencySummary">
+          <h3>Concurrency summary</h3>
+        </section>
+        
+        <section>
+          <p>Problems start when you have to share objects between concurrent tasks.</p>
+          <p class="fragment">Solutions are based on atomic operations. An atomic operation is an operation
+             which can't be interrupted by another one.</p>
+        </section>
+        
+        <section>
+          <p>In a bare-metal environment:</p>
+          <ul>
+            <li>With a single-core microcontroller: atomicity can be provided by disabling interrupt(s)</li>
+            <li>With a multi-core microcontroller: atomicity rely on specific instructions and bus control</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>In an RTOS environment, high-level facilities:</p>
+          <ul>
+            <li>Mutexes</li>
+            <li>Semaphores</li>
+            <li>Queues</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Mutexes and semaphores must be used with caution, otherwise: priority inversion, deadlock.</p>
+          <p>Queues can be an easier solution. They can be used to synchronize tasks, and to exchange data
+             between tasks.</p>
+          <p>In some contexts, mutexes and semaphores can be better than queues. You have to remember that
+             they exist.</p>
+          <p class="fragment">In the end, many things depend on the architecture, i.e. on the developer(s).</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

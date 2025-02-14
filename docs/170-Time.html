@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Time ------------ -->
+        
+        <section id="time">
+          <h2>Time</h2>
+        </section>
+        
+        <section>
+          <h3>Timer</h3>
+          <p>We used one in practice session 9.</p>
+          <ul>
+            <li>Software timers: service provided by the RTOS, based on at least one hardware timer</li>
+            <li>No limitation (excepted RAM) on the number of timers</li>
+            <li>When the timer reaches its duration, it calls its callback function</li>
+            <li>The callback function is passed a parameter that allows to identify the timer</li>
+            <li>Do not block in the callback function!</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Time functions</h3>
+          <ul>
+            <li>Time is local to the microcontroller</li>
+            <li>Function to get current (local) time</li>
+            <li>Function to convert time (e.g. POSIX format)</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>In some systems integrating several devices and/or PCs, servers, etc., it may be important to have a 
+             common time.</p>
+          <p class="fragment">If the devices are connected to the Internet, 
+             <a href="https://www.rfc-editor.org/rfc/rfc5905" target="_blank">NTP (Network Time Protocol)</a> can be used.</p>
+          <p class="fragment">If not, you're on your own.</p>
+          <div class="fragment">
+            <p>Possible solutions:</p>
+              <ul>
+                <li>A Real-Time Clock (RTC)</li>
+                <li>A simple message exchange to get (approximate) time</li>
+                <li>Etc.</li>
+              </ul>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

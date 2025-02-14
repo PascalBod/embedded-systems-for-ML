@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- ---------- Software development - design pattern > Finite State Machine ---------- -->
+        
+        <section id="fsm">
+            <h3>Software development - design pattern</h3>
+            <h4>Finite State Machine (FSM)</h4>
+        </section>
+        
+        <section>
+          <h4>Finite State Machine</h4>
+		  <ul>
+            <li>Abstract machine having a finite number of states</li>
+            <li>At a given time, is in one state</li>
+            <li>Entering a new state (transition) is caused by an event</li>
+            <li>A condition may guard a transition</li>
+            <li>Processing is performed when transitioning</li>
+          </ul>
+          <p class="pbcenter">Also named Finite State Automaton (FSA)</p>
+        </section>
+        
+        <section>
+          <p>A way to depict an FSM:</p>
+          <img src="images/fsm.png">
+        </section>
+        
+        <section>
+          <h4>Example: a message receiver</h4>
+          <p>A PC needs to send text messages to another PC. The two PCs
+             are connected by a link with the following properties:</p>
+          <ul>
+            <li>Reliable (every sent byte is received, without error)</li>
+            <li>In order</li>
+          </ul>
+          <div class="fragment">
+            <p>Every message is formatted as follows:</p>
+            <ul>
+              <li>Starts with the ASCII character STX (0x02)</li>
+              <li>Ends with the ASCII character ETX (0x03)</li>
+              <li>Message body contains alphanumeric characters (letters and numbers) only</li>
+              <li>Message body contains a maximum of 255 characters</li>
+            </ul>
+          </div>
+        </section>
+        
+        <section>
+          <p>Possible FSM waiting for a full message:</p>
+          <img src="images/messageReceiverFsm.png">
+        </section>
+
+        <section>
+          <p>A possible implementation:</p>
+          <pre><code data-trim data-noescape>
+						current_state = WAIT_STX;
+
+						while (true) {
+
+							c = get_character();
+
+							switch (current_state) {
+							case WAIT_STX:
+								if (c == STX) {
+								  body_length = 0
+									current_state = WAIT_ETX;
+									break;
+								}
+								// At this stage, other character, stay in this state.
+								break;
+							case WAIT_ETX:
+								if (c != ETX) {
+								  if (body_length < 255) {
+								    // TODO: store received byte.
+								    body_length++;
+								    // Stay in same state.
+								    break;
+								  }
+								  // At this stage, body_length >= 255.
+								  // TODO: signal error.
+								  current_state = WAIT_STX;
+								  break;
+								}
+								// At this stage, ETX.
+								current_state = WAIT_STX;
+								break;
+							default:
+								signal_error(UNKNOWN_STATE);
+								current_state = WAIT_STX;
+							}
+						}
+		  </code></pre>
+		</section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

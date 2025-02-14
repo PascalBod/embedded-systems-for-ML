@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Execution environments ---------------------------------------- -->
+        
+        <section id="executionEnvironments">
+          <h3>Execution environments</h3>
+        </section>
+        <section>
+          <p>Execution environment: what the target board provides to run an application.</p>
+        </section>
+        
+        <!-- -------------------- Execution environments > bare metal ---------------------------------------- -->
+        
+        <section id="bareMetal">
+          <h4>Bare metal</h4>
+          <ul>
+            <li>You write all the code, without any help to run concurrent tasks,
+              to share data between tasks, etc.</li>
+            <li>Nowadays, an abstraction layer is provided by almost all 
+              microcontroller manufacturers:
+              <ul>
+                <li>&rArr; Compatibility over a family of microcontrollers</li>
+                <li>&rArr; A little bit easier to use peripherals and interfaces</li>
+                <li>Arm: <a href="https://www.arm.com/technologies/cmsis" target="_blank">CMSIS</a></li>
+                <li>Silicon Labs: <a href="https://www.silabs.com/developer-tools/gecko-software-development-kit"
+                      target="_blank"">Gecko SDK</a></li>
+                <li>STMicroelectronics: <a href="https://github.com/STMicroelectronics/STM32Cube_MCU_Overall_Offer/blob/master/README.md#stm32cube-hal-drivers"
+                      target="_blank">HAL + LL</a></li>
+                <li>Espressif: <a href="https://www.espressif.com/en/products/sdks/esp-idf"
+                      target="_blank">ESP-IDF</a></li>
+                <li>Etc.</li>
+              </ul>
+            </li>
+          </ul>
+          <p>What we did in the practical sessions is bare-metal software development.</p>
+        </section>
+        
+        <!-- -------------------- Execution environments > RTOS ---------------------------------------- -->
+
+        <section id="rtos">
+          <h4>Real-Time Operating System (RTOS)</h4>
+          <ul>
+            <li>Provides real help to run concurrent tasks, share data between tasks, etc.</li>
+            <li>Allows for deterministic response time</li>
+            <li>Uses very little memory</li>
+            <li>No protection between tasks, nor between tasks and RTOS (no virtual memory)</li>
+            <li>No way to modify the application without rebuilding and reflashing (well, not fully true)</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>Minimum required memory:</p>
+          <ul>
+            <li>RAM: a few KB</li>
+            <li>Flash: a few KB</li>
+            <li>Depends on the application</li>
+          </ul>
+        </section>
+
+        <section>
+          <img src="images/rtos.png">
+          <div class="pbverysmall">Sources: <a href="https://www.freertos.org/index.html" title="FreeRTOS"
+                                               target="_blank">FreeRTOS</a>,
+            <a href="https://www.ecoscentric.com/ecos/index.shtml" title="eCos" target="_blank">eCos</a>,
+            <a href="https://www.contiki-ng.org/" title="Contiki-NG"
+               target="_blank">Contiki-NG</a>,
+            <a href="http://riot-os.org/" title="RIOT" target="_blank">RIOT</a>,
+            <a href="https://blackberry.qnx.com/en" title="QNX" target="_blank">QNX</a>,
+           <a href="https://www.rt-thread.io/index.html" title="RT-Thread" target="_blank">RT-Thread</a>,
+            <a href="https://www.zephyrproject.org/" title="Zephyr" target="_blank">Zephyr</a>,
+            <a href="https://threadx.io/" title="ThreadX"
+               target="_blank">ThreadX</a>,
+            <a href="https://www.silabs.com/developer-tools/micrium-os" title="Micriµm OS" target="_blank">Micriµm OS</a>,
+            <a href="https://microware.com/" title="OS-9" target="_blank">OS-9</a>,
+            <a href="https://mynewt.apache.org/" title="Mynewt" target="_blank">Mynewt</a>,
+            <a href="https://www.windriver.com/products/vxworks/" title="VxWorks"
+               target="_blank">VxWorks</a>,
+            <a href="https://www.lynx.com/products/lynxos-posix-real-time-operating-system-rtos"
+               title="LynxOS" target="_blank">LynxOS</a>,
+            <a href="https://www.zerynth.com/zos/" title="Zerynth OS" target="_blank">Zerynth OS</a>,
+            <a href="https://nuttx.apache.org/" title="NuttX" target="_blank">NuttX</a>
+          </div>        
+        </section>
+
+        <section>
+          <ul>
+            <li>FreeRTOS acquired by Amazon - 2017</li>
+            <li>ThreadX acquired by Microsoft - 2019, transferred to the Eclipse Foundation, as open source - 2023</li>
+            <li>Google and Meta support Zephyr</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>Available services: will be seen farther.</p>
+        </section>
+
+        <!-- -------------------- Execution environments > OS ---------------------------------------- -->
+
+        <section id="os">
+          <h4>Operating System (OS)</h4>
+          <ul>
+            <li>Mainly: Linux</li>
+            <li>Similar to a desktop computer environment:
+              <ul>
+                <li>Package manager, to install new applications</li>
+                <li>Graphical user interface is possible</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <p>Minimum required memory:</p>
+          <ul>
+            <li>RAM: a few MB or a few tens of MB</li>
+            <li>Depends on applications</li>
+          </ul>
+          <p>Usually:</p>
+          <ul>
+            <li>RAM: from 512 MB to 8 GB</li>
+            <li>Flash card: from 1 GB to 8 GB</li>
+          </ul>
+        </section>
+
+        <section>
+          <ul>
+            <li>Linux typically requires an MMU (Memory Management Unit) &rArr; virtual memory</li>
+            <li>The kernel can be configured to work without one
+              <ul>
+                <li>Thanks to μClinux project</li>
+                <li>Beware about applications compatibility</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <img src="images/embeddedOS.png">
+          <div class="pbverysmall">Sources: <a href="https://isc.tamu.edu/~lewing/linux/" title="Larry Ewing"
+                                               target="_blank">Larry Ewing</a>,
+            <a href="https://www.yoctoproject.org/" title="Yocto Project" target="_blank">Yocto Project</a>,
+            <a href="https://legato.io/" title="Legato" target="_blank">Legato</a>,
+            <a href="https://archlinuxarm.org/" title="Arch Linux ARM" target="_blank">Arch Linux ARM</a>,
+            <a href="https://openwrt.org/" title="OpenWrt Project" target="_blank">OpenWrt Project</a>,
+            <a href="https://www.balena.io/os/" title="balenaOS" target="_blank">balenaOS</a>,
+            <a href="https://www.windriver.com/products/linux/" title="Wind River" target="_blank">Wind
+              River</a>,
+            <a href="https://www.mvista.com/" title="MontaVista" target="_blank">MontaVista</a>,
+            <a href="https://www.lynx.com/products/lynx-mosaic-modular-development-framework"
+               title="LYNX MOSA.ic" target="_blank">LYNX MOSA.ic</a>
+          </div>
+        </section>
+        
+        <section>
+          <p>Latest news: <a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=baeb9a7d8b60b021d907127509c44507539c15e5"
+               target="_blank">real-time is now supported by mainline Linux kernel</a>.</p>
+          <p>&rArr; "standard" Linux now can provide deterministic response time.</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

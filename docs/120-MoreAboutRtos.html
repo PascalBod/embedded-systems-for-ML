@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>RTOS for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- More about what an RTOS is ---------------------------------------- -->
+
+        <section id="moreAboutRtos">
+          <h2>More about what an RTOS is</h2>
+        </section>
+        
+        <section>
+            <h3>Problem</h3>
+            <p>The bare metal architecture (ISR + background task) seen before does not provide solutions
+               to the following needs:</p>
+            <ul>
+                <li>Structure application code in several "independent" units of execution</li>
+                <li>Share data between these units</li>
+                <li>Handle different priorities</li>
+                <li>Ensure that time constraints are met (or not met)</li>
+                <li>Etc.</li>
+            </ul>
+        </section>
+        
+        <section>
+            <h3>A solution</h3>
+            <p>An RTOS.</p>
+        </section>
+        
+        <section>
+          <h3>More precisely</h3>
+          <p class="pbcenter">RTOS = OS intended for real-time applications.</p>
+          <ul>
+            <li>Provides minimal latency when handling events</li>
+            <li>Guarantees predictable response time</li>
+          </ul>
+        </section>
+        
+        <section>
+            <h3>Soft and hard real time</h3>
+            <ul>
+                <li><b>Hard real time</b>: when a system will cease to function if a deadline is missed, 
+                    which can result in catastrophic consequences</li>
+                <li class="fragment"><b>Soft real time</b>: when a system continues to function even if
+                    it’s unable to execute within an allotted time. If the system has missed its deadline,
+                    it will not result in critical consequences. The system can continue to function,
+                    though with undesirable lower quality of output</li>
+            </ul>
+            <div class="pbverysmall">Source: <a href="https://www.intel.com/content/www/us/en/robotics/real-time-systems.html" title="Intel" target="_blank">Intel</a></div>
+        </section>
+        
+        <section>
+            <p>This presentation is about soft real time only.</p>
+        </section>
+        
+        <!-- -------------------- RTOS benefits ---------------------------------------- -->
+
+        <section id="benefits">
+          <h2>Benefits</h2>
+        </section>
+        
+        <section>
+          <ul>
+            <li>
+              Provides a way to split application code in several execution blocks
+            </li>
+            <li class="fragment">
+              Allows to prioritize execution blocks
+            </li>
+            <li class="fragment">
+              Application architecture easier to design: several execution blocks can 
+              concurrently process events
+            </li>
+            <li class="fragment">
+              Can reuse existing middleware (TCP/IP stack, flash file system, time handling, etc.)
+              more easily
+            </li>
+            <li class="fragment">
+              Provides a common reference framework for teams of several developers
+            </li>
+            <li class="fragment">
+              Makes application code more portable (to different hardware targets)
+            </li>
+            <li class="fragment">
+              ...
+            </li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- RTOS drawbacks ---------------------------------------- -->
+
+        <section id="drawbacks">
+          <h2>Drawbacks</h2>
+        </section>
+        
+        <section>
+          <ul>
+            <li>
+              Requires more flash memory (from a few KB to a few tens of KB)
+            </li>
+            <li class="fragment">
+              Requires more RAM (fixed quantity + quantity depending on execution blocks)
+            </li>
+            <li class="fragment">
+              Consumes some processing power (a few %)
+            </li>
+            <li class="fragment">
+              Associated learning curve must be taken into account
+            </li>
+            <li class="fragment">
+              Brings in a software dependency
+            </li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- RTOS components ---------------------------------------- -->
+
+        <section id="components">
+          <h2>Components</h2>
+        </section>
+        
+        <section>
+          <p class="pbcenter">Usual components:</p>
+          <ul>
+            <li>
+              Scheduler - assigns computing resource to the execution blocks <em>(tasks</em> or 
+              <em>threads)</em>
+            </li>
+            <li class="fragment">
+              Services allowing concurrent accesses to shared resources
+            </li>
+            <li class="fragment">
+              Communication services letting tasks exchange data
+            </li>
+            <li class="fragment">
+              Time services
+            </li>
+            <li class="fragment">
+              Memory allocation services
+            </li>
+            <li class="fragment">
+              Middleware: Wi-Fi stack, Bluetooth stack, TCP/IP stack, USB stack, flash file system, 
+              GUI, etc.
+            </li>
+          </ul>
+          <p class="pbsmaller fragment">GUI: Graphical User Interface</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>
