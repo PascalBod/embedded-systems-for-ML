@@ -66,7 +66,7 @@ C language is used, for the practice sessions. [This Standford Computer Science 
 
 ### What to do before going through the presentation
 
-If ypou want to use FreeRTOS:
+If you want to use FreeRTOS:
 
 1. Create a [Simplicity Studio VM](https://github.com/PascalBod/lm-efr32-simplicityStudio)
 2. Get an EFR32xG24 Dev Kit (see the link provided in the *Hardware* section above.
@@ -75,11 +75,8 @@ If ypou want to use FreeRTOS:
 > [!Note]
 > The practice sessions code was written for Simplicity SDK Suite v2024.6.2. They will soon be migrated to v2024.12.2. Refer to the *Modifications in progress* section above for current status.
 
-If you want to use Zephyr:
+If you want to use Zephyr, adhere to the following steps, in addition to the above ones:
 
-1. Create a [Simplicity Studio VM](https://github.com/PascalBod/lm-efr32-simplicityStudio)
-2. Get an EFR32xG24 Dev Kit (see the link provided in the *Hardware* section above.
-3. Ensure that you can build and program the sample application, as presented in the VM repository above
 4. Update the Simplicity Studio VM according to the instructions for the [Zephyr VM](https://github.com/PascalBod/lm-zephyr). Select the Zephyr Workbench method, to configure VS Code
 5. Ensure that you can build and program the sample application, as presented in the VM repository above
 
