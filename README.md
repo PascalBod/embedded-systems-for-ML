@@ -1,8 +1,16 @@
 # Introduction to Embedded Systems for Machine Learning
 
+## Modifications in progress
+
+Bare metal and FreeRTOS examples will soon be migrated to Simplicity SDK Suite v2024.6.2.
+
+FreeRTOS examples will soon be ported to Zephyr.
+
 ## Overview
 
 This repository contains a presentation providing an introduction to embedded systems. The targeted audience is machine learning application developers, who want to better understand what an embedded system is, and how it can be used.
+
+The presentation DOES NOT provide any information about machine learning topic.
 
 The following topics are covered:
 * Interfaces: GPIO, ADC, UART, SPI, I2C
@@ -13,17 +21,33 @@ Practice sessions provide hands-on experience of the presented concepts.
 
 The hardware target for the practice sessions is the [Silicon Labs EFR32xG24 Dev Kit](https://www.silabs.com/development-tools/wireless/efr32xg24-dev-kit?tab=overview), based on the [EFR32MG24 wireless System on Chip (SoC)](https://www.silabs.com/wireless/zigbee/efr32mg24-series-2-socs).
 
-The presentation DOES NOT provide any information about Machine Learning topic.
-
 This presentation was used as a support for the 22-hour course given at [IMT Atlantique](https://www.imt-atlantique.fr/en) in January 2025. The 22-hour duration was slightly too short to cover all the practical sessions.
 
 ## Prerequisites for the practice sessions
 
 ### Software
 
-The provided practice sessions rely on the development environment presented [here](https://github.com/PascalBod/lm-efr32-simplicityStudio): *Silicon Labs Simplicity Studio* installed in a *Linux Mint Xfce* virtual machine.
+#### Overview
 
-Using a virtual machine allows to isolate all specific configuration relating to Simplicity Studio from your other projects. A drawback is that the host computer must be powerful enough and must have more memory.
+Two different development environments are used:
+
+* [Silicon Labs Simplicity Studio](https://www.silabs.com/developer-tools/simplicity-studio) (based on Eclipse CDT) is used for bare metal (i.e. no RTOS) practice sessions and for FreeRTOS-based practice sessions
+* Visual Studio Code (VS Code) with the [Ac6 Zephyr Workbench extension](https://zephyr-workbench.com) is used for Zephyr-based practice sessions
+
+Each of these development environments is installed in a [Linux Mint](https://linuxmint.com) Virtual Machine (VM). Using a virtual machine allows to isolate the specific configuration from other projects. A drawback is that the host computer must be powerful enough and must have more memory.
+
+RTOS practice sessions were initially developed for FreeRTOS. All of them are currently in the process of being ported to Zephyr.
+
+#### Simplicity Studio
+
+The construction of the associated VM is presented [here](https://github.com/PascalBod/lm-efr32-simplicityStudio).
+
+#### VS Code
+
+The construction of the associated VM is presented [here](https://github.com/PascalBod/lm-zephyr). 
+
+> [!NOTE]
+> Of course, VS Code can be installed in the VM where Simplicity Studio has been installed.
 
 ### Hardware
 
@@ -42,12 +66,25 @@ C language is used, for the practice sessions. [This Standford Computer Science 
 
 ### What to do before going through the presentation
 
-1. Install *Simplicity Studio* on your computer. It's a good thing to install it in a virtual machine as presented in the *Software* section above. This way, you can reproduce the exact same environment than the one used here. You can also directly install  Simplicity Studio in your usual environment, but in this case, you are on your own.
+If ypou want to use FreeRTOS:
+
+1. Create a [Simplicity Studio VM](https://github.com/PascalBod/lm-efr32-simplicityStudio)
 2. Get an EFR32xG24 Dev Kit (see the link provided in the *Hardware* section above.
-3. Ensure that you can build and program the sample application, as presented in the *lm-efr32-simplicityStudio* repository, introduced in the *Software* section above.
+3. Ensure that you can build and program the sample application, as presented in the VM repository above
 
 > [!Note]
-> The practice sessions code was written for Simplicity SDK Suite v2024.6.2.
+> The practice sessions code was written for Simplicity SDK Suite v2024.6.2. They will soon be migrated to v2024.12.2. Refer to the *Modifications in progress* section above for current status.
+
+If you want to use Zephyr:
+
+1. Create a [Simplicity Studio VM](https://github.com/PascalBod/lm-efr32-simplicityStudio)
+2. Get an EFR32xG24 Dev Kit (see the link provided in the *Hardware* section above.
+3. Ensure that you can build and program the sample application, as presented in the VM repository above
+4. Update the Simplicity Studio VM according to the instructions for the [Zephyr VM](https://github.com/PascalBod/lm-zephyr). Select the Zephyr Workbench method, to configure VS Code
+5. Ensure that you can build and program the sample application, as presented in the VM repository above
+
+> [!NOTE]
+> The practice sessions are being written for Zephyr SDK 0.17.0 and Zephyr 4.1.0. Check the *Modifications in progress* section above for current status.
 
 ## Licenses
 
