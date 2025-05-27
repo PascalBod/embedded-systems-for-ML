@@ -27,9 +27,9 @@
   --r-heading4-size: 1em;
   --r-code-font: monospace;
   --r-link-color: #c4a55e;
-  --r-link-color-dark: #9c7e39;
-  --r-link-color-hover: #d9c496;
-  --r-selection-background-color: #e6d9bb;
+  --r-link-color-dark: rgb(156.2431818182, 126.1590909091, 57.2568181818);
+  --r-link-color-hover: rgb(216.5159090909, 196.2954545455, 149.9840909091);
+  --r-selection-background-color: rgb(230.1931818182, 217.1590909091, 187.3068181818);
   --r-selection-color: #fff;
   --r-overlay-element-bg-color: 240, 240, 240;
   --r-overlay-element-fg-color: 0, 0, 0;
