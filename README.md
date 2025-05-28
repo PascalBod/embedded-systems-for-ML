@@ -118,6 +118,7 @@ Solutions to the practice sessions are available to sponsors. Check the [sponsor
     * STM32
     * EFR32
     * ESP32
+    * RISC-V
 * [Software development - Introduction](https://pascalbod.github.io/embedded-systems-for-ML/050-SoftDevIntroduction.html)
   * Cross development
   * Debugging
