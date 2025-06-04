@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="favicon.ico">
+
+    <title>Embedded systems for ML</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/pb.css">
+    <link rel="stylesheet" href="pres-style.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+      
+        <!-- -------------------- Interfaces - Part 1 ------------------------------------- -->
+        
+        <section id="interfacesPart1">
+          <h3>Interfaces - part 1 - continued</h3>
+        </section>
+        
+        <!-- -------------------- Interfaces > GPIO ---------------------------------------- -->
+        
+        <section>
+          <h4>GPIO as an input - 1/3</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioInput03.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li>The <a href="https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf"
+                       target="_blank">board schematic</a> shows an additional resistor, R141. What is its purpose?</li>
+                <li class="fragment">If the GPIO was configured as an output (bug), set to 1, and the switch was closed: short-circuit</li>
+                <li class="fragment">R141 limits the current in such a case</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+
+        <section>
+          <h4>GPIO as an input - 2/3</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioInput04.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li>The <a href="https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf"
+                       target="_blank">board schematic</a> shows a capacitor, C142. What is its purpose?</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+        
+        <section>
+          <h4>What really happens when closing a switch</h4>
+          <img src="images/0059-Switch_Debouncing_Figure_1.webp" height="300">
+          <p class="pbcenter">Vertical: 1 V / division - Horizontal: 1 ms / division</p>
+          <div class="pbverysmall">Source: <a href="https://circuitcellar.com/resources/quickbits/switch-debouncing/" title="circuit cellar" 
+               target="_blank">
+               circuit cellar</a></div>
+        </section>
+        
+        <section>
+          <h4>GPIO as an input - 3/3</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/interfacesGpioInput04.png" height="400">
+            </div>
+            <div class=column>
+              <ul>
+                <li>C142 "fills in" the gaps / filters out the highest frequencies</li>
+                <li class="fragment">&rArr; <em>debouncing</em></li>
+                <li class="fragment">Debouncing can also be done in software</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
+               KiCad</a></div>
+        </section>
+        
+        <section>
+          <h4>Voltage and current adaptation</h4>
+          <p>If peripheral voltage is different from microcontroller voltage, or if it requires
+             more current than what the microcontroller can provide, or if regulations require 
+             some specific protections, adaptation is required:</p>
+          <ul>
+            <li>Optocoupler</li>
+            <li>Relay</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>GPIO and ML application</h4>
+          <ul>
+            <li>Start/stop a task on a contact closure:
+              <ul>
+                <li>Start processing a video stream when a door opens</li>
+                <li>Start converting and processing analog data when an engine starts</li>
+                <li>Etc.</li>
+              </ul></li>
+            <li>Activate a peripheral:
+              <ul>
+                <li>Start an alarm siren when an unknown person enters a room</li>
+                <li>Stop a conveyor belt when a problem is detected</li>
+                <li>Etc.</li>
+              </ul></li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Practice: GPIO Input ---------------------------------------- -->
+        
+        <section id="practice02">
+          <h4>Practice session 02</h4>
+          <p>Display a message when a button is pushed or released</p>
+          <ul>
+            <li>Follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/02-GpioInput/README.md"
+                   target="_blank""><code>embedded-systems-for-ML/practice-sessions/02-GpioInput/README.md</code></a>
+                file.</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Practice: GPIO Output ---------------------------------------- -->
+
+        <section id="practice03">
+          <h4>Practice session 03</h4>
+          <p>Make a LED blink</p>
+          <ul>
+            <li>Follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/03-GpioOutput/README.md"
+                   target="_blank""><code>embedded-systems-for-ML/practice-sessions/03-GpioOutput/README.md</code></a>
+                file.</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      // Scroll view inhibited until arrow keys can be used.
+      //view: 'scroll',
+      //scrollProgress: true,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

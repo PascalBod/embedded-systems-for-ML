@@ -74,7 +74,7 @@
         </section>
         
         <section>
-          <h4>Physical world has some constraints - 1/2</h4>
+          <h4>The physical world has some constraints</h4>
           <div class="row">
             <div class="column">
               <img src="images/interfacesGpioOutput01.png" height="400">
@@ -92,16 +92,7 @@
         </section>
         
         <section>
-          <h4>Physical world has some constraints - 2/2</h4>
-          <p>The LED current flows into the microcontroller. A GPIO can't accept more than a given value 
-             (provided by the microcontroller data sheet).</p>
-          <p class="fragment">For the EFR32MG24, maximum value is 50 mA. As R137 limits the current to 1.5 mA, we are OK.</p>
-          <p class="fragment">Another limit: total maximum value for all GPIO pins. For the EFR32MG24: 200 mA.</p>
-          <p class="fragment">Note: the GPIO is configured as an output, but the current flows INTO the microcontroller.</p>
-        </section>
-        
-        <section>
-          <h4>GPIO as an input - 1/5</h4>
+          <h4>GPIO as an input - 1/2</h4>
           <div class="row">
             <div class="column">
               <img src="images/interfacesGpioInput01.png" height="400">
@@ -120,7 +111,7 @@
         </section>
 
         <section>
-          <h4>GPIO as an input - 2/5</h4>
+          <h4>GPIO as an input - 2/2</h4>
           <div class="row">
             <div class="column">
               <img src="images/interfacesGpioInput02.png" height="400">
@@ -137,124 +128,80 @@
           <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
                KiCad</a></div>
         </section>
-
+        
         <section>
-          <h4>GPIO as an input - 3/5</h4>
-          <div class="row">
-            <div class="column">
-              <img src="images/interfacesGpioInput03.png" height="400">
-            </div>
-            <div class=column>
-              <ul>
-                <li>The <a href="https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf"
-                       target="_blank">board schematic</a> shows an additional resistor, R141. What is its purpose?</li>
-                <li class="fragment">If the GPIO was configured as an output (bug), set to 1, and the switch was closed: short-circuit</li>
-                <li class="fragment">R141 limits the current in such a case</li>
-              </ul>
-            </div>
+          <p>The microcontroller may provide internal pullup/pulldown resistors.</p>
+          <p>This is the case for the EFR32MG24.</p>
+        </section>
+        
+        <section>
+          <h3>Hardware API</h3>
+          <div>
+            <p>To summarize, configuration of a given GPIO pin:</p>
+            <ul>
+              <li>Output or input</li>
+              <li>If input: internal pulldown resistor, internal pullup resistor, no internal resistor</li>
+              <li>Etc.</li>
+            </ul>
           </div>
-          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
-               KiCad</a></div>
-        </section>
-
-        <section>
-          <h4>GPIO as an input - 4/5</h4>
-          <div class="row">
-            <div class="column">
-              <img src="images/interfacesGpioInput04.png" height="400">
-            </div>
-            <div class=column>
-              <ul>
-                <li>The <a href="https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf"
-                       target="_blank">board schematic</a> shows a capacitor, C142. What is its purpose?</li>
-              </ul>
-            </div>
-          </div>
-          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
-               KiCad</a></div>
+          <p class="fragment">The microcontroller provides an interface to use the GPIO pins.</p>
         </section>
         
         <section>
-          <h4>What really happens when closing a switch</h4>
-          <img src="images/0059-Switch_Debouncing_Figure_1.webp" height="300">
-          <p class="pbcenter">Vertical: 1 V / division - Horizontal: 1 ms / division</p>
-          <div class="pbverysmall">Source: <a href="https://circuitcellar.com/resources/quickbits/switch-debouncing/" title="circuit cellar" 
-               target="_blank">
-               circuit cellar</a></div>
-        </section>
-        
-        <section>
-          <h4>GPIO as an input - 5/5</h4>
-          <div class="row">
-            <div class="column">
-              <img src="images/interfacesGpioInput04.png" height="400">
-            </div>
-            <div class=column>
-              <ul>
-                <li>C142 "fills in" the gaps / filters out the highest frequencies</li>
-                <li class="fragment">&rArr; <em>debouncing</em></li>
-                <li class="fragment">Debouncing can also be done in software</li>
-              </ul>
-            </div>
-          </div>
-          <div class="pbverysmall">EDA (Electronic Design Automation) tool: <a href="https://www.kicad.org/" title="KiCad" target="_blank">
-               KiCad</a></div>
-        </section>
-        
-        <section>
-          <h4>Voltage and current adaptation</h4>
-          <p>If peripheral voltage is different from microcontroller voltage, or if it requires
-             more current than what the microcontroller can provide, or if regulations require 
-             some specific protections, adaptation is required:</p>
+          <h4>The interface</h4>
           <ul>
-            <li>Optocoupler</li>
-            <li>Relay</li>
-            <li>Etc.</li>
+            <li>A set of <em>registers</em></li>
+            <li>The values which can be written to the registers, to configure a given GPIO pin</li>
+            <li>The values which can be read from the registers, to get the state of a given GPIO pin</li>
           </ul>
+          <p>Reminder: a register is a small amount of storage within the microcontroller (RAM).</p>
         </section>
         
         <section>
-          <h4>GPIO and ML application</h4>
-          <ul>
-            <li>Start/stop a task on a contact closure:
-              <ul>
-                <li>Start processing a video stream when a door opens</li>
-                <li>Start converting and processing analog data when an engine starts</li>
-                <li>Etc.</li>
-              </ul></li>
-            <li>Activate a peripheral:
-              <ul>
-                <li>Start an alarm siren when an unknown person enters a room</li>
-                <li>Stop a conveyor belt when a problem is detected</li>
-                <li>Etc.</li>
-              </ul></li>
-          </ul>
+          <h4>GPIO registers of the EFR32MG24</h4>
+          <p>Reminder: the board uses pin 2 of port D as output (LED) and pin 2 of port B as input (button).</p>
         </section>
         
-        <!-- -------------------- Practice: GPIO Input ---------------------------------------- -->
-        
-        <section id="practice02">
-          <h4>Practice session 02</h4>
-          <p>Display a message when a button is pushed or released</p>
-          <ul>
-            <li>Follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/02-GpioInput/README.md"
-                   target="_blank""><code>embedded-systems-for-ML/practice-sessions/02-GpioInput/README.md</code></a>
-                file.</li>
-          </ul>
+        <section>
+          <p>First, pin 2 of port B must be configured as an input, with GPIO_PORTB_MODEL:</p>
+          <img src="images/efr32mg24-gpio_portb_model.png">
+          <p>Each pin is configured by a block of 4 bits. For pin 2: MODE2.</p>
         </section>
         
-        <!-- -------------------- Practice: GPIO Output ---------------------------------------- -->
-
-        <section id="practice03">
-          <h4>Practice session 03</h4>
-          <p>Make a LED blink</p>
+        <section>
+          <p>Configuration values:</p>
+          <img src="images/efr32mg24-gpio_moden.png">
+        </section>
+        
+        <section>
+          <p>The board provides a pullup resistor &rArr; no need to use the internal one.</p>
+          <p>Consequently, the value to write into MODE2 is <code>1</code> (INPUT mode).</p>
+          <p>Additionally, bit 2 of GPIO_PORTB_DOUT must be set to <code>0</code> to disable filtering:</p>
+          <img src="images/efr32mg24-gpio_portb_dout.png">
+          <p>We'll see later what filtering is about.</p>
+        </section>
+        
+        <section>
+          <p>State of pin 2 of port B can now be read from GPIO_PORTB_DIN:</p>
+          <img src="images/efr32mg24-gpio_portb_din.png">
+          <p>State of the port is in bit 2.</p>
+          <div class="pbverysmall">Source: <a href="https://www.silabs.com/documents/public/reference-manuals/efr32xg24-rm.pdf" 
+               title="EFR32MG24 Reference Manual" target="_blank">
+               EFR32MG24 Reference Manual</a></div>
+        </section>
+        
+        <section>
+          <h4>GPIO summary</h4>
+          <p>To be able to read the state of a GPIO pin on the EFR32MG24:</p>
           <ul>
-            <li>Follow the instructions provided by the 
-                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/03-GpioOutput/README.md"
-                   target="_blank""><code>embedded-systems-for-ML/practice-sessions/03-GpioOutput/README.md</code></a>
-                file.</li>
+            <li>Some data must be written into two registers, to configure the pin</li>
+            <li>Then, pin state can be read from a third register</li>
           </ul>
+          <p>Note: we'll see later that more configuration is usually required, involving more registers!</p>
+        </section>
+        
+        <section>
+          Similar for configuration and use of pin 2 of port D, and for other interfaces and peripherals.
         </section>
 
       </div>

@@ -35,26 +35,37 @@
         
         <section id="bareMetal">
           <h4>Bare metal</h4>
+          <p>You write all the code:</p>
           <ul>
-            <li>You write all the code, without any help to run concurrent tasks,
-              to share data between tasks, etc.</li>
+            <li>Configure and use interfaces and peripherals</li>
+            <li>Define how to run several concurrent tasks</li>
+            <li>Define how to share data between tasks</li>
+            <li>Etc.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <ul>
             <li>Nowadays, an abstraction layer is provided by almost all 
               microcontroller manufacturers:
               <ul>
                 <li>&rArr; Compatibility over a family of microcontrollers</li>
                 <li>&rArr; A little bit easier to use peripherals and interfaces</li>
                 <li>Arm: <a href="https://www.arm.com/technologies/cmsis" target="_blank">CMSIS</a></li>
-                <li>Silicon Labs: <a href="https://www.silabs.com/developer-tools/gecko-software-development-kit"
-                      target="_blank"">Gecko SDK</a></li>
+                <li>Silicon Labs: <a href="https://www.silabs.com/developer-tools/simplicity-software-development-kit"
+                      target="_blank"">(Part of) Simplicity SDK</a></li>
                 <li>STMicroelectronics: <a href="https://github.com/STMicroelectronics/STM32Cube_MCU_Overall_Offer/blob/master/README.md#stm32cube-hal-drivers"
                       target="_blank">HAL + LL</a></li>
                 <li>Espressif: <a href="https://www.espressif.com/en/products/sdks/esp-idf"
-                      target="_blank">ESP-IDF</a></li>
+                      target="_blank">(Part of) ESP-IDF</a></li>
                 <li>Etc.</li>
               </ul>
             </li>
           </ul>
-          <p>What we did in the practical sessions is bare-metal software development.</p>
+        </section>
+        
+        <section>
+          <img src="images/execEnv-bareMetal.png">
         </section>
         
         <!-- -------------------- Execution environments > RTOS ---------------------------------------- -->
@@ -70,6 +81,10 @@
           </ul>
         </section>
 
+        <section>
+          <img src="images/execEnv-Rtos.png">
+        </section>
+        
         <section>
           <p>Minimum required memory:</p>
           <ul>
@@ -178,6 +193,153 @@
                target="_blank">real-time is now supported by mainline Linux kernel</a>.</p>
           <p>&rArr; "standard" Linux now can provide deterministic response time.</p>
         </section>
+
+        <!-- -------------------- Practice session 01 - step 1: Hello World ---------------------------------------- -->
+        
+        <section id="practice01Step1">
+          <h3>Practice session 01</h3>
+          <p>Build and run an <em>Hello World</em> application for the EFR32xG24 Dev Kit.</p>
+          <p>Execution environment: bare metal.</p>
+        </section>
+        
+        <section>
+          <h4>EFR32MG24</h4>
+          <img src="images/efr32mg24-functional-diagram.png">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/data-sheets/efr32mg24-datasheet.pdf"
+              title="EFR32MG24 Datasheet"
+              target="_blank">EFR32MG24 Datasheet</a></div>
+        </section>
+        
+        <section>
+          <h4>xG24 Dev Kit</h4>
+          <img src="images/efr32xg24-dev-kit-annotated-photo.png" height="400">
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf"
+              title="xG24 Dev Kit User's Guide" 
+              target="_blank">xG24 Dev Kit User's Guide</a></div>
+        </section>
+        
+        <section>
+          <h4>Reference documentation</h4>
+          <ul>
+            <li>Microcontroller:
+              <ul>
+                <li><a href="https://www.silabs.com/documents/public/data-sheets/efr32mg24-datasheet.pdf"
+                       target="_blank">
+                  EF32MG24 Wireless SoC Family Data Sheet (132 pages)</a></li>
+                <li><a href="https://www.silabs.com/documents/public/reference-manuals/efr32xg24-rm.pdf"
+                       target="_blank">
+                  EFR32xG24 Wireless SoC Reference Manual (1152 pages)</a></li>
+              </ul>
+            </li>
+            <li>Board:
+              <ul>
+                <li><a href="https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf"
+                       target="_blank">
+                  xG24 Dev Kit User's Guide</a></li>
+                <li><a href="https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf"
+                       target="_blank">
+                  Schematic - Revision A01</a></li>
+              </ul>
+            </li>
+            <li>Sofware:
+              <ul>
+                <li><a href="https://docs.silabs.com/" target="_blank">Developer Documentation</a>:
+                  <ul>
+                    <li><a href="https://docs.silabs.com/simplicity-studio-5-users-guide/latest/ss-5-users-guide-overview/"
+                           target="_blank"">Simplicity Studio 5 User's Guide</a></li>
+                    <li><a href="https://docs.silabs.com/gecko-platform/5.1.2/platform-overview/"
+                           target="_blank">Platform (SDK)</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Development environments</h4>
+          <p>Several possibilities:</p>
+          <ul>
+            <li>Simplicity Studio v5 (SSv5) - based upon Eclipse IDE</li>
+            <li>VS Code + extension</li>
+            <li>...</li>
+          </ul>
+          <p class="fragment">We will use SSv5.</p>
+        </section>
+        
+        <section>
+          <h4>SSv5</h4>
+          <div class="r-stack">
+            <div class="fragment fade-out" data-fragment-index="0">
+              <img src="images/efr32DevEnvironmentWithoutCallouts.png">
+            </div>
+            <div class="fragment fade-in-then-out" data-fragment-index="0">
+              <img src="images/efr32DevEnvironmentCallouts1.png">
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <h4>Practice session 01 - step 1</h4>
+          <ul>
+            <li>Using <em>git</em>, clone the <a href="https://github.com/PascalBod/embedded-systems-for-ML"
+                                          target="_blank">
+              <code>embedded-systems-for-ML</code> GitHub repository</a>:
+              <pre><code data-trim data-noescape>
+                $ git clone https://github.com/PascalBod/embedded-systems-for-ML.git
+              </code></pre>
+              </li>
+            <li>Follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/01-HelloWorld-step1/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/01-HelloWorld-step1/README.md</code></a>
+                file.</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- Software development - introduction > debugging ------------------------- -->
+        
+        <section id="debugging">
+          <h4>Debugging</h4>
+          <p><em>Debugging:</em> process of finding the root cause of a bug.</p>
+          <p class="fragment">Always try to reduce time devoted to debugging. How to do this is not part
+             of this course, even if it contains some related information.</p>
+        </section>
+        
+        <section>
+          <h4>Generic architecture</h4>
+          <img src="images/debuggingArchitecture.png">
+        </section>
+        
+        <section>
+          <ul>
+            <li>Microcontroller controlled by the debug probe</li>
+            <li class="fragment">JTAG: an industry standard, initially developped for verifying printed circuit boards (PCB)</li>
+            <li class="fragment">SWD: an Arm standard, fully debug oriented</li>
+            <li class="fragment">Debug probe controlled by the debugger server</li>
+            <li class="fragment">Debugger client used to send commands: run, pause, step, set breakpoint, etc.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>For most of the dev boards, a simple probe is part of the board:</p>
+          <img src="images/onBoardDebugger.png">
+        </section>
+        
+        <!-- -------------------- Practice session 01 - step 2: breakpoint ---------------------------------------- -->
+        
+        <section id="practice01Step2">
+          <h4>Practice session 01 - step 2</h4>
+          <ul>
+            <li>Follow the instructions provided by the 
+                <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/01-HelloWorld-step2/README.md"
+                   target="_blank"><code>embedded-systems-for-ML/practice-sessions/01-HelloWorld-step2/README.md</code></a>
+                file.</li>          
+            </ul>
+        </section>      
 
       </div>
     </div>

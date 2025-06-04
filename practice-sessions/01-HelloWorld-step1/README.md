@@ -6,11 +6,11 @@ Display a message on the virtual serial link created over the USB connection.
 
 ## A few words about EFR32MG24 libraries
 
-Many libraries are provided by Silicon Labs for helping the developer in writing code. The libraries contain abstraction code implementing a "high-level" API (Application Programming Interface) to the various microcontroller blocks: peripherals, interfaces, etc. (more information on this topic later in the presentation).
+As seen in the presentation, Silicon Labs provides an abstraction layer for helping the developer in writing code. This abstraction layer is implemented by several libraries.
 
 For Simplicity Studio, these libraries are provided as "software components" which can be added to a project in a simple way.
 
-There are pros and cons to this architecture. Adding, configuring and removing software support to a given interface or peripheral is easy. On the other hand, it can be sometimes difficult to understand exactly how a library works. 
+There are pros and cons to this component architecture. Adding, configuring and removing software support to a given interface or peripheral is easy. On the other hand, it can be sometimes difficult to understand exactly how a library works. 
 
 ## What to do
 
@@ -64,9 +64,9 @@ When creating an empty C project, two source-code files are generated for you by
 
 Some other source-code files are generated in the `autogen` and `simplicity_sdk_2024.6.1` directories. We can ignore them for now.
 
-An application is made of your code, and of the code used by the required libraries. In this example, the application prints a message. In a desktop application, the message would be printed in a terminal window. Here, the message is sent over a serial link. The serial link is created over the USB connection between the microcontroller board and the development PC. On the PC, the message is displayed by the serial terminal application.
+An application is made of the generated code, of your code, and of the code used by the required libraries. In this example, the application prints a message. In a desktop application, the message would be printed in a terminal window. Here, the message is sent over a serial link. The serial link is created over the USB connection between the microcontroller board and the development PC. On the PC, the message is displayed by the serial terminal application.
 
-Initializing the serial link and redirecting the message to the serial link is performed by some code automatically added by Simplicity Studio. This code has to be run along with your code. This is done by `main.c`:
+Initializing the serial link and redirecting the message to the serial link is performed by some code automatically added by Simplicity Studio. This code has to be run along with your code. This is done by `main.c`, thanks to the call to `sl_system_process_action` function:
 ```C
 int main(void)
 {
@@ -87,7 +87,7 @@ int main(void)
 }
 ```
 
-You have to insert your code in the `app_init` and `app_process_action` functions. You have to do this in the `app.c` file.
+You have to insert your code in the `app_init` and `app_process_action` functions. You do this in the `app.c` file.
 
 ## Roles of components
 

@@ -122,14 +122,21 @@ Solutions to the practice sessions are available to sponsors. Check the [sponsor
 * [Software development - Introduction](https://pascalbod.github.io/embedded-systems-for-ML/050-SoftDevIntroduction.html)
   * Cross development
   * Debugging
+* [Interfaces - Part 1](https://pascalbod.github.io/embedded-systems-for-ML/052-InterfacesPart1.html)
+  * GPIO
+  * Hardware API
+* [Execution environments](https://pascalbod.github.io/embedded-systems-for-ML/054-ExecutionEnvironments)
+  * Bare metal
+  * RTOS
+  * OS
   * **Practice sessions:**
-    * Hello World!
+    * *Hello World!* in bare metal
     * A debug session
 * [Peripherals](https://pascalbod.github.io/embedded-systems-for-ML/060-Peripherals.html)
   * Sensors
   * Actuators
-* [Interfaces - Part 1](https://pascalbod.github.io/embedded-systems-for-ML/070-InterfacesPart1.html)
-  * GPIO
+* [Interfaces - Part 1 - continued](https://pascalbod.github.io/embedded-systems-for-ML/070-InterfacesPart1Continued.html)
+  * More about GPIO
   * **Practice sessions:**
     * Display button state changes
     * Make the red LED blink
@@ -158,10 +165,6 @@ Solutions to the practice sessions are available to sponsors. Check the [sponsor
     * GPIO and interrupt
     * Timer and interrupt
     * Application and interrupts
-* [Execution environments](https://pascalbod.github.io/embedded-systems-for-ML/110-ExecutionEvironments.html)
-  * Bare metal
-  * RTOS
-  * OS
 * [More about what an RTOS is](https://pascalbod.github.io/embedded-systems-for-ML/120-MoreAboutRtos.html)
   * Problems and solution
   * Soft and hard real time
