@@ -33,6 +33,9 @@ The sections below explain how to create a Linux virtual machine (VM) so that th
 
 You can also decide on installing SSv5 directly on the OS of your PC. In this case, you can refer to [the instructions provided by Silicon Labs](https://docs.silabs.com/simplicity-studio-5-users-guide/latest/ss-5-users-guide-getting-started/install-ss-5-and-software). But be prepared to possibly have to spend some time tinkering with your setup on your own :-)
 
+> [!Important]
+> Be sure to install version 5 of Simplicity Studio, not version 6.
+
 ### Hardware
 
 As mentionned above, the practice sessions use the following hardware:
@@ -53,7 +56,7 @@ C language is used, for the practice sessions. [This Standford Computer Science 
 1. Create a [Linux Mint VM, configure it and install Simplicity Studio](https://github.com/PascalBod/lm-efr32-simplicityStudio)
 2. Get an EFR32xG24 Dev Kit (see the link provided in the *Hardware* section above.
 3. If you need it, spend some time browsing the documents listed above (Git, GitHub, Linux, C, etc.)
-4. Ensure that you can build and program the sample application, as presented in the *VM repository above*lm-ef32-simplicityStudio* repository (the one linked in list item 1 just above)
+4. Ensure that you can build and program the sample application, as presented in the *lm-efr32-simplicityStudio* repository (the one linked in list item 1 just above)
 
 ## Licenses
 
