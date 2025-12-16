@@ -27,6 +27,7 @@
 #define SL_IOSTREAM_USART_RX_IRQ_HANDLER(periph_nbr)    SL_IOSTREAM_USART_CONCAT_PASTER(USART, periph_nbr, _RX_IRQHandler)  
 
 #define SL_IOSTREAM_USART_RX_DMA_SIGNAL(periph_nbr)     SL_IOSTREAM_USART_CONCAT_PASTER(dmadrvPeripheralSignal_USART, periph_nbr, _RXDATAV)  
+#define SL_IOSTREAM_USART_TX_DMA_SIGNAL(periph_nbr)     SL_IOSTREAM_USART_CONCAT_PASTER(dmadrvPeripheralSignal_USART, periph_nbr, _TXBL)  
 
 #define SL_IOSTREAM_USART_CLOCK_REF(periph_nbr)         SL_IOSTREAM_USART_CONCAT_PASTER(cmuClock_, USART, periph_nbr)       
 // EM Events
@@ -34,11 +35,11 @@
 #if defined(_SILICON_LABS_32B_SERIES_2)
 #define SLEEP_EM_EVENT_MASK      ( SL_POWER_MANAGER_EVENT_TRANSITION_ENTERING_EM2  \
                                   | SL_POWER_MANAGER_EVENT_TRANSITION_LEAVING_EM2  \
-                                  | SL_POWER_MANAGER_EVENT_TRANSITION_ENTERING_EM3 \
-                                  | SL_POWER_MANAGER_EVENT_TRANSITION_LEAVING_EM3  \
+                                  | SL_POWER_MANAGER_EVENT_TRANSITION_ENTERING_EM0 \
                                   | SL_POWER_MANAGER_EVENT_TRANSITION_LEAVING_EM0)
 #else 
-#define SLEEP_EM_EVENT_MASK      (SL_POWER_MANAGER_EVENT_TRANSITION_LEAVING_EM0)
+#define SLEEP_EM_EVENT_MASK      (SL_POWER_MANAGER_EVENT_TRANSITION_ENTERING_EM0   \
+                                  | SL_POWER_MANAGER_EVENT_TRANSITION_LEAVING_EM0)
 #endif // _SILICON_LABS_32B_SERIES_2
 static void events_handler(sl_power_manager_em_t from,
                            sl_power_manager_em_t to);
@@ -61,6 +62,12 @@ sl_iostream_t *sl_iostream_vcom_handle = &sl_iostream_vcom.stream;
 sl_iostream_uart_t *sl_iostream_uart_vcom_handle = &sl_iostream_vcom;
 static sl_iostream_usart_context_t  context_vcom;
 static uint8_t  rx_buffer_vcom[SL_IOSTREAM_USART_VCOM_RX_BUFFER_SIZE];
+static sli_iostream_uart_periph_t uart_periph_vcom = {
+  .rx_irq_number = SL_IOSTREAM_USART_RX_IRQ_NUMBER(SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO),
+#if defined(SL_CATALOG_POWER_MANAGER_PRESENT)
+  .tx_irq_number = SL_IOSTREAM_USART_TX_IRQ_NUMBER(SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO),
+#endif
+};
 sl_iostream_instance_info_t sl_iostream_instance_vcom_info = {
   .handle = &sl_iostream_vcom.stream,
   .name = "vcom",
@@ -114,19 +121,31 @@ sl_status_t sl_iostream_usart_init_vcom(void)
 #endif
   };
 
-  sl_iostream_dma_config_t dma_config_vcom = {.src = (uint8_t *)&SL_IOSTREAM_USART_VCOM_PERIPHERAL->RXDATA,
-                                                        .peripheral_signal = SL_IOSTREAM_USART_RX_DMA_SIGNAL(SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO)};
+  sl_iostream_dma_config_t rx_dma_config_vcom = {.src = (uint8_t *)&SL_IOSTREAM_USART_VCOM_PERIPHERAL->RXDATA,
+                                                        .xfer_cfg = IOSTREAM_LDMA_TFER_CFG_PERIPH(SL_IOSTREAM_USART_RX_DMA_SIGNAL(SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO))};
+
+  sl_iostream_dma_config_t tx_dma_config_vcom = {.dst = (uint8_t *)&SL_IOSTREAM_USART_VCOM_PERIPHERAL->TXDATA,
+                                                        .xfer_cfg = IOSTREAM_LDMA_TFER_CFG_PERIPH(SL_IOSTREAM_USART_TX_DMA_SIGNAL(SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO))};
 
   sl_iostream_uart_config_t uart_config_vcom = {
-    .dma_cfg = dma_config_vcom,
+    .rx_dma_cfg = rx_dma_config_vcom,
+    .tx_dma_cfg = tx_dma_config_vcom,
     .rx_buffer = rx_buffer_vcom,
     .rx_buffer_length = SL_IOSTREAM_USART_VCOM_RX_BUFFER_SIZE,
-    .tx_irq_number = SL_IOSTREAM_USART_TX_IRQ_NUMBER(SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO),
-    .rx_irq_number = SL_IOSTREAM_USART_RX_IRQ_NUMBER(SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO),
     .lf_to_crlf = SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF,
+    .enable_high_frequency = true,
     .rx_when_sleeping = SL_IOSTREAM_USART_VCOM_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION,
+    .uart_periph = &uart_periph_vcom
   };
   uart_config_vcom.sw_flow_control = SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE == uartFlowControlSoftware;
+
+
+#if defined(SL_IOSTREAM_USART_VCOM_ASYNC_TX)
+  uart_config_vcom.async_tx_enabled = SL_IOSTREAM_USART_VCOM_ASYNC_TX;
+#else
+  uart_config_vcom.async_tx_enabled = false;
+#endif
+
   // Instantiate usart instance 
   status = sl_iostream_usart_init(&sl_iostream_vcom,
                                   &uart_config_vcom,
@@ -234,8 +253,14 @@ static void events_handler(sl_power_manager_em_t from,
     
   }
   #endif // _SILICON_LABS_32B_SERIES_2
-  if (to < SL_POWER_MANAGER_EM2){
-    // Only prepare for wakeup from EM1 or less, since USART doesn't run in EM2
+  if (to == SL_POWER_MANAGER_EM0) {
+     
+    if (sl_iostream_uart_vcom_handle->stream.context != NULL) {
+      sl_iostream_uart_wakeup(sl_iostream_uart_vcom_handle);
+    }
+    
+  } else if (to < SL_POWER_MANAGER_EM2){
+    // Only prepare for sleep to EM1 or less, since USART doesn't run in EM2
      
     if (sl_iostream_uart_vcom_handle->stream.context != NULL) {
       sl_iostream_uart_prepare_for_sleep(sl_iostream_uart_vcom_handle);

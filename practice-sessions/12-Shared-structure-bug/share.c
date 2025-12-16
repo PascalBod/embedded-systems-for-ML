@@ -1,20 +1,3 @@
-/***************************************************************************//**
- * @file
- * @brief Blink examples functions
- *******************************************************************************
- * # License
- * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
- *******************************************************************************
- *
- * The licensor of this software is Silicon Laboratories Inc. Your use of this
- * software is governed by the terms of Silicon Labs Master Software License
- * Agreement (MSLA) available at
- * www.silabs.com/about-us/legal/master-software-license-agreement. This
- * software is distributed to you in Source Code format and is governed by the
- * sections of the MSLA applicable to Source Code.
- *
- ******************************************************************************/
-
 /*
     RTOS for ML presentation - exercise 12.
     Copyright (C) 2024  Pascal Bodin
@@ -39,7 +22,7 @@
 #include "app_log.h"
 #include "em_system.h"
 #include "FreeRTOS.h"
-#include "sl_udelay.h"
+#include "sl_sleeptimer.h"
 #include "task.h"
 
 #define TASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -48,8 +31,8 @@
 #define LONG_DELAY_MS   200
 #define SHORT_DELAY_MS  10
 
-// Maximum delay for sl_udelay_wait: 100000 µs.
-#define RESET_DELAY_US  100000
+// Delay before resetting, in ms.
+#define RESET_DELAY_MS  1000
 
 static volatile uint32_t a;
 static volatile uint32_t b;
@@ -68,7 +51,7 @@ static TickType_t short_delay;
 static void reset_on_fatal_error(void) {
 
   app_log_error("About to reset\n");
-  sl_udelay_wait(RESET_DELAY_US);
+  sl_sleeptimer_delay_millisecond (RESET_DELAY_MS);
   NVIC_SystemReset();
 
 }

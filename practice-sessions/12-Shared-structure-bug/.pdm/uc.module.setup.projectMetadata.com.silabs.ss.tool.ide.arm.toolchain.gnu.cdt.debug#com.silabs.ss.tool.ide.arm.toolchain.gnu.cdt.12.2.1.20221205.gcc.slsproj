@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="uc.module.setup.projectMetadata.com.silabs.ss.tool.ide.arm.toolchain.gnu.cdt.debug#com.silabs.ss.tool.ide.arm.toolchain.gnu.cdt:12.2.1.20221205.gcc" propertyScope="project">
+  <folder name="autogen">
+    <file name="gen.properties" builtin="true" generated="true"/>
+  </folder>
+  <includePath uri="studio:/project/autogen"/>
+</project>

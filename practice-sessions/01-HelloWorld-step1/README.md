@@ -17,7 +17,7 @@ There are pros and cons to this component architecture. Adding, configuring and 
 1. Ensure you completed the [prerequisites](https://github.com/PascalBod/embedded-systems-for-ML?tab=readme-ov-file#prerequisites-for-the-practical-exercises).
 2. [Create a new project](https://github.com/PascalBod/lm-efr32-simplicityStudio?tab=readme-ov-file#sample-application), still based on the **Empty C project**, naming it `01-HelloWorld`.
 3. Check that you can build it and that you can program the board.
-4. Replace the content of the `readme.md` file (right-click and **Open With > Text Editor**) by:
+4. Replace the content of the `readme.md` file (right-click and **Open With > Plain Text Editor**) by:
     ```
     # HelloWorld
     
@@ -62,7 +62,7 @@ When creating an empty C project, two source-code files are generated for you by
 * `main.c`
 * `app.c`
 
-Some other source-code files are generated in the `autogen` and `simplicity_sdk_2024.6.1` directories. We can ignore them for now.
+Some other source-code files are generated in the `autogen` and `simplicity_sdk_2025.6.2` directories. We can ignore them for now.
 
 An application is made of the generated code, of your code, and of the code used by the required libraries. In this example, the application prints a message. In a desktop application, the message would be printed in a terminal window. Here, the message is sent over a serial link. The serial link is created over the USB connection between the microcontroller board and the development PC. On the PC, the message is displayed by the serial terminal application.
 

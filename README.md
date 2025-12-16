@@ -2,15 +2,13 @@
 
 ## Modifications in progress
 
-Bare metal and FreeRTOS examples will soon be migrated to Simplicity SDK Suite v2024.6.2.
+07-Dec-2025: bare metal and FreeRTOS examples up to and including practice session 13 have been migrated to Simplicity SDK Suite v2025.6.2.
 
-FreeRTOS examples will soon be ported to Zephyr.
+# Overview
 
-## Overview
+This repository contains a presentation providing an introduction to embedded systems. The targeted audience is machine learning application developers, who want to better understand what an embedded system is, and how it can/must be used.
 
-This repository contains a presentation providing an introduction to embedded systems. The targeted audience is machine learning application developers, who want to better understand what an embedded system is, and how it can be used.
-
-The presentation DOES NOT provide any information about machine learning topic.
+The presentation DOES NOT provide information about machine learning.
 
 The following topics are covered:
 * Interfaces: GPIO, ADC, UART, SPI, I2C
@@ -21,33 +19,19 @@ Practice sessions provide hands-on experience of the presented concepts.
 
 The hardware target for the practice sessions is the [Silicon Labs EFR32xG24 Dev Kit](https://www.silabs.com/development-tools/wireless/efr32xg24-dev-kit?tab=overview), based on the [EFR32MG24 wireless System on Chip (SoC)](https://www.silabs.com/wireless/zigbee/efr32mg24-series-2-socs).
 
-This presentation was used as a support for the 22-hour course given at [IMT Atlantique](https://www.imt-atlantique.fr/en) in January 2025. The 22-hour duration was slightly too short to cover all the practical sessions.
+This presentation is used as a support for the 22-hour course taught at [IMT Atlantique](https://www.imt-atlantique.fr/en) in January.
 
 ## Prerequisites for the practice sessions
 
 ### Software
 
-#### Overview
+[Silicon Labs Simplicity Studio 5](https://www.silabs.com/developer-tools/simplicity-studio) (based on Eclipse CDT) is used for bare metal (i.e. no RTOS) practice sessions and for FreeRTOS-based practice sessions.
 
-Two different development environments are used:
+Simplicity Studio 5, abbreviated as SSv5 hereinafter, can be installed on Linux, Apple macOS (Arm or Intel) and Microsoft Windows.
 
-* [Silicon Labs Simplicity Studio](https://www.silabs.com/developer-tools/simplicity-studio) (based on Eclipse CDT) is used for bare metal (i.e. no RTOS) practice sessions and for FreeRTOS-based practice sessions
-* Visual Studio Code (VS Code) with the [Ac6 Zephyr Workbench extension](https://zephyr-workbench.com) is used for Zephyr-based practice sessions
+The sections below explain how to create a Linux virtual machine (VM) so that the configuration specific to SSv5 can be isolated from your other projects. A drawback is that the host PC must be powerful enough and must have enough memory (a minimum of 8 GB must be assigned to the VM).
 
-Each of these development environments is installed in a [Linux Mint](https://linuxmint.com) Virtual Machine (VM). Using a virtual machine allows to isolate the specific configuration from other projects. A drawback is that the host computer must be powerful enough and must have more memory.
-
-RTOS practice sessions were initially developed for FreeRTOS. All of them are currently in the process of being ported to Zephyr.
-
-#### Simplicity Studio
-
-The construction of the associated VM is presented [here](https://github.com/PascalBod/lm-efr32-simplicityStudio).
-
-#### VS Code
-
-The construction of the associated VM is presented [here](https://github.com/PascalBod/lm-zephyr). 
-
-> [!NOTE]
-> Of course, VS Code can be installed in the VM where Simplicity Studio has been installed.
+You can also decide on installing SSv5 directly on the OS of your PC. In this case, you can refer to [the instructions provided by Silicon Labs](https://docs.silabs.com/simplicity-studio-5-users-guide/latest/ss-5-users-guide-getting-started/install-ss-5-and-software). But be prepared to possibly have to spend some time tinkering with your setup on your own :-)
 
 ### Hardware
 
@@ -56,7 +40,7 @@ As mentionned above, the practice sessions use the following hardware:
 
 ### Software development competencies
 
-* Basic knowledge of *git* - [git user manual](https://git-scm.com/docs/user-manual)
+* Basic knowledge of *Git* - [git user manual](https://git-scm.com/docs/user-manual)
 * Basic knowledge of *GitHub* - [About GitHub and Git](https://docs.github.com/en/get-started/start-your-journey/about-github-and-git)
 * Basic knowledge of *Linux* (knowing the most common commands...) - [An Introduction to Linux Basics, from DigitalOcean](https://www.digitalocean.com/community/tutorials/an-introduction-to-linux-basics)
 * Basic knowledge of *VirtualBox* (knowing how to create a virtual machine...) - [VirtualBox end-user documentation](https://www.virtualbox.org/wiki/End-user_documentation)
@@ -66,22 +50,10 @@ C language is used, for the practice sessions. [This Standford Computer Science 
 
 ### What to do before going through the presentation
 
-If you want to use FreeRTOS:
-
-1. Create a [Simplicity Studio VM](https://github.com/PascalBod/lm-efr32-simplicityStudio)
+1. Create a [Linux Mint VM, configure it and install Simplicity Studio](https://github.com/PascalBod/lm-efr32-simplicityStudio)
 2. Get an EFR32xG24 Dev Kit (see the link provided in the *Hardware* section above.
-3. Ensure that you can build and program the sample application, as presented in the VM repository above
-
-> [!Note]
-> The practice sessions code was written for Simplicity SDK Suite v2024.6.2. They will soon be migrated to v2024.12.2. Refer to the *Modifications in progress* section above for current status.
-
-If you want to use Zephyr, adhere to the following steps, in addition to the above ones:
-
-4. Update the Simplicity Studio VM according to the instructions for the [Zephyr VM](https://github.com/PascalBod/lm-zephyr). Select the Zephyr Workbench method, to configure VS Code
-5. Ensure that you can build and program the sample application, as presented in the VM repository above
-
-> [!NOTE]
-> The practice sessions are being written for Zephyr SDK 0.17.0 and Zephyr 4.1.0. Check the *Modifications in progress* section above for current status.
+3. If you need it, spend some time browsing the documents listed above (Git, GitHub, Linux, C, etc.)
+4. Ensure that you can build and program the sample application, as presented in the *VM repository above*lm-ef32-simplicityStudio* repository (the one linked in list item 1 just above)
 
 ## Licenses
 
@@ -91,7 +63,7 @@ The source code is licensed under the [GNU General Public License v3](https://ww
 
 ## Sponsorship
 
-Solutions to the practice sessions are available to sponsors. Check the [sponsorship page](https://github.com/sponsors/PascalBod).
+Solutions to the practice sessions are available to IMT Atlantique students attending the course, and to sponsors. To become a sponsor, check the [sponsorship page](https://github.com/sponsors/PascalBod).
 
 ## Presentation
 

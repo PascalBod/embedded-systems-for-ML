@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="uc.module.setup.ucProject.Default.gcc" propertyScope="project">
+  <folder name="autogen">
+    <folder name=".slc_state">
+      <file name=".crc_config.crc" builtin="true" generated="true"/>
+    </folder>
+  </folder>
+</project>

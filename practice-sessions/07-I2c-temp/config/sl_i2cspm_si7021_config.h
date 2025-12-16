@@ -63,7 +63,7 @@
 
 // I2C0 SCL on PC04
 #ifndef SL_I2CSPM_SI7021_SCL_PORT               
-#define SL_I2CSPM_SI7021_SCL_PORT                gpioPortC
+#define SL_I2CSPM_SI7021_SCL_PORT                SL_GPIO_PORT_C
 #endif
 #ifndef SL_I2CSPM_SI7021_SCL_PIN                
 #define SL_I2CSPM_SI7021_SCL_PIN                 4
@@ -71,7 +71,7 @@
 
 // I2C0 SDA on PC05
 #ifndef SL_I2CSPM_SI7021_SDA_PORT               
-#define SL_I2CSPM_SI7021_SDA_PORT                gpioPortC
+#define SL_I2CSPM_SI7021_SDA_PORT                SL_GPIO_PORT_C
 #endif
 #ifndef SL_I2CSPM_SI7021_SDA_PIN                
 #define SL_I2CSPM_SI7021_SDA_PIN                 5

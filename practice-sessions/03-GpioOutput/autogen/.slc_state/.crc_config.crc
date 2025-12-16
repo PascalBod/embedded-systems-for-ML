@@ -1,0 +1,6 @@
+#CRC Codes for initially generated config files -- do not modify!
+app_log_config.h=-508530382
+dmadrv_config.h=281221886
+sl_debug_swo_config.h=1207363231
+sl_iostream_usart_exp_config.h=-272687490
+sl_mx25_flash_shutdown_eusart_config.h=256100110

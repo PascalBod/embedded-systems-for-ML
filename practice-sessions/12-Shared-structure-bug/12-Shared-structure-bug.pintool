@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="ASCII"?>
-<device:XMLDevice xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:device="http://www.silabs.com/ss/hwconfig/document/device.ecore" name="pin_tool.EFR32MG24B310F1536IM48" partId="mcu.arm.efr32.mg24.efr32mg24b310f1536im48" contextId="com.silabs.sdk.stack.sisdk:2024.6.2._-482801502">
+<device:XMLDevice xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:device="http://www.silabs.com/ss/hwconfig/document/device.ecore" name="pin_tool.EFR32MG24B310F1536IM48" partId="mcu.arm.efr32.mg24.efr32mg24b310f1536im48" contextId="com.silabs.sdk.stack.sisdk:2025.6.2._-482801502">
   <mode name="DefaultMode">
     <property object="DefaultMode" propertyId="mode.diagramLocation" value="100, 100"/>
+    <property object="PORTIO" propertyId="portio.usart0.enable.rx" value="Enabled"/>
+    <property object="PORTIO" propertyId="portio.usart0.enable.tx" value="Enabled"/>
+    <property object="PORTIO" propertyId="portio.usart0.location.rx" value="6"/>
+    <property object="PORTIO" propertyId="portio.usart0.location.tx" value="5"/>
+    <property object="USART0" propertyId="ABModule.selectedRequirement" value="usart%T%SL_IOSTREAM_USART_LOG_UART%T%sl_iostream_usart_log_uart_config.h"/>
+    <property object="USART0" propertyId="ABPeripheral.included" value="true"/>
   </mode>
   <modeTransition>
     <property object="RESET &#x2192; DefaultMode" propertyId="modeTransition.source" value="RESET"/>

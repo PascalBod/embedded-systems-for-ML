@@ -10,7 +10,7 @@ The ADC block of the EFR32MG24 is feature rich. Consequently, it's complicated. 
 
 Additionally, the sections below provide an overview of the ADC block.
 
-Note: the skeleton application is created from the *Hello World* application. In step 1, the **Platform > Peripheral > IADC** component is added. In step 2, the **Services > Timers > Sleep Timer** component is added.
+Note: the skeleton application is created from the *Hello World* application. In step 1, the **Platform > Peripheral > EMLIB > IADC** component is added. In step 2, the **Services > Timers > Sleep Timer** component is added.
 
 ## EFR32MG24 ADC
 

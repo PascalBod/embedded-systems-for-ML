@@ -3,7 +3,7 @@
  * @brief Clock Manager - Clock Tree configuration file.
  *******************************************************************************
  * # License
- * <b>Copyright 2024 Silicon Laboratories Inc. www.silabs.com</b>
+ * <b>Copyright 2025 Silicon Laboratories Inc. www.silabs.com</b>
  *******************************************************************************
  *
  * SPDX-License-Identifier: Zlib
@@ -28,10 +28,13 @@
  *
  ******************************************************************************/
 
-// <<< Use Configuration Wizard in Context Menu >>>
-
 #ifndef SL_CLOCK_MANAGER_TREE_CONFIG_H
 #define SL_CLOCK_MANAGER_TREE_CONFIG_H
+
+#if defined(SL_COMPONENT_CATALOG_PRESENT)
+#include "sl_component_catalog.h"
+
+#endif
 
 // Internal Defines: DO NOT MODIFY
 // Those defines are used internally to help converting the DEFAULT_HF_CLOCK_SOURCE and DEFAULT_LF_CLOCK_SOURCE
@@ -43,16 +46,26 @@
 #define SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE_LFXO         0xFB
 #define SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE_ULFRCO       0xFA
 
+#if defined(SL_CATALOG_RAIL_LIB_PRESENT)
+#define SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_AUTO         SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFXO
+#else
+#define SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_AUTO         SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFRCODPLL
+#endif
+
+// <<< Use Configuration Wizard in Context Menu >>>
+
 // <h> Clock Tree Settings
 
 // <o SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE> Default Clock Source Selection for HF clock branches
+//   <SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_AUTO=> AUTO
 //   <SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFRCODPLL=> HFRCODPLL
 //   <SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFXO=> HFXO
 //   <SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_FSRCO=> FSRCO
 // <i> Selection of the high frequency clock source. HF clock branches can select this value by chosing the DEFAULT_HF value.
-// <d> SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFRCODPLL
+// <i> AUTO uses HFXO if a radio is used and HFRCODPLL otherwise
+// <d> SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_AUTO
 #ifndef SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE
-#define SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE    SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFXO
+#define SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE    SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_AUTO
 #endif
 
 // <o SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE> Default Clock Source Selection for LF clock branches
@@ -62,7 +75,7 @@
 // <i> Selection of the low frequency clock source. LF clock branches can select this value by chosing the DEFAULT_HF value.
 // <d> SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE_LFRCO
 #ifndef SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE
-#define SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE    SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE_LFXO
+#define SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE    SL_CLOCK_MANAGER_DEFAULT_LF_CLOCK_SOURCE_LFRCO
 #endif
 
 // <h> System Clock Branch Settings
@@ -72,6 +85,7 @@
 //   <CMU_SYSCLKCTRL_CLKSEL_FSRCO=> FSRCO
 //   <CMU_SYSCLKCTRL_CLKSEL_HFRCODPLL=> HFRCODPLL
 //   <CMU_SYSCLKCTRL_CLKSEL_HFXO=> HFXO
+//   <CMU_SYSCLKCTRL_CLKSEL_CLKIN0=> CLKIN0
 // <i> Selection of the Clock source for SYSCLK
 // <d> SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE
 #ifndef SL_CLOCK_MANAGER_SYSCLK_SOURCE
@@ -91,12 +105,13 @@
 #endif
 
 // <o SL_CLOCK_MANAGER_PCLK_DIVIDER> PCLK branch divider
+//   <SL_CLOCK_MANAGER_PCLK_DIV_MIN=> MIN
 //   <CMU_SYSCLKCTRL_PCLKPRESC_DIV1=> DIV1
 //   <CMU_SYSCLKCTRL_PCLKPRESC_DIV2=> DIV2
 // <i> PCLK branch is derived from HCLK. This clock drives the APB bus interface.
-// <d> CMU_SYSCLKCTRL_PCLKPRESC_DIV2
+// <d> SL_CLOCK_MANAGER_PCLK_DIV_MIN
 #ifndef SL_CLOCK_MANAGER_PCLK_DIVIDER
-#define SL_CLOCK_MANAGER_PCLK_DIVIDER    CMU_SYSCLKCTRL_PCLKPRESC_DIV2
+#define SL_CLOCK_MANAGER_PCLK_DIVIDER    SL_CLOCK_MANAGER_PCLK_DIV_MIN
 #endif
 
 // </h>
@@ -272,6 +287,18 @@
 // <d> CMU_VDAC0CLKCTRL_CLKSEL_EM01GRPACLK
 #ifndef SL_CLOCK_MANAGER_VDAC0CLK_SOURCE
 #define SL_CLOCK_MANAGER_VDAC0CLK_SOURCE    CMU_VDAC0CLKCTRL_CLKSEL_EM01GRPACLK
+#endif
+
+// <o SL_CLOCK_MANAGER_VDAC1CLK_SOURCE> Clock Source Selection for VDAC1CLK branch
+//   <CMU_VDAC1CLKCTRL_CLKSEL_DISABLED=> DISABLED
+//   <CMU_VDAC1CLKCTRL_CLKSEL_EM01GRPACLK=> EM01GRPACLK
+//   <CMU_VDAC1CLKCTRL_CLKSEL_EM23GRPACLK=> EM23GRPACLK
+//   <CMU_VDAC1CLKCTRL_CLKSEL_FSRCO=> FSRCO
+//   <CMU_VDAC1CLKCTRL_CLKSEL_HFRCOEM23=> HFRCOEM23
+// <i> Selection of the Clock source for VDAC1CLK
+// <d> CMU_VDAC1CLKCTRL_CLKSEL_EM01GRPACLK
+#ifndef SL_CLOCK_MANAGER_VDAC1CLK_SOURCE
+#define SL_CLOCK_MANAGER_VDAC1CLK_SOURCE    CMU_VDAC1CLKCTRL_CLKSEL_EM01GRPACLK
 #endif
 
 // </h>
