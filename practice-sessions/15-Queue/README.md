@@ -12,7 +12,7 @@ Use a queue to let two producers send their data to one consumer.
 
 Import the `15-Queue` project.
 
-The source code of this project is organized in a way slightly different from the previous projects, in order to be more consistent with Silicon Labs environment. The application is no more implemented in `app.c`. `app.c` only calls the application initialization function(s). The application initiailization function(s) is/are defined in other files. Here, as this is still a very simple project, we have only one such other file, `cons_prod.c`.
+The source code of this project is organized in a way slightly different from the previous projects, in order to be more consistent with Silicon Labs environment. The application is no more implemented in `app.c`. `app.c` only calls the application initialization function(s). The application initialization function(s) is/are defined in other files. Here, as this is still a very simple project, we have only one such other file, `cons_prod.c`.
 
 Go through these two files, to understand this new architecture. Some code is missing, and it's up to you to add it, according to the `TODO` instructions in `cons_prod.c`.
 

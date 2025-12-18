@@ -18,12 +18,11 @@ readme:
 - {path: readme.md}
 source:
 - {path: app.c}
-- {path: main.c}
 include:
 - path: .
   file_list:
   - {path: app.h}
-sdk: {id: simplicity_sdk, version: 2024.6.2}
+sdk: {id: simplicity_sdk, version: 2025.6.2}
 toolchain_settings: []
 component:
 - {id: EFR32MG24B310F1536IM48}
@@ -34,9 +33,9 @@ component:
 - {id: freertos}
 - {id: iostream_retarget_stdio}
 - {id: iostream_stdlib_config}
-- instance: [vcom]
+- instance: [log_uart]
   id: iostream_usart
-- {id: sl_system}
+- {id: sl_main}
 - {id: sleeptimer}
 define:
 - {name: DEBUG_EFM}

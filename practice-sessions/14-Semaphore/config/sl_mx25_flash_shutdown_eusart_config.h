@@ -1,9 +1,9 @@
 /***************************************************************************//**
  * @file
- * @brief emlib_core Configuration
+ * @brief SL_MX25_FLASH_SHUTDOWN_USART Config
  *******************************************************************************
  * # License
- * <b>Copyright 2019 Silicon Laboratories Inc. www.silabs.com</b>
+ * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
  *******************************************************************************
  *
  * SPDX-License-Identifier: Zlib
@@ -28,18 +28,40 @@
  *
  ******************************************************************************/
 
-#ifndef EM_CORE_DEBUG_CONFIG_H
-#define EM_CORE_DEBUG_CONFIG_H
+#ifndef SL_MX25_FLASH_SHUTDOWN_CONFIG_H
+#define SL_MX25_FLASH_SHUTDOWN_CONFIG_H
 
-// <<< Use Configuration Wizard in Context Menu >>>
+// <<< sl:start pin_tool >>>
+// {eusart signal=TX,RX,SCLK} SL_MX25_FLASH_SHUTDOWN
+// [EUSART_SL_MX25_FLASH_SHUTDOWN]
+#define SL_MX25_FLASH_SHUTDOWN_PERIPHERAL        EUSART1
+#define SL_MX25_FLASH_SHUTDOWN_PERIPHERAL_NO     1
 
-// <h> Core Configuration
+// EUSART1 TX on PC03
+#define SL_MX25_FLASH_SHUTDOWN_TX_PORT           SL_GPIO_PORT_C
+#define SL_MX25_FLASH_SHUTDOWN_TX_PIN            3
 
-// <q SL_EMLIB_CORE_ENABLE_INTERRUPT_DISABLED_TIMING> Enables measuring of interrupt disable time for debugging purposes.
-// <i> Default: 0
-#define SL_EMLIB_CORE_ENABLE_INTERRUPT_DISABLED_TIMING    0
+// EUSART1 RX on PC02
+#define SL_MX25_FLASH_SHUTDOWN_RX_PORT           SL_GPIO_PORT_C
+#define SL_MX25_FLASH_SHUTDOWN_RX_PIN            2
 
-// </h>
+// EUSART1 SCLK on PC01
+#define SL_MX25_FLASH_SHUTDOWN_SCLK_PORT         SL_GPIO_PORT_C
+#define SL_MX25_FLASH_SHUTDOWN_SCLK_PIN          1
 
-// <<< end of configuration section >>>
-#endif // EM_CORE_CONFIG_H
+// [EUSART_SL_MX25_FLASH_SHUTDOWN]
+
+// <gpio> SL_MX25_FLASH_SHUTDOWN_CS
+
+// $[GPIO_SL_MX25_FLASH_SHUTDOWN_CS]
+#ifndef SL_MX25_FLASH_SHUTDOWN_CS_PORT          
+#define SL_MX25_FLASH_SHUTDOWN_CS_PORT           SL_GPIO_PORT_C
+#endif
+#ifndef SL_MX25_FLASH_SHUTDOWN_CS_PIN           
+#define SL_MX25_FLASH_SHUTDOWN_CS_PIN            0
+#endif
+// [GPIO_SL_MX25_FLASH_SHUTDOWN_CS]$
+
+// <<< sl:end pin_tool >>>
+
+#endif // SL_MX25_FLASH_SHUTDOWN_CONFIG_H

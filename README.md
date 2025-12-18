@@ -1,6 +1,8 @@
 # Introduction to Embedded Systems for Machine Learning
 
-## Modifications in progress
+## Latest modifications
+
+18-Dec-2025: all practice sessions are now migrated.
 
 07-Dec-2025: bare metal and FreeRTOS examples up to and including practice session 13 have been migrated to Simplicity SDK Suite v2025.6.2.
 

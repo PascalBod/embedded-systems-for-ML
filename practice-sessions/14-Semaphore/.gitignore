@@ -1,6 +1,8 @@
 .trash/
 .uceditor/
-.projectlinkstore/
-trashed_modified_files/
 *Debug/
+trashed_modified_files/
+.projectlinkstore
 imported_project_report.html
+**/*.bak
+

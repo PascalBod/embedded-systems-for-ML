@@ -30,16 +30,16 @@ In the `xTaskCreateStatic` function documentation (see below), check what is sai
 
 ### FreeRTOS
 
-Open the `11-Start-task.slcp` file, and search the `FreeRTOS` component, **RTOS > FreeRTOS > FreeRTOS**. Click the **Configure** button, to display the various FreeRTOS configuration parameters. Among them:
+Open the `11-Start-task.slcp` file, and search the `FreeRTOS Kernel` component, **RTOS > FreeRTOS > FreeRTOS Kernel**. Click the **Configure** button, to display the various FreeRTOS configuration parameters. Among them:
 * Minimal (default) stack size, in words (a word = 4 bytes). `configMINIMAL_STACK_SIZE` is set to this value (see `blink.c`)
 * Total heap size, in bytes
 * Kernel tick frequency. By default it is set to 1000 Hz. This is the frequency at which the scheduler checks if the currently running task has to be replaced by another one
 
 ### How the task is started
 
-Defined in `main.c`, the `main` function initializes the system (call to `sl_system_init`), then the application (call to `app_init`).
+Defined in `main.c`, the `main` function initializes the system (call to `sl_main_second_stage_init`), then the application (call to `app_init`).
 
-The FreeRTOS component being present in the project, `SL_CATALOG_KERNEL_PRESENT` is defined (this is automagically done by Simplicity Studio, when the component is added). Consequently, the `sl_system_kernel_start` is called. It starts the FreeRTOS scheduler. Any task created beforehand will be started.
+But, before calling the `main` function, the executable file also calls `STD_LIB_WRAPPER`, a function defined in `~/SimplicityStudio/SDKs/simplicity_sdk_2/platform/service/sl_main/src/rtos/main_retarget.c`. This function calls `sl_main_init` (which initialize Silicon Labs code), and `sl_main_kernel_start` (which starts FreeRTOS).
 
 `app_init` has to be defined by the developer, in `app.c`. The idea is that `app_init` should create all application tasks. Currently, there is only one, created by `blink_init`, defined in `blink.c`.
 

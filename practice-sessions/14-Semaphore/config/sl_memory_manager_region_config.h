@@ -33,6 +33,8 @@
 #ifndef SL_MEMORY_MANAGER_REGION_CONFIG_H
 #define SL_MEMORY_MANAGER_REGION_CONFIG_H
 
+#include "sl_component_catalog.h"
+
 // <h> Memory configuration
 
 // <o SL_STACK_SIZE> Stack size for the application.

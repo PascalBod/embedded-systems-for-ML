@@ -70,7 +70,7 @@
 // $[GPIO]
 // GPIO SWV on PA03
 #ifndef GPIO_SWV_PORT                           
-#define GPIO_SWV_PORT                            gpioPortA
+#define GPIO_SWV_PORT                            SL_GPIO_PORT_A
 #endif
 #ifndef GPIO_SWV_PIN                            
 #define GPIO_SWV_PIN                             3
@@ -96,7 +96,7 @@
 // $[USART0]
 // USART0 RX on PA06
 #ifndef USART0_RX_PORT                          
-#define USART0_RX_PORT                           gpioPortA
+#define USART0_RX_PORT                           SL_GPIO_PORT_A
 #endif
 #ifndef USART0_RX_PIN                           
 #define USART0_RX_PIN                            6
@@ -104,7 +104,7 @@
 
 // USART0 TX on PA05
 #ifndef USART0_TX_PORT                          
-#define USART0_TX_PORT                           gpioPortA
+#define USART0_TX_PORT                           SL_GPIO_PORT_A
 #endif
 #ifndef USART0_TX_PIN                           
 #define USART0_TX_PIN                            5
@@ -159,7 +159,7 @@
 
 // $[CUSTOM_PIN_NAME]
 #ifndef _PORT                                   
-#define _PORT                                    gpioPortA
+#define _PORT                                    SL_GPIO_PORT_A
 #endif
 #ifndef _PIN                                    
 #define _PIN                                     0

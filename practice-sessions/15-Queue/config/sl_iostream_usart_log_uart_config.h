@@ -28,86 +28,86 @@
  *
  ******************************************************************************/
 
-#ifndef SL_IOSTREAM_USART_VCOM_CONFIG_H
-#define SL_IOSTREAM_USART_VCOM_CONFIG_H
+#ifndef SL_IOSTREAM_USART_LOG_UART_CONFIG_H
+#define SL_IOSTREAM_USART_LOG_UART_CONFIG_H
 
 // <<< Use Configuration Wizard in Context Menu >>>
 
 // <h>USART settings
 
-// <o SL_IOSTREAM_USART_VCOM_BAUDRATE> Baud rate
+// <o SL_IOSTREAM_USART_LOG_UART_BAUDRATE> Baud rate
 // <i> Default: 115200
-#define SL_IOSTREAM_USART_VCOM_BAUDRATE              115200
+#define SL_IOSTREAM_USART_LOG_UART_BAUDRATE              115200
 
-// <o SL_IOSTREAM_USART_VCOM_PARITY> Parity mode to use
+// <o SL_IOSTREAM_USART_LOG_UART_PARITY> Parity mode to use
 // <usartNoParity=> No Parity
 // <usartEvenParity=> Even parity
 // <usartOddParity=> Odd parity
 // <i> Default: usartNoParity
-#define SL_IOSTREAM_USART_VCOM_PARITY                usartNoParity
+#define SL_IOSTREAM_USART_LOG_UART_PARITY                usartNoParity
 
-// <o SL_IOSTREAM_USART_VCOM_STOP_BITS> Number of stop bits to use.
+// <o SL_IOSTREAM_USART_LOG_UART_STOP_BITS> Number of stop bits to use.
 // <usartStopbits0p5=> 0.5 stop bits
 // <usartStopbits1=> 1 stop bits
 // <usartStopbits1p5=> 1.5 stop bits
 // <usartStopbits2=> 2 stop bits
 // <i> Default: usartStopbits1
-#define SL_IOSTREAM_USART_VCOM_STOP_BITS             usartStopbits1
+#define SL_IOSTREAM_USART_LOG_UART_STOP_BITS             usartStopbits1
 
-// <o SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE> Flow control
+// <o SL_IOSTREAM_USART_LOG_UART_FLOW_CONTROL_TYPE> Flow control
 // <usartHwFlowControlNone=> None
 // <usartHwFlowControlCts=> CTS
 // <usartHwFlowControlRts=> RTS
 // <usartHwFlowControlCtsAndRts=> CTS/RTS
 // <uartFlowControlSoftware=> Software Flow control (XON/XOFF)
 // <i> Default: usartHwFlowControlNone
-#define SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE     usartHwFlowControlNone
+#define SL_IOSTREAM_USART_LOG_UART_FLOW_CONTROL_TYPE     usartHwFlowControlNone
 
-// <o SL_IOSTREAM_USART_VCOM_RX_BUFFER_SIZE> Receive buffer size
+// <o SL_IOSTREAM_USART_LOG_UART_RX_BUFFER_SIZE> Receive buffer size
 // <i> Default: 32
-#define SL_IOSTREAM_USART_VCOM_RX_BUFFER_SIZE    32
+#define SL_IOSTREAM_USART_LOG_UART_RX_BUFFER_SIZE    32
 
-// <q SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF> Convert \n to \r\n
+// <q SL_IOSTREAM_USART_LOG_UART_CONVERT_BY_DEFAULT_LF_TO_CRLF> Convert \n to \r\n
 // <i> It can be changed at runtime using the C API.
 // <i> Default: 0
-#define SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF     0
+#define SL_IOSTREAM_USART_LOG_UART_CONVERT_BY_DEFAULT_LF_TO_CRLF     0
 
-// <q SL_IOSTREAM_USART_VCOM_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION> Restrict the energy mode to allow the reception.
+// <q SL_IOSTREAM_USART_LOG_UART_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION> Restrict the energy mode to allow the reception.
 // <i> Default: 1
 // <i> Limits the lowest energy mode the system can sleep to in order to keep the reception on. May cause higher power consumption.
-#define SL_IOSTREAM_USART_VCOM_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION    1
+#define SL_IOSTREAM_USART_LOG_UART_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION    1
 
 // </h>
 
 // <<< end of configuration section >>>
 
 // <<< sl:start pin_tool >>>
-// <usart signal=TX,RX,(CTS),(RTS)> SL_IOSTREAM_USART_VCOM
-// $[USART_SL_IOSTREAM_USART_VCOM]
-#ifndef SL_IOSTREAM_USART_VCOM_PERIPHERAL       
-#define SL_IOSTREAM_USART_VCOM_PERIPHERAL        USART0
+// <usart signal=TX,RX,(CTS),(RTS)> SL_IOSTREAM_USART_LOG_UART
+// $[USART_SL_IOSTREAM_USART_LOG_UART]
+#ifndef SL_IOSTREAM_USART_LOG_UART_PERIPHERAL   
+#define SL_IOSTREAM_USART_LOG_UART_PERIPHERAL    USART0
 #endif
-#ifndef SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO    
-#define SL_IOSTREAM_USART_VCOM_PERIPHERAL_NO     0
+#ifndef SL_IOSTREAM_USART_LOG_UART_PERIPHERAL_NO
+#define SL_IOSTREAM_USART_LOG_UART_PERIPHERAL_NO 0
 #endif
 
 // USART0 TX on PA05
-#ifndef SL_IOSTREAM_USART_VCOM_TX_PORT          
-#define SL_IOSTREAM_USART_VCOM_TX_PORT           gpioPortA
+#ifndef SL_IOSTREAM_USART_LOG_UART_TX_PORT      
+#define SL_IOSTREAM_USART_LOG_UART_TX_PORT       SL_GPIO_PORT_A
 #endif
-#ifndef SL_IOSTREAM_USART_VCOM_TX_PIN           
-#define SL_IOSTREAM_USART_VCOM_TX_PIN            5
+#ifndef SL_IOSTREAM_USART_LOG_UART_TX_PIN       
+#define SL_IOSTREAM_USART_LOG_UART_TX_PIN        5
 #endif
 
 // USART0 RX on PA06
-#ifndef SL_IOSTREAM_USART_VCOM_RX_PORT          
-#define SL_IOSTREAM_USART_VCOM_RX_PORT           gpioPortA
+#ifndef SL_IOSTREAM_USART_LOG_UART_RX_PORT      
+#define SL_IOSTREAM_USART_LOG_UART_RX_PORT       SL_GPIO_PORT_A
 #endif
-#ifndef SL_IOSTREAM_USART_VCOM_RX_PIN           
-#define SL_IOSTREAM_USART_VCOM_RX_PIN            6
+#ifndef SL_IOSTREAM_USART_LOG_UART_RX_PIN       
+#define SL_IOSTREAM_USART_LOG_UART_RX_PIN        6
 #endif
 
-// [USART_SL_IOSTREAM_USART_VCOM]$
+// [USART_SL_IOSTREAM_USART_LOG_UART]$
 // <<< sl:end pin_tool >>>
 
 #endif
