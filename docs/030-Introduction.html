@@ -27,87 +27,59 @@
         <section id="introduction">
           <h2>Introduction</h2>
         </section>
-        <section id="hardwareProgress">
-          <h3>Hardware progress</h3>
-        </section>
+        
+        <!-- -------------------- Example of an embedded system ----------------------- -->
+        
         <section>
-          <h4>1982 - Cray X-MP</h4>
-          <img src="images/CRAY-X-MP-1-1.jpg" height="500">
-          <div class="pbverysmall">Source: <a href="https://www.hpe.com/us/en/compute/hpc/cray.html"
-                                              title="HPE" target="_blank">HPE</a></div>
-        </section>
-        <section>
-          <ul>
-            <li>World most powerful computer</li>
-            <li>0.94 GFLOPS (giga floating-point operations per second)</li>
-            <li>Price: around US$15 million (would be US$50 million in 2025)</li>
-          </ul>
-          <div class="pbverysmall">Sources: 
-            <a href="https://www.hpe.com/us/en/compute/hpc/cray.html"
-               title="HPE" target="_blank">HPE</a>
-            <a href="https://www2.cisl.ucar.edu/ncar-supercomputing-history/cx"
-               title="NCAR" target="_blank">NCAR</a>
-          </div>                    
+          <h3>Example of an embedded system</h3>
         </section>
         
         <section>
-          <h4>2025 - iPhone 16</h4>
-          <img src="images/iPhone16.png" height="500">
-          <div class="pbverysmall">Source: <a href="https://www.apple.com/iphone-16/" title="Apple"
-                                              target="_blank">Apple</a></div>
-        </section>
-        
-        <section>
-          <ul>
-            <li>A18 Bionic chip with 5-core GPU: 1.8 TFLOPS</li>
-            <li>Price: US$800</li>
-          </ul>
-          <div class="pbverysmall">Sources: 
-            <a href="https://www.apple.com/shop/buy-iphone/iphone-16"
-               title="Apple" target="_blank">Apple</a> - 
-            <a href="https://www.topcpu.net/en/cpu/apple-a18"
-               title="TOPCPU" target="_blank">TOPCPU</a>
-          </div>
-        </section>
-        
-        <section>
-          <p>In 40 years:</p>
-          <ul>
-            <li>Processing power multiplied by around 1,800</li>
-            <li>Cost divided by around 56,000</li>
-          </ul>
-          <div class="pbverysmall">
-            (Beware: comparing processing power in a really correct way is more complex than simply 
-            looking at the two FLOPS values. But, anyway, this gives an idea.)
-          </div>
-        </section>
-        <section>
-          <p class="pbcenter">What do the years to come have in store?!</p>
-        </section>
-        <section id="embeddedApplications">
-          <h3>Embedded applications</h3>
-        </section>
-        
-        <section>
-          <h4>1969 - The computer that made it possible to land on the Moon</h4>
+          <h4>1960s - The Apollo Guidance Computer (AGC)</h4>
           <img src="images/agc_dsky.jpg">
           <div class="pbverysmall">Source: <a href="http://klabs.org/history/history_docs/mit_docs/agc.htm"
                                               title="klabs.org" target="_blank">klabs.org</a></div>
         </section>
+        
         <section>
+            <h4>Functions</h4>
+            <ul>
+                <li>Navigation from the Earth to lunar orbit</li>
+                <li>Landing on the Moon</li>
+                <li>Return to lunar orbit</li>
+                <li>Rendezvous</li>
+                <li>User interface</li>
+                <li>Redundancy and safety</li>
+                <li>Etc.</li>
+            </ul>
+        </section>
+        
+        <section>
+          <h4>Characteristics</h4>
           <ul>
             <li>Weight: aroung 32 kg (without the user interface)</li>
             <li>Power supply: 28 V CC - 70 W</li>
-            <li>Permanent memory: 36 Kwords (16 bits)</li>
-            <li>Erasable memory: 2 Kwords (16 bit)</li>
+            <li>Permanent memory: 36 Kwords (16 bits) &hArr; 72 KB</li>
+            <li>Erasable memory: 2 Kwords (16 bit) &hArr; 4 KB</li>
             <li>Clock: 1 MHz (83 kHz instruction cycle time)</li>
-            <li>Simple operating system, with priority handling</li>
           </ul>
         </section>
         
         <section>
-          <h4>Margaret Hamilton</h4>
-          <img src="images/Margaret_Hamilton_-_restoration.jpg" height="500">
+          <h4>Software</h4>
+          <div class="row">
+            <div class="column">
+              <img src="images/Margaret_Hamilton_-_restoration.jpg" height="500">
+            </div>
+            <div class="column">
+              <ul>
+                <li>One of the first real-time, interrupt-driven operating systems</li>
+                <li>Task priorization</li>
+                <li>Fault tolerance</li>
+                <li>Written in assembly language</li>
+              </ul>
+            </div>
+          </div>
           <div class="pbverysmall">Source: <a href="https://en.wikipedia.org/wiki/Margaret_Hamilton_(software_engineer)"
                                               title="Margaret Hamilton" target="_blank">
                                               Wikipedia - Margaret Hamilton</a></div>
@@ -116,36 +88,117 @@
         <section>
           <p class="pbcenter">Compared to current configurations:</p>
           <ul>
-            <li>Very little memory</li>
-            <li>Very little processing power</li>
+            <li>Very little memory (total of 76 KB)</li>
+            <li>Very little processing power (83,000 instructions per second)</li>
           </ul>
           <p class="pbcenter">Yet it allowed to bring human beings to the Moon.</p>
         </section>
         
         <section>
           <p class="pbcenter">It's not because you don't have a lot of memory and processing power
-            that you can't develop great applications &#x1F642;
+            that you can't develop great applications!
           </p>
         </section>
         
         <section>
-          <p class="pbcenter">A modern microcontroller with similar processing power:</p>
-          <img src="images/pic18f47k42.png" height="100">
-          <br />
+          <h4>The board we will use in the practice sessions</h4>
           <ul>
-            <li>Flash memory: 128 Ko</li>
-            <li>RAM: 8 Ko</li>
-            <li>Clock: up to 64 MHz</li>
-            <li>Power consumption: 30 mW (microcontroller alone)</li>
-            <li>Power consumption in sleep mode: 0,1 &mu;W</li>
-            <li>Price: around US$3.00</li>
+            <li>Memory: total of 1792 KB (23 times the AGC)</li>
+            <li>Processing power: 117 millions of instructions per second (1410 times the AGC)</li>
           </ul>
-          <div class="pbverysmall">
-            Note: this microcontroller is not radiation hardened, does not provide all required I/O, does
-            not provide all required reliability mechanisms, etc.
+          <p class="fragment">So, please, never complain that you don't have enough memory and processing power for
+          running an embedded application, unless you're trying to perform something more complicated than
+          landing on the Moon!</p>
+        </section>
+
+        <!-- -------------------- Definition and characteristics ----------------------- -->
+        
+        <section>
+          <h4>What is an embedded system?</h4>
+          <p>An embedded system is a specialized computer system able to perform dedicated functions within a
+             larger system.</p>
+        </section>
+        
+        <section>
+          <h4>Key characteristics</h4>
+          <ul>
+            <li><b>Purpose-built</b> - as opposed to general purpose computers</li>
+            <li><b>Integration within a larger system</b> - handling sensors and actuators</li>
+            <li><b>Real-time operation</b> - strict time constraints</li>
+            <li><b>Resource constraints</b> - memory, processing power, energy, size, etc.</li>
+            <li><b>Reliability</b> - continuous operation without human intervention</li>
+          </ul>
+        </section>
+        
+         <!-- -------------------- Needs of embedded ML applications ----------------------- -->
+        
+        <section>
+            <h3>Machine learning and embedded systems</h3>
+            <ul>
+              <li>In the embedded world, some classes of problems can't be easily solved with traditional methods: voice recognition, object detection, facial recognition, etc.</li>
+              <li>Nowadays, some embedded systems are powerful enough to run (and even train) some ML models</li>
+              <li>But running ML models in embedded systems is still somewhat challenging, and requires to understand what embedded systems are and how they work</li>
+            </ul>
+        </section>
+        
+        <section>
+          <h4>Needs of embedded ML applications</h4>
+          <p>To perform their job, ML applications need:</p>
+          <div class="r-stack">
+            <div>
+              <img src="images/mlNeeds-0.png" height="400">
+            </div>
+            <div>
+              <img src="images/mlNeeds-1.png" height="400" class="fragment fade-in-then-out">
+            </div>
           </div>
-          <div class="pbverysmall">Source : <a href="https://www.microchip.com/wwwproducts/en/PIC18F47K42"
-                                               title="Microchip" target="_blank">Microchip</a></div>
+        </section>
+        
+        <section>
+          <h4>Technical domains</h4>
+          <img src="images/technicalDomains-1.png" height="150">
+        </section>
+        
+        <section>
+          <h4>Closer look - Software Development</h4>
+          <div class="r-stack">
+            <div>
+              <img src="images/technicalDomainsSoftwareDevelopment-0.png" height="500">
+            </div>
+            <div>
+              <img src="images/technicalDomainsSoftwareDevelopment-1.png" height="500"
+                   class="fragment fade-in-theen-out">
+            </div>
+          </div>
+          <div class="pbverysmall">
+            HAL: Hardware Abstraction Layer - RTOS: Real-Time Operating System
+          </div>
+        </section>
+        
+        <section>
+            <h4>Closer look - Communication</h4>
+            <div class="r-stack">
+              <div>
+                <img src="images/technicalDomainsCommunication-0.png" height="300">
+              </div>
+              <div>
+                <img src="images/technicalDomainsCommunication-1.png" height="300"
+                     class="fragment fade-in-then-out">
+              </div>
+            </div>
+        </section>
+
+        <section>
+            <h4>Closer look - Electronics</h4>
+            <div class="r-stack">
+              <div>
+                <img src="images/technicalDomainsElectronics-0.png" height="400">
+              </div>
+              <div>
+                <img src="images/technicalDomainsElectronics-1.png" height="400"
+                     class="fragment fade-in-then-out">
+               </div>
+            </div>
         </section>
 
       </div>

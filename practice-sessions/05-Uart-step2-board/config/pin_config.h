@@ -135,7 +135,7 @@
 
 // $[CUSTOM_PIN_NAME]
 #ifndef _PORT                                   
-#define _PORT                                    gpioPortA
+#define _PORT                                    SL_GPIO_PORT_A
 #endif
 #ifndef _PIN                                    
 #define _PIN                                     0

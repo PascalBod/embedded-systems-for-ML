@@ -29,72 +29,146 @@
         </section>
         
         <section id="microcontrollerBoardReminders">
-          <h4>Reminders - Memory content retention</h4>
-          <ul>
-            <li>Volatile memory: content is lost when the system is turned off - RAM</li>
-            <li>Non-volatile memory: content is retained - Flash, EEPROM</li>
-          </ul>
-          <div class="pbverysmall">
-          RAM: Random Access Memory - EEPROM: Electrically Erasable Programmable Read-Only Memory
-          </div>
-        </section>
-        
-        <section>
-          <h4>Reminders - Memory hierarchy</h4>
-          <p>From most rapid access to slowest access:</p>
-          <ul>
-            <li>Registers - inside the CPU</li>
-            <li>Cache - inside and outside the CPU - usually not present in MCU</li>
-            <li>Main memory</li>
-            <li>Disk - magnetic or flash</li>
-          </ul>
-          <div class="pbverysmall">
-          CPU: Central Processing Unit - MCU: MicroController Unit
-          </div>
+          <h4>Reminder - Computer architecture</h4>
+          <img src="images/computerArchitecture.png">
         </section>
         
         <section>
           <ul>
-            <li>Registers: RAM</li>
-            <li>Cache: RAM</li>
-            <li>Main memory:
+            <li>Main memory: RAM (see further)</li>
+            <li>Secondary memory:
               <ul>
-              <li>Computer board: RAM</li>
-              <li>Microcontroller board: RAM + flash</li>
-              </ul>
-           </li>
-          </ul>
-        </section>
-        
-        <section id="microcontrollerArchitecture">
-          <h4>Microcontroller</h4>
-          <ul>
-            <li>A computer in a chip:
-              <ul>
-                <li>Central Processing Unit (CPU)</li>
-                <li>Read-only memory (Flash)</li>
-                <li>Read/write memory (RAM)</li>
-                <li>Clocks</li>
-                <li>Energy management</li>
-                <li>Peripherals and interfaces:
-                  <ul>
-                    <li>Analog I/O</li>
-                    <li>Digital I/O</li>
-                    <li>Timers</li>
-                    <li>Serial interfaces</li>
-                    <li>etc.</li>
-                  </ul>
-                </li>
+                <li>hard drive</li>
+                <li>SSD (Flash)</li>
               </ul>
             </li>
+            <li>I/O interfaces: for keyboard(s), mouse/mice, monitor(s), printer(s), network(s), etc.</li>
+            <li>When multiple CPUs: more complicated</li>
+          </ul>
+          <div class="pbverysmall">
+            RAM: Random Access Memory<br>
+            SSD: Solid State Drive
+          </div>
+        </section>
+        
+        <section>
+          <h4>Example - IBM z16 A01</h4>
+          <img src="images/ibmZA01.png" height="400">
+          <ul>
+            <li>4 cabinets, each measuring approximately 48 x 185 cm</li>
+            <li>Maximum memory: 40 TB</li>
+          </ul>
+          <div class="pbverysmall">
+            CPC: Central Processor Complex
+          </div>
+          <div class="pbverysmall">Source: 
+            <a href="https://www.redbooks.ibm.com/redbooks/pdfs/sg248950.pdf"
+               title="IBM" target="_blank">IBM</a>
+          </div>
+        </section>
+        
+        <section>
+          <h4>Example - Desktop PC</h4>
+          <img src="images/pcArchitecture.jpg" height="400">
+          <div class="pbverysmall">
+            Source: PB
+          </div>
+        </section>
+        
+        <section>
+          <h4>Example - BeagleBone Black SBC</h4>
+          <img src="images/beagleBoneBlack.webp">
+          <div class="pbverysmall">
+            SBC: Single Board Computer
+          </div>
+          <div class="pbverysmall">Source: 
+            <a href="https://www.beagleboard.org/boards/beaglebone-black"
+               title="beagleboard.org" target="_blank">beagleboard.org</a>
+          </div>
+        </section>
+        
+        <section>
+          <ul>
+            <li>The BeagleBone Black can be used as a general purpose computer</li>
+            <li>It can also be used as an embedded system</li>
+            <li class="fragment">&rArr;The definition in the previous section should not be taken strictly</li>
+          </ul>
+          <p class="fragment">Many different SBCs exist.</p>
+        </section>
+        
+        <section>
+          <h4>Continuing with integration</h4>
+          <ul>
+            <li>What about an Integrated Circuit (IC) containing one (or more) CPU(s), some memory, 
+                and I/O interfaces?</li>
+            <li class="fragment">This is a <em>microcontroller</em> (MCU - MicroController Unit)</li>
           </ul>
         </section>
         
         <section>
-          <p>An example of MCU architecture:</p>
+          <h4>Microcontroller architecture</h4>
           <img src="images/mcuArchitecture.png">
+          <ul>
+            <li>Some microcontrollers may have one or more caches</li>
+            <li>No more primary/secondary memory but RAM/Flash (see further) instead</li>
+          </ul>
         </section>
         
+        <section>
+          <h4>Microprocessor vs microcontroller</h4>
+          <ul>
+            <li>A <em>microprocessor</em> (MPU - MicroProcessor Unit) contains one 
+                (or more) CPU(s) and some I/O interfaces</li>
+            <li>Most computers are based on microprocessors.</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Reminder - Memory content retention</h4>
+          <ul>
+            <li>RAM is volatile memory: content is lost when the system is turned off</li>
+            <li>Flash is non-volatile memory</li>
+            <li>You may find other acronyms: ROM, PROM, EPROM, EEPROM, FRAM, MRAM, etc.</li>
+          </ul>
+          <div class="pbverysmall">
+            RAM: Random Access Memory - ROM: Read-Only Memory - PROM: Programmable ROM
+            - EPROM: Erasable Programmable ROM - EEPROM: Electrically Erasable ROM
+            - FRAM: Ferroelectric RAM - Magnetoresistive RAM
+          </div>
+        </section>
+        
+        <section>
+          <p>Important: flash memory can only accept a limited number of writes.</p>
+          <ul class="fragment">
+            <li>Depending on memory type: between 10,000 and 1 million writes</li>
+            <li>Wear-leveling algorithms: spread out write operations</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Microcontroller architecture - more details</h4>
+          <img src="images/mcuArchitectureMoreDetails.png">
+        </section>
+        
+        <section>
+          <ul>
+            <li>I/O interfaces: different types (see further)</li>
+            <li>Peripherals may be included (see further)</li>
+            <li>Energy management: on low power consumption microcontrollers</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>Embedded system</h4>
+          <ul>
+            <li>Printed Circuit Board (PCB)</li>
+            <li>A microcontroller</li>
+            <li>Additional elements (see next diagram)</li>
+            <li>Case</li>
+          </ul>
+          <p>The name <em>device</em> is also used.</p>
+        </section>
+                
         <section id="boardArchitecture">
           <h4>Board architecture</h4>
           <img src="images/deviceArchitecture.png">
@@ -108,46 +182,30 @@
             <div class="column">
               <div class="r-stack">
                 <div class="fragment fade-in-then-out">
+                  <p>Energy management:</p>
                   <ul>
-                    <li>Microcontroller
-                      <ul>
-                        <li>CPU + memory</li>
-                        <li>Some peripherals (e.g. timers)</li>
-                        <li>Interfaces (e.g. serial interfaces, GPIO)</li>
-                      </ul>
-                    </li>
-                    <li>Power system</li>
+                    <li>Voltage regulator</li>
+                    <li>Protection against voltage inversion</li>
+                    <li>Battery management system</li>
+                    <li>Etc.</li>
                   </ul>
                 </div>
                 <div class="fragment fade-in-then-out">
+                  <p>Wireless interface:</p>
                   <ul>
-                    <li>Wireless communication
-                      <ul>
-                        <li>Optional</li>
-                        <li>May be hosted by the microcontroller</li>
-                        <li>Wi-Fi, Bluetooth, LoRa, etc.</li>
-                      </ul>
-                    </li>
+                    <li>May be provided by the MCU</li>
                   </ul>
                 </div>
                 <div class="fragment fade-in-then-out">
+                  <p>Data storage:</p>
                   <ul>
-                    <li>Optionally:
-                      <ul>
-                        <li>Additional interfaces</li>
-                        <li>Peripherals (e.g. sensors)</li>
-                        <li>Positioning (e.g. GNSS)</li>
-                        <li>User interface</li>
-                        <li>Data storage</li>
-                      </ul>
-                    </li>
+                    <li>To store large amounts of data</li>
                   </ul>
-                  <div class="pbverysmall">GNSS: Global Navigation Satellite System</div>
                 </div>
-                <div class="fragment fade-in_then-out">
+                <div class="fragment fade-in-then-out">
+                  <p>Firmware storage:</p>
                   <ul>
-                    <li>Not depicted: optional, additional memory, outside of the microcontroller
-                    </li>
+                    <li>To implement Over-The-Air (OTA) update</li>
                   </ul>
                 </div>
               </div>
@@ -155,19 +213,23 @@
           </div>
         </section>
         
+        <section>
+          <h4>Example - EFR32BG24 Dev Kit</h4>
+          <img src="images/efr32bg24-dev-kit.png">
+        </section>
+        
         <section id="importantCharacteristics">
           <h4>Important board/microcontroller characteristics?</h4>
           <ul>
             <li>Depend on the target application!</li>
-            <li>Example:
+            <li>Example of characteristics to consider:
               <ul>
-                <li>General Purpose Input/Output (GPIO)</li>
-                <li>Serial links</li>
-                <li>Serial buses (SPI, I2C, etc.)</li>
-                <li>Analog to Digital Converters (ADC), Digital to Analog Converters (DAC)</li>
-                <li>Analog blocks</li>
+                <li>Serial interfaces</li>
+                <li>Digital interfaces</li>
+                <li>Analog interfaces</li>
+                <li>Peripherals</li>
                 <li>Instruction cycle time</li>
-                <li>Memory (size, type, expandable...)</li>
+                <li>Memory (size, type, expandable or not)</li>
                 <li>Registers size (8/16/32 bits)</li>
                 <li>Packaging</li>
                 <li>etc.</li>
@@ -213,25 +275,24 @@
             <li><b>There isn't any Arm microcontroller</b></li>
             <li>Arm provides Intellectual Property (IP) blocks, under a licensing agreement</li>
             <li>Among these blocks: RISC microcontrollers cores</li>
-            <li>For the IoT (low power, low cost): Cortex-M family</li>
+            <li>Low power, low cost: Cortex-M family</li>
           </ul>
           <div class="pbverysmall">RISC: Reduced Instruction Set Computer</div>
         </section>
         
         <section>
-          <img src="images/arm-highlights.png">
+          <p class="pbcenter">325 billions of Arm-based chips shipped.</p>
           <div class="pbverysmall">Source: 
-            <a href="https://www.arm.com/company"
-               title="Arm" target="_blank">Arm</a>
-          </div>
-        </section>
+          <a href="https://www.arm.com/company"
+             title="Arm" target="_blank">Arm</a></div>
+        </section> 
         
         <section>
           <p class="pbcenter">Some Cortex-M licensees:</p>
           <ul>
             <li><a href="https://www.infineon.com/cms/en/product/microcontroller/"
                    target="_blank">Infineon</a></li>
-            <li><a href="https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32cm-mc"
+            <li><a href="https://www.microchip.com/en-us/products/microcontrollers/32-bit-mcus/pic32-sam"
                    target="_blank">Microchip</a></li>
             <li><a href="https://www.nordicsemi.com/Products"
                    target="_blank">Nordic Semiconductor</a></li>
@@ -243,7 +304,7 @@
                    target="_blank">Silicon Labs</a></li>
             <li><a href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html"
                    target="_blank">STMicroelectronics</a></li>
-            <li><a href="https://www.ti.com/microcontrollers-mcus-processors/microcontrollers/arm-based-microcontrollers/overview.html"
+            <li><a href="https://www.ti.com/product-category/microcontrollers-processors/mcus/overview.html"
                    target="_blank">Texas Instruments</a></li>
             <li>etc.</li>
           </ul>
@@ -258,11 +319,25 @@
         </section>
         
         <section>
-          <h4>Provided elements</h4>
-          <img src="images/armCortexMArchitecture.png" height="500">
-          <div class="pbverysmall">Source: <a
-                                             href="https://community.arm.com/cn/b/blog/posts/2017-cortex-m-whitepaper-english"
-                                             title="Cortex-M for Beginners" target="_blank">Cortex-M for Beginners</a></div>
+          <h4>Facilities for ML applications on Cortex-M</h4>
+          <ul>
+            <li>Software library: <a href="https://arm-software.github.io/CMSIS-NN/latest/" target="_blank"">
+            CMSIS-NN</a> - open-source library maximizing NN performance</li>
+            <li>Hardware extension: <a href="https://www.arm.com/technologies/floating-point" target="_blank"">
+            FPU</a></li>
+            <li>Hardware extension: <a href="https://www.arm.com/technologies/dsp" target="_blank">
+            DSP</a></li>
+            <li>Hardware extension: <a href="https://www.arm.com/technologies/helium" target="_blank">
+            Helium</a> - vector extension</li>
+            <li>Hardware extension: <a href="https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u55" target="_blank">
+            Ethos-U55</a> - NPU</li>
+          </ul>
+          <div class="pbverysmall">
+            CMSIS-NN: Common Microcontroller Software Interface Standard - Neural Network<br>
+            FPU: Floating-Point Unit<br>
+            DSP: Digital Signal Processing<br>
+            NPU: Neural Processing Unit
+          </div>
         </section>
         
         <section>
@@ -303,9 +378,9 @@
         <section>
           <h5>Development board</h5>
           <img src="images/nucleo-l073rg.png">
-          <p class="pbcenter">Price: US$13</p>
+          <p class="pbcenter">Price: US$16</p>
           <div class="pbverysmall">Source: <a
-                                             href="https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-l073rz.html"
+                                             href="https://www.st.com/en/evaluation-tools/nucleo-l073rz.html"
                                              title="STMicroelectronics" target="_blank">STMicroelectronics</a></div>
         </section>
         
@@ -335,10 +410,33 @@
         <section>
           <h5>Development board</h5>
           <img src="images/nucleowl55jc.jpg" height="400">
-          <p class="pbcenter">US$42</p>
+          <p class="pbcenter">US$53</p>
           <div class="pbverysmall">Source: <a
                                              href="https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-wl55jc.html"
                                              title="STMicroelectronics" target="_blank">STMicroelectronics</a></div>
+        </section>
+        
+        <section>
+          <h4><a href="https://www.st.com/en/microcontrollers-microprocessors/stm32n6-series.html" target="_href">STM32N6 series</a></h4>
+        </section>
+        
+        <section>
+          <img src="images/stm32n6x7Architecture.jpg" height="600">
+          <div class="pbverysmall">Source: 
+          <a href="https://www.st.com/en/microcontrollers-microprocessors/stm32n657x0.html"
+             title="STMicroelectronics" 
+             target="_blank">STMicroelectronics</a></div>
+        </section>
+        
+        <section>
+          <h5>Development board</h5>
+          <img src="images/stm32n6x7DevelopmentBoard.webp">
+          <p class="pbcenter">US$78</p>
+          <div class="pbverysmall">Source: 
+            <a
+              href="https://www.st.com/en/evaluation-tools/nucleo-n657x0-q.html"
+              title="STMicroelectronics"
+              target="_blank">STMicroelectronics</a></div>
         </section>
         
         <section>
@@ -374,6 +472,15 @@
               href="https://www.silabs.com/documents/public/data-sheets/efr32mg24-datasheet.pdf"
               title="EFR32MG24 Datasheet"
               target="_blank">EFR32MG24 Datasheet</a></div>
+        </section>
+        
+        <section>
+          <p>Matrix Vector Processor (MVP) - hardware accelerator for (complex) vector and matrix operations.</p>
+          <p>The <a href="https://docs.silabs.com/gecko-platform/latest/platform-compute-math/" target="_blank">
+          MVP Math Library</a> provides the associated API.</p>
+          <div class="pbverysmall">
+          API: Application Programming Interface
+          </div>
         </section>
         
         <section>
@@ -421,12 +528,8 @@
 
         <section>
           <h4>A note about RISC-V</h4>
-          <p>RISC-V is an open, royalty-free instruction set architecture (ISA)</p>
-          <p>The RISC-V International Association drives the development of RISC-V</p>
-          <div class="pbverysmall">Source: <a
-                                             href="https://riscv.org/"
-                                             title="RISC-V International" target="_blank">RISC-V International</a>
-          </div>
+          <p>RISC-V is an open, royalty-free instruction set architecture (ISA).</p>
+          <p>The <a href="https://riscv.org/" target="_blank">RISC-V International Association</a> drives the development of RISC-V.</p>
         </section>
                 
         <section>
@@ -471,7 +574,11 @@
           </ul>
         </section>
         
-
+        <section>
+          <h4>For ML</h4>
+          <p>ESP32-S3: vector instructions - ESP-DSP and ESP-NN libraries</p>
+          <p>ESP32-P4: instruction extensions (vector, complex, etc.)</p>
+        </section>
 
       </div>
     </div>

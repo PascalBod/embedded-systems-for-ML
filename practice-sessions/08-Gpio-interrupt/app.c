@@ -16,8 +16,8 @@
  ******************************************************************************/
 
 /*
-    RTOS for ML presentation - exercise 08.
-    Copyright (C) 2024  Pascal Bodin
+    Embedded Systems for ML presentation
+    Copyright (C) 2024-2026  Pascal Bodin
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 #include <stdint.h>
 
 #include "app_log.h"

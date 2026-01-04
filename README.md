@@ -1,11 +1,5 @@
 # Introduction to Embedded Systems for Machine Learning
 
-## Latest modifications
-
-18-Dec-2025: all practice sessions are now migrated.
-
-07-Dec-2025: bare metal and FreeRTOS examples up to and including practice session 13 have been migrated to Simplicity SDK Suite v2025.6.2.
-
 # Overview
 
 This repository contains a presentation providing an introduction to embedded systems. The targeted audience is machine learning application developers, who want to better understand what an embedded system is, and how it can/must be used.
@@ -79,12 +73,12 @@ Solutions to the practice sessions are available to IMT Atlantique students atte
   * How to navigate
 * [Foreword](https://pascalbod.github.io/embedded-systems-for-ML/020-Foreword.html)
   * Who am I?
-  * Needs of embedded ML applications
-  * Technical domains
   * Presentation goal
 * [Introduction](https://pascalbod.github.io/embedded-systems-for-ML/030-Introduction.html)
-  * Hardware progress
-  * Embedded applications
+  * Example of an embedded system
+  * Definition and characteristics
+  * Needs of embedded ML applications
+  * Technical domains
 * [Microcontrollers and boards](https://pascalbod.github.io/embedded-systems-for-ML/040-MicrocontrollersAndBoards.html)
   * Reminders: memory
   * Microcontroller

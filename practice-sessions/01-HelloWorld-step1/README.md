@@ -35,7 +35,11 @@ There are pros and cons to this component architecture. Adding, configuring and 
 Notes:
 * Only the part of the string after the last **>** character must be used to search.
 * When the search result is displayed, click the small triangles on the left-hand side until the result is fully unfolded. Then, click the **Install** button.
-* For the USART component, keep the default name for the instance.
+* For the USART component, use `log_uart` for the instance name.
+* Still for the USART component, configure it as follows:
+  * **Selected Module**: **USART0**
+  * **RX**: **PA06**
+  * **TX**: **PA05**
 
 8. Double-click the `app.c` file in order to display its content.
 9. Add the following include directive:

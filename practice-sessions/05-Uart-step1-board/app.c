@@ -16,8 +16,8 @@
  ******************************************************************************/
 
 /*
-    RTOS for ML presentation - exercise 05 step 1.
-    Copyright (C) 2024  Pascal Bodin
+    Embedded Systems for ML presentation
+    Copyright (C) 2024-2026  Pascal Bodin
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ void app_init(void)
 {
 
   // Enable required clocks: for USART0 block and for GPIO block.
-  // The EFR32BG24 has only one USART, named USART0.
+  // The EFR32MG24 has only one USART, named USART0.
   CMU_ClockEnable(cmuClock_USART0, true);
   CMU_ClockEnable(cmuClock_GPIO, true);
 
