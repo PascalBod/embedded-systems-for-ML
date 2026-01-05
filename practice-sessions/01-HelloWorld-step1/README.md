@@ -15,14 +15,14 @@ There are pros and cons to this component architecture. Adding, configuring and 
 ## What to do
 
 1. Ensure you completed the [prerequisites](https://github.com/PascalBod/embedded-systems-for-ML?tab=readme-ov-file#prerequisites-for-the-practical-exercises).
-2. [Create a new project](https://github.com/PascalBod/lm-efr32-simplicityStudio?tab=readme-ov-file#sample-application), still based on the **Empty C project**, naming it `01-HelloWorld`.
+2. [Create a new project](https://github.com/PascalBod/lm-efr32-simplicityStudio?tab=readme-ov-file#sample-application), still based on the **Empty C project**, naming it `01-HelloWorld-step1`.
 3. Check that you can build it and that you can program the board.
 4. Replace the content of the `readme.md` file (right-click and **Open With > Plain Text Editor**) by:
     ```
     # HelloWorld
-    
+
     This example project shows how to display a message on the
-    virtual serial link created over the USB connection.          
+    virtual serial link created over the USB connection.
     ```
 5. If the content of the `01-HelloWorld.slcp` file is not displayed in an editor tab yet, double-click the filename in the Project Explorer view.
 6. Click on the **SOFTWARE COMPONENTS** tab.
