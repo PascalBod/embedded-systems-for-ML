@@ -22,7 +22,7 @@ Click on the *Step Into* tool to enter the `sl_main_init` code:
 
 ### Step Over a function call
 
-Click on the *Step Over* tool to run the fisrt statement of the `sl_main_init` function, which is a call to `app_init_pre_clock`:
+Click on the *Step Over* tool to run the first statement of the `sl_main_init` function, which is a call to `app_init_pre_clock`:
 
 ![](debuggerStepOver.png)
 
