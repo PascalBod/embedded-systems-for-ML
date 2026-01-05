@@ -80,8 +80,11 @@ Solutions to the practice sessions are available to IMT Atlantique students atte
   * Needs of embedded ML applications
   * Technical domains
 * [Microcontrollers and boards](https://pascalbod.github.io/embedded-systems-for-ML/040-MicrocontrollersAndBoards.html)
-  * Reminders: memory
-  * Microcontroller
+  * Reminders: computer architecture
+  * Microcontroller architecture - microprocessor
+  * Reminder: memory content retention
+  * Microcontroller architecture: more details
+  * Embedded system components
   * Board architecture
   * Important characteristics?
   * Some common microcontroller families
