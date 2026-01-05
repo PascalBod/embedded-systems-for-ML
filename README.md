@@ -187,5 +187,5 @@ Solutions to the practice sessions are available to IMT Atlantique students atte
 ### Software
 
 * [Silicon Labs Developer Documentation](https://docs.silabs.com)
-* [Simplicity Studio 5 User's Guide](ttps://docs.silabs.com/simplicity-studio-5-users-guide/latest/ss-5-users-guide-overview/)
-* [Platform (SDK)(https://docs.silabs.com/gecko-platform/5.2.2/platform-overview/)
+* [Simplicity Studio 5 User's Guide](https://docs.silabs.com/simplicity-studio-5-users-guide/latest/ss-5-users-guide-overview/)
+* [Platform (SDK)](https://docs.silabs.com/gecko-platform/5.2.2/platform-overview/)
