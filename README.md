@@ -1,6 +1,6 @@
 # Introduction to Embedded Systems for Machine Learning
 
-# Overview
+## Overview
 
 This repository contains a presentation providing an introduction to embedded systems. The targeted audience is machine learning application developers, who want to better understand what an embedded system is, and how it can/must be used.
 
@@ -175,6 +175,17 @@ Solutions to the practice sessions are available to IMT Atlantique students atte
   * Drawbacks
 * [Middleware](https://pascalbod.github.io/embedded-systems-for-ML/190-Middleware.html)
 
+## Reference documents
 
+### Hardware
 
+* [xG24 Dev Kit User's Guide](https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf)
+* [xG24 Dev Kit Schematic - Revision A01](https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf)
+* [EF32MG24 Wireless SoC Family Data Sheet](https://www.silabs.com/documents/public/data-sheets/efr32mg24-datasheet.pdf)
+* [EFR32xG24 Wireless SoC Reference Manual](https://www.silabs.com/documents/public/reference-manuals/efr32xg24-rm.pdf)
 
+### Software
+
+* [Silicon Labs Developer Documentation](https://docs.silabs.com)
+* [Simplicity Studio 5 User's Guide](ttps://docs.silabs.com/simplicity-studio-5-users-guide/latest/ss-5-users-guide-overview/)
+* [Platform (SDK)(https://docs.silabs.com/gecko-platform/5.2.2/platform-overview/)
