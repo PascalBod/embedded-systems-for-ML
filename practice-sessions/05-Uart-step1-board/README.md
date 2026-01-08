@@ -18,4 +18,4 @@ To check that the characters are received by the PC, run *pyserial-miniterm* (re
 
 ## Reference documentation
 
-* [USART peripheral library API](https://docs.silabs.com/gecko-platform/5.0.1/platform-emlib-efr32xg24/usart)
+* [USART peripheral library API](https://docs.silabs.com/gecko-platform/latest/platform-emlib-efr32xg24/usart)
