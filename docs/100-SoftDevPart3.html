@@ -591,7 +591,7 @@
           </ul>
         </section>       
 
-        <!-- -------------------- Practice session 10: application and interrupts ---------------------------------------- -->
+        <!-- -------------------- Practice session 10: application and interrupts ---------------- -->
         
         <section id="practice10">
           <h3>Practice session 10</h3>
@@ -605,6 +605,105 @@
                 <a href="https://github.com/PascalBod/embedded-systems-for-ML/blob/main/practice-sessions/10-Application-interrupts/README.md"
                    target="_blank"><code>embedded-systems-for-ML/practice-sessions/10-Application-interrupts/README.md</code></a>
                 file</li>
+          </ul>
+        </section>
+        
+        <!-- -------------------- A possible bre metal global architecture -------------------- -->
+        
+        <section>
+          <h3>A possible bare metal global architecture</h3>
+          <p>Initialization and main loop:</p>
+          <pre><code data-trim data-noescape class="codeblock">
+            int main(void) {
+            
+              // Initialization.
+              sl_system_init();   // "System" initialization.
+              app_init();         // Application initialization.
+              
+              // Main loop.
+              while (1) {
+                sl_system_process_action(); // "System" tasks.
+                app_process_action();       // Application tasks.
+              }
+            }
+          </code></pre>          
+        </section>
+        
+        <section>
+          <p>Application - supporting code:</p>
+          <pre><code data-trim data-noescape class="codeblock">
+            // Define possible states (i.e. a type for state variable).
+            typedef enum {
+              STATE_1,
+              ...
+            } state_t;
+            
+            static state_t current_state;
+            
+            // Event flags
+            static volatile bool event_flag_1;
+            ...
+            
+            // Interrupt service routines.
+            static void on_event_1(...) {
+              ...                     // Get event context, if any.
+              event_flag_1 = true;
+            }
+            ...
+          </code></pre>          
+        </section>
+        
+        <section>
+          <p>Application:</p>
+          <pre><code data-trim data-noescape class="codeblock">            
+            void app_init(void) {
+              ...
+              event_flag_1 = false;
+              ...
+              current_state = STATE_1;
+            }
+            
+            void app_process_action(void) {
+              
+              switch (current_state) {
+              
+              case ST_WAIT_FIRST_PRESS:
+                if (event_flag_1) {
+                  event_flag_1 = false;
+                  ...   // Process event, set current_state if required.
+                  break;
+                }
+                ...   // Event != event_flag_1.
+                ...   // Possible error processing.
+                break;
+              
+              ...   // Other states.
+              
+              default:
+                ...   // Error processing.
+              }
+            }
+          </code></pre>          
+        </section>
+        
+        <section>
+          <h4>Main points</h4>
+          <ul>
+            <li>Establish a list of the events to be handled</li>
+            <li>Establish a list of possible application states</li>
+            <li>For a given state/event couple, processing time must be "short"</li>
+            <li>Use an FSM to implement the application body</li>
+            <li>Handle all possible errors</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h4>For a more complex application</h4>
+          <ul>
+            <li>Break down the application logic in several concurrent tasks</li>
+            <li>Implement each task according to previous points</li>
+            <li>How to make the tasks communicate? Not part of this course but, after having
+              gone through the RTOS part, you should know how to do it</li>
           </ul>
         </section>
         
