@@ -9,8 +9,8 @@ Use an interrupt to detect button presses.
 * [xG24 Dev Kit User Guide](https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf)
 * [xG24 Dev Kit schematic](https://www.silabs.com/documents/public/schematic-files/BRD2601B-A01-schematic.pdf)
 * [EFR32xG24 Reference Manual](https://www.silabs.com/documents/public/reference-manuals/efr32xg24-rm.pdf)
-* [SDK GPIO module API](https://docs.silabs.com/gecko-platform/5.0.2/platform-emlib-efr32xg24/gpio)
-* [SDK GPIOINT module API](https://docs.silabs.com/gecko-platform/5.0.2/platform-driver/gpioint)
+* [SDK GPIO module API](https://docs.silabs.com/gecko-platform/latest/platform-emlib-efr32xg24/gpio)
+* [SDK GPIOINT module API](https://docs.silabs.com/gecko-platform/latest/platform-driver/gpioint)
 
 ## What you have to do
 
