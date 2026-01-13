@@ -6,7 +6,7 @@ By using an ISR attached to a timer, periodically display a message.
 
 ## Reference documents
 
-* [SDK Sleep Timer module API](https://docs.silabs.com/gecko-platform/5.0.2/platform-service/sleeptimer)
+* [SDK Sleep Timer module API](https://docs.silabs.com/gecko-platform/latest/platform-service/sleeptimer)
 
 ## Guidelines
 
