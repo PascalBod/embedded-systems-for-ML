@@ -16,3 +16,13 @@ Using what you learned in practice session 8 (GPIO interruption) and in practice
 * An interruption is triggered each time button 0 is released.
 * The associated ISR sends the current relative time (number of ticks elapsed since last reset) to a queue.
 * A task waits on the queue. Each time a new message is received, it increments a counter, and display the counter value, and the received relative time.
+
+One possible way to reuse what you already did in previous practice sessions is to adhere to the following steps:
+* In the Project Explorer view, select the project `15-Queue`
+* Copy and paste it as `16-Button-presses` rpoject, with **Edit/Copy** and **Edit/Paste**
+* Add the *GPIOINT* component to the project
+* Right-click on the `cons_prod.c` file in the Project Explorer view, select **Rename...** and rename it to `counter.c`
+* Rename `cons_prod.h` to `count.h` in a similar way
+* Check that the project builds
+* Keep only the consumer task. You can rename it "counter" task
+* Configure the GPIO pin, add the ISR code
