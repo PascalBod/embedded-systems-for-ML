@@ -2,11 +2,11 @@
 
 ## Overview
 
-This repository contains a presentation providing an introduction to embedded systems. The targeted audience is machine learning application developers, who want to better understand what an embedded system is, and how it can/must be used.
+This repository contains a presentation providing an introduction to embedded systems. The associated course is intended for machine learning application developers who want to better understand what an embedded system is and the specific characteristics of this type of environment.
 
 The presentation DOES NOT provide information about machine learning.
 
-The following topics are covered:
+Among other things, the following topics are covered:
 * Interfaces: GPIO, ADC, UART, SPI, I2C
 * Software development over bare metal
 * Software development with an RTOS
